@@ -1,16 +1,17 @@
-## **VIAUCV**  
+## **ViaUCV**  
+ViaUCV es un sitio web orientado a la gestión del sistema de transporte de la comunidad universitaria de la UCV, diseñado para atender las necesidades de estudiantes, personal docente y administrativo.  
 
-## Integrantes:
+## Integrantes
 
 Fraidis Franco   
 Eliany Morales    
 Mariam Battika
 
-## Herramientas utilizadas:    
+## Tecnologías utilizadas
 Lenguaje: Java     
 Pruebas unitarias: JUnit
 
-## Ejecutar el proyecto:   
+## Librerías adicionales (work in progress..)
 1...     
 2...    
 3..    
