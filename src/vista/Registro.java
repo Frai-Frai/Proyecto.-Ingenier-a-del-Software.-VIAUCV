@@ -80,14 +80,11 @@ public class Registro extends JFrame{
             super.paintComponent(graficos);
         }
     }
-
-    
-
     
     //  vamos a crear las cajas. En Java, los textos fijos son JLabel y las cajas para escribir son JTextField
         public static void main(String[] args){
         Registro interfazR = new Registro();
         interfazR.setVisible(true);
-    }
+        }
 
 }
