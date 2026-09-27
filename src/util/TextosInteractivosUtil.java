@@ -23,6 +23,17 @@ public class TextosInteractivosUtil{
             public void mouseExited (MouseEvent ev){
                 jlabel.setForeground(colorNormal);
             }
+
+            @Override 
+            public void mousePressed(java.awt.event.MouseEvent event){
+                jlabel.setForeground(colorIluminado);
+            }
+
+            @Override 
+            public void mouseReleased(java.awt.event.MouseEvent event){
+                jlabel.setForeground(colorNormal);
+            }
+
             
         });
     }
