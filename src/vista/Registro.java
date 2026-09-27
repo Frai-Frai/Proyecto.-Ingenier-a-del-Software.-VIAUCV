@@ -5,7 +5,7 @@ import util.*;
 import java.io.File;
 public class Registro extends JFrame{
 
-    //Tipografia de los titulos
+    //Tipografia 
     private Font fuenteGlacial(String ruta, float tamano, int estilo){
         try {
             Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
@@ -25,6 +25,13 @@ public class Registro extends JFrame{
         setLayout(null);
         setLocationRelativeTo(null);
 
+        Font    fuenteT = new Font("Dialog", Font.BOLD, 30); // tipografias
+        Font    fuenteNormal = fuenteGlacial("res/GlacialIndifference-Regular.otf", 14, Font.PLAIN); 
+        Font    fuenteLetras = fuenteGlacial("res/GlacialIndifference-Regular.otf", 16, Font.PLAIN);
+        Color   azulCuadros = new Color(0x0D47A1); // para el cuadro de crear cuenta
+        Color   azulPastelC = new Color(0xBBDEFB); // para el cuadro del form 
+        Color   Colormenu = new Color(0xE3F2FD);
+
         //fondito
         ImageIcon imagenFondo = new ImageIcon("res/FondoRegistro.png");
         JPanel panelFondo = new JPanel(){
@@ -39,15 +46,8 @@ public class Registro extends JFrame{
         panelFondo.setLayout(new GridBagLayout()); 
         setContentPane(panelFondo);
 
-        Font    fuenteT = new Font("Dialog", Font.BOLD, 30); // tipografias
-        Font    fuenteNormal = fuenteGlacial("res/GlacialIndifference-Regular.otf", 14, Font.PLAIN); 
-        Font    fuenteLetras = fuenteGlacial("res/GlacialIndifference-Regular.otf", 16, Font.PLAIN);
-        Color   azulCuadros = new Color(0x0D47A1); // para el cuadro de crear cuenta
-        Color   azulPastelC = new Color(0xBBDEFB); // para el cuadro del form 
-        Color   Colormenu = new Color(0xE3F2FD);
-
         //creacion del cuadro central
-        MiniVentanaUtil panelForm = new MiniVentanaUtil(40, azulPastelC, 500, 570, true, azulCuadros );//colorcito TENIA CuadroCentro
+        MiniVentanaUtil panelForm = new MiniVentanaUtil(40, azulPastelC, 500, 570, true, azulCuadros );
       
         JLabel titulo1 = new JLabel("¿No tienes cuenta?");// el texto q muestra eso
         titulo1.setFont(fuenteT);
@@ -106,7 +106,7 @@ public class Registro extends JFrame{
         panelForm.add(cuadritoConfirmar);
 
         //texto para que escoja el rol
-        JLabel rolUser = new JLabel("Escoja su rol: ");
+        JLabel rolUser = new JLabel("Escoja su Rol: ");
         rolUser.setFont(fuenteLetras);
         rolUser.setBounds(50, 415, 300, 25);
         panelForm.add(rolUser);
@@ -120,12 +120,24 @@ public class Registro extends JFrame{
         panelForm.add(menu);
 
         //botoncito de registro
-
         BotonUtil Registrar = new BotonUtil("Crear Cuenta", azulCuadros, Color.WHITE, 20, new Font("SansSerif", Font.BOLD, 14), 180, 40);
         Registrar.setBounds(150, 499, 200, 50);
         panelForm.add(Registrar);
         
-        add(panelForm);
+        add(panelForm); //para que se vea todo
+
+        //encabezado
+        panelFondo.setLayout(new BorderLayout()); //para que pegue el encabezado a la parte superior de la pagina
+        EncabezadoUtil encabezado = new EncabezadoUtil(azulPastelC);
+        panelFondo.add(encabezado, BorderLayout.NORTH);
+
+        JPanel Centro = new JPanel(new GridBagLayout()); // es como un panel invisible que coloca el cuadro del formulario en el centro
+        Centro.setOpaque(false); // transparente para que se vea la foto del fondo
+        Centro.add(panelForm); // el form encima
+
+        //se coloca el form en el centro de la ventana
+        panelFondo.add(Centro, BorderLayout.CENTER);
+
     }
 
     public static void main(String[] args){
