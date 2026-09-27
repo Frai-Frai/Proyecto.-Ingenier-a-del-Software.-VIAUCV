@@ -42,6 +42,4 @@ public class MiniVentanaUtil extends JPanel {
         g2.dispose();
         super.paintComponent(g);
         }
-
-
 }
