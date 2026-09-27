@@ -14,9 +14,9 @@ public class EncabezadoUtil extends JPanel{
         //Hacemos el contenedor que se asegura de ponerlo en el lugar adecuado
         setOpaque(false);
         setLayout(new FlowLayout(FlowLayout.CENTER));
-        setBorder (BorderFactory.createEmptyBorder(20,30,10,30));
+        setBorder (BorderFactory.createEmptyBorder(30,30,10,30));
 
-        encabezado=new MiniVentanaUtil (25, colorFondo, 1000 , 85, false, null); //Ya predefinidos (solo cambia el color)
+        encabezado=new MiniVentanaUtil (25, colorFondo, 1000 , 75, false, null); //Ya predefinidos (solo cambia el color)
         encabezado.setLayout(new BorderLayout(15,0)); //Ubica los elemntos izq o der 
         encabezado.setBorder((BorderFactory.createEmptyBorder(8,25,6,35))); //Padding interno de la barra
         encabezado.setMinimumSize(new Dimension(1000,80));
@@ -44,7 +44,7 @@ public class EncabezadoUtil extends JPanel{
             System.err.println("No se pudo cargar el logo: "+e.getMessage());
         }
 
-        gbcIzq.insets=new Insets(0,0,10,15);
+        gbcIzq.insets=new Insets(0,0,30,15);
         parteIzq.add(logo,gbcIzq); //Anadimos al panel izq, los insets aplican solo al logo
 
         //texto
