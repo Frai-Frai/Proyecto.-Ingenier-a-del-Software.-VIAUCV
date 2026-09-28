@@ -34,7 +34,7 @@ public class InicioSesion extends JFrame {
 
         //Ventana general
         setTitle("ViaUCV - Inicio de Sesión");
-        setSize(1000, 680);
+        setSize(1000, 720);
         setMinimumSize(new Dimension(950,680)); //para que no se achique menos de esto
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
