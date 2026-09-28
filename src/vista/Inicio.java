@@ -23,14 +23,14 @@ public class Inicio extends JFrame {
 
         //lo de arribita y otras config
         setTitle ("VIAUCV");
-        setSize(800,720);
+        setSize(1000,680);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setMinimumSize(new Dimension(800, 720));
+        setMinimumSize(new Dimension(1000, 680));
         setLocationRelativeTo(null);
        
         Color   azulCuadros = new Color(0x0D47A1); // para el cuadro de registrar o inicio de sesion
         Color   azulPastelC = new Color(0xBBDEFB); // para el cuadro del encabezado
-        Font    fuenteLetras = fuenteGlacial("res/GlacialIndifference-Bold.otf", 16, Font.PLAIN);
+        Font    fuenteLetras = fuenteGlacial("res/GlacialIndifference-Bold.otf", 17, Font.PLAIN);
         
         //fondito
         ImageIcon imagenFondo = new ImageIcon("res/FondoInicio.png");
@@ -45,19 +45,44 @@ public class Inicio extends JFrame {
         //para que se vea
         setContentPane(panelFondo);
 
+        //conetenedor de ambos botones
+        JPanel panelBontones= new JPanel(null); //Para juntarlos y centrarlos
+        panelBontones.setOpaque(false);
+
+        Dimension tamano= new Dimension(170, 50);
+
         BotonUtil Registrar = new BotonUtil("Registrarse", azulCuadros, Color.WHITE, 20, fuenteLetras, 180, 40);
-        Registrar.setBounds(210, 600, 200, 50);
-        panelFondo.add(Registrar);
-
+        //Registrar.setBounds(210, 600, 200, 50);
+        Registrar.setPreferredSize(tamano);
+        
         BotonUtil IniciarS = new BotonUtil("Iniciar Sesión", azulCuadros, Color.WHITE, 20, fuenteLetras, 180, 40);
-        IniciarS.setBounds(520, 600, 200, 50);
-        panelFondo.add(IniciarS);
+        //IniciarS.setBounds(520, 600, 200, 50);
+        IniciarS.setPreferredSize(tamano);
 
+        panelBontones.add(Registrar);
+        panelBontones.add(IniciarS);
+
+        //Listener por porcentajes se me acaban las opciones funciona por favor
+        panelBontones.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override 
+            public void componentResized(java.awt.event.ComponentEvent e){
+                int ancho= panelBontones.getWidth();
+                int alto= panelBontones.getHeight();
+
+                //Posiciones
+                int regX= (int) (ancho*0.15f); //12%
+                int iniX= (int) (ancho*0.34f); //30%
+                int posY= (int) (alto*0.67f);  //65%
+                Registrar.setBounds(regX, posY, tamano.width, tamano.height);
+                IniciarS.setBounds(iniX, posY, tamano.width, tamano.height);      
+            }
+        });
+        
         //encabezado
-        panelFondo.setLayout(new BorderLayout()); //para que pegue el encabezado a la parte superior de la pagina
+        panelFondo.setLayout(new BorderLayout()); 
         EncabezadoUtil encabezado = new EncabezadoUtil(azulPastelC);
         panelFondo.add(encabezado, BorderLayout.NORTH);
-
+        panelFondo.add(panelBontones,BorderLayout.CENTER);
     }
 
     public static void main(String[] args){
@@ -66,4 +91,3 @@ public class Inicio extends JFrame {
     }
 
 }
-    
