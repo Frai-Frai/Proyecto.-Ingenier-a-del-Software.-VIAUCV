@@ -20,7 +20,8 @@ public class Registro extends JFrame{
 
         //lo de arribita
         setTitle ("VIAUCV");
-        setSize(800,720);
+        setSize(1000,720);
+        setMinimumSize(new Dimension(950,680)); //para que no se achique menos de esto
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
         setLocationRelativeTo(null);
