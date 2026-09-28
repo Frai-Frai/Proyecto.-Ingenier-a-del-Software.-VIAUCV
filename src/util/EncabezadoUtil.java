@@ -129,5 +129,8 @@ public class EncabezadoUtil extends JPanel{
         }
     }
 
+    public JLabel getInicio() {
+        return inicio;
+    }
 
 }

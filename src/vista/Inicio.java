@@ -8,6 +8,9 @@ import java.io.File;
 
 
 public class Inicio extends JFrame {
+
+    private BotonUtil botonR;
+    private BotonUtil botonI;
     //Tipografia 
     private Font fuenteGlacial(String ruta, float tamano, int estilo){
         try {
@@ -45,13 +48,13 @@ public class Inicio extends JFrame {
         //para que se vea
         setContentPane(panelFondo);
 
-        BotonUtil Registrar = new BotonUtil("Registrarse", azulCuadros, Color.WHITE, 20, fuenteLetras, 180, 40);
-        Registrar.setBounds(210, 600, 200, 50);
-        panelFondo.add(Registrar);
+        botonR = new BotonUtil("Registrarse", azulCuadros, Color.WHITE, 20, fuenteLetras, 180, 40);
+        botonR.setBounds(210, 600, 200, 50);
+        panelFondo.add(botonR);
 
-        BotonUtil IniciarS = new BotonUtil("Iniciar Sesión", azulCuadros, Color.WHITE, 20, fuenteLetras, 180, 40);
-        IniciarS.setBounds(520, 600, 200, 50);
-        panelFondo.add(IniciarS);
+        botonI = new BotonUtil("Iniciar Sesión", azulCuadros, Color.WHITE, 20, fuenteLetras, 180, 40);
+        botonI.setBounds(520, 600, 200, 50);
+        panelFondo.add(botonI);
 
         //encabezado
         panelFondo.setLayout(new BorderLayout()); //para que pegue el encabezado a la parte superior de la pagina
@@ -60,6 +63,13 @@ public class Inicio extends JFrame {
 
     }
 
+    public BotonUtil getbotonI(){
+        return botonI;
+    }
+
+    public BotonUtil getbotonR(){
+        return botonR;
+    }
     public static void main(String[] args){
         Inicio interfazI = new Inicio();
         interfazI.setVisible(true);

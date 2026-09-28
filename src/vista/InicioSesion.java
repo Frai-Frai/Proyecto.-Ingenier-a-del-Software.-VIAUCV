@@ -16,7 +16,7 @@ public class InicioSesion extends JFrame {
     private JButton boton;
     private JLabel restaurarContrasena= new JLabel();  //Vacios, mas adelante se llama al instructor para el estilo
     private JLabel registrarse= new JLabel();
-
+    private EncabezadoUtil encabezado;
 
     //fuente de letra "Glcial Indifference"
     private Font fuenteGlacial(String ruta, float tamano, int estilo){
@@ -51,7 +51,7 @@ public class InicioSesion extends JFrame {
         panelFondo.setLayout(new BorderLayout());
 
         //Agrega encabezado de arriba 
-        EncabezadoUtil encabezado= new EncabezadoUtil(new Color(234,246,255));
+        encabezado= new EncabezadoUtil(new Color(234,246,255));
 
         //Logo ViaUCV
         ImageIcon logoViaUCV= new ImageIcon("res/LogoViaUCV.png");
@@ -138,6 +138,14 @@ public class InicioSesion extends JFrame {
         add(panelFondo);
         
 
+    }
+
+   public JLabel getlinkRegistarse() {
+        return registrarse;
+    }
+
+    public EncabezadoUtil getEncabezado() {
+        return encabezado;
     }
 
 }

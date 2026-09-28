@@ -5,6 +5,9 @@ import util.*;
 import java.io.File;
 public class Registro extends JFrame{
 
+    private BotonUtil botonR;
+    private JLabel  IrAIniciarS;
+    private EncabezadoUtil encabezado;
     //Tipografia 
     private Font fuenteGlacial(String ruta, float tamano, int estilo){
         try {
@@ -28,12 +31,11 @@ public class Registro extends JFrame{
         Font    fuenteT = new Font("Dialog", Font.BOLD, 30); // tipografias
         Font    fuenteNormal = fuenteGlacial("res/GlacialIndifference-Regular.otf", 14, Font.PLAIN); 
         Font    fuenteLetras = fuenteGlacial("res/GlacialIndifference-Regular.otf", 16, Font.PLAIN);
-        Font    fuenteLink= fuenteGlacial("res/GlacialIndifference-Regular.otf", 14, Font.BOLD);
+        Font    fuenteLink = fuenteGlacial("res/GlacialIndifference-Regular.otf", 14, Font.BOLD);
         Color   azulCuadros = new Color(0x0D47A1); // para el cuadro de crear cuenta
         Color   azulPastelC = new Color(0xBBDEFB); // para el cuadro del form 
         Color   Colormenu = new Color(0xE3F2FD);
-        JLabel  IrAIniciarS= new JLabel();
-        
+                IrAIniciarS = new JLabel();
         //fondito
         ImageIcon imagenFondo = new ImageIcon("res/FondoRegistro.png");
         JPanel panelFondo = new JPanel(){
@@ -122,9 +124,9 @@ public class Registro extends JFrame{
         panelForm.add(menu);
 
         //botoncito de registro
-        BotonUtil Registrar = new BotonUtil("Crear Cuenta", azulCuadros, Color.WHITE, 20, new Font("SansSerif", Font.BOLD, 14), 180, 40);
-        Registrar.setBounds(150, 499, 190, 46);
-        panelForm.add(Registrar);
+        botonR= new BotonUtil("Crear Cuenta", azulCuadros, Color.WHITE, 20, new Font("SansSerif", Font.BOLD, 14), 180, 40);
+        botonR.setBounds(150, 499, 190, 46);
+        panelForm.add(botonR);
         
         //link para ir a inicio de sesion
         new TextosInteractivosUtil(IrAIniciarS, "¿Ya tienes una cuenta? Inicia Sesión", Color.GRAY, Color.darkGray, fuenteLink);
@@ -134,7 +136,7 @@ public class Registro extends JFrame{
 
         //encabezado
         panelFondo.setLayout(new BorderLayout()); //para que pegue el encabezado a la parte superior de la pagina
-        EncabezadoUtil encabezado = new EncabezadoUtil(azulPastelC);
+        encabezado = new EncabezadoUtil(azulPastelC);
         panelFondo.add(encabezado, BorderLayout.NORTH);
 
         JPanel Centro = new JPanel(new GridBagLayout()); // es como un panel invisible que coloca el cuadro del formulario en el centro
@@ -146,6 +148,17 @@ public class Registro extends JFrame{
 
     }
 
+    public BotonUtil getbotonR(){
+        return botonR;
+    }
+
+    public EncabezadoUtil getEncabezado() {
+        return encabezado;
+    }
+
+    public JLabel getIrAIniciarS(){
+        return IrAIniciarS;
+    }
     public static void main(String[] args){
         Registro interfazR = new Registro();
         interfazR.setVisible(true);
