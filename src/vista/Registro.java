@@ -28,10 +28,12 @@ public class Registro extends JFrame{
         Font    fuenteT = new Font("Dialog", Font.BOLD, 30); // tipografias
         Font    fuenteNormal = fuenteGlacial("res/GlacialIndifference-Regular.otf", 14, Font.PLAIN); 
         Font    fuenteLetras = fuenteGlacial("res/GlacialIndifference-Regular.otf", 16, Font.PLAIN);
+        Font    fuenteLink= fuenteGlacial("res/GlacialIndifference-Regular.otf", 14, Font.BOLD);
         Color   azulCuadros = new Color(0x0D47A1); // para el cuadro de crear cuenta
         Color   azulPastelC = new Color(0xBBDEFB); // para el cuadro del form 
         Color   Colormenu = new Color(0xE3F2FD);
-
+        JLabel  IrAIniciarS= new JLabel();
+        
         //fondito
         ImageIcon imagenFondo = new ImageIcon("res/FondoRegistro.png");
         JPanel panelFondo = new JPanel(){
@@ -47,7 +49,7 @@ public class Registro extends JFrame{
         setContentPane(panelFondo);
 
         //creacion del cuadro central
-        MiniVentanaUtil panelForm = new MiniVentanaUtil(40, azulPastelC, 500, 570, true, azulCuadros );
+        MiniVentanaUtil panelForm = new MiniVentanaUtil(40, azulPastelC, 500, 580, true, azulCuadros );
       
         JLabel titulo1 = new JLabel("¿No tienes cuenta?");// el texto q muestra eso
         titulo1.setFont(fuenteT);
@@ -121,9 +123,13 @@ public class Registro extends JFrame{
 
         //botoncito de registro
         BotonUtil Registrar = new BotonUtil("Crear Cuenta", azulCuadros, Color.WHITE, 20, new Font("SansSerif", Font.BOLD, 14), 180, 40);
-        Registrar.setBounds(150, 499, 200, 50);
+        Registrar.setBounds(150, 499, 190, 46);
         panelForm.add(Registrar);
         
+        //link para ir a inicio de sesion
+        new TextosInteractivosUtil(IrAIniciarS, "¿Ya tienes una cuenta? Inicia Sesión", Color.GRAY, Color.darkGray, fuenteLink);
+        IrAIniciarS.setBounds(130,538,260,50);
+        panelForm.add(IrAIniciarS);
         add(panelForm); //para que se vea todo
 
         //encabezado
