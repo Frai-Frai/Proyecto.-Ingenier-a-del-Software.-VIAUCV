@@ -13,14 +13,17 @@ public class MiniVentanaUtil extends JPanel {
         this.hayBorde = hayBorde;
         
 
-        setPreferredSize(new Dimension(ancho, alto));
-        setSize(ancho, alto);
+        Dimension tamano= new Dimension(ancho,alto);
+        setPreferredSize(tamano);
+        setMinimumSize(tamano); //EVita que colapse
+        setMaximumSize(tamano); //Evita que estire de mas
+        setSize(tamano);
+
         setBackground(colorFondo);
         setOpaque(false); // Para que el fondo transparente
         setLayout(null); //poner botones y texto donde quiera
 
         //SI NO TIENE BORDES SE PONE ASI AL LLMARLO: (radioBorde, colorFondo, ancho, alto, false, null);
-
     }
 
         @Override 
@@ -42,7 +45,5 @@ public class MiniVentanaUtil extends JPanel {
         g2.dispose();
         super.paintComponent(g);
         }
-
-
 }
 

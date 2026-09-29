@@ -2,122 +2,166 @@ package vista;
 import javax.swing.*;
 import java.awt.*;
 import util.*;
+import java.io.File;
 public class Registro extends JFrame{
+
+    private BotonUtil botonR;
+    private JLabel  IrAIniciarS;
+    private EncabezadoUtil encabezado;
+    //Tipografia 
+    private Font fuenteGlacial(String ruta, float tamano, int estilo){
+        try {
+            Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
+            return fuente.deriveFont(estilo, tamano);
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar la fuente: " + e.getMessage());
+            return new Font("SansSerif", estilo, (int) tamano);
+        }
+    }
 
     public Registro(){
 
+        //lo de arribita
         setTitle ("VIAUCV");
-        setSize(800,600);
+        setSize(1000,720);
+        setMinimumSize(new Dimension(950,680)); //para que no se achique menos de esto
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
         setLocationRelativeTo(null);
 
-        ImagenFondo fondo = new ImagenFondo("InterfazViaUCV.png"); // Pon el nombre exacto de tu imagen
-        fondo.setLayout(new GridBagLayout()); // Le damos el poder de centrar
-        setContentPane(fondo);
+        Font    fuenteT = new Font("Dialog", Font.BOLD, 30); // tipografias
+        Font    fuenteNormal = fuenteGlacial("res/GlacialIndifference-Regular.otf", 14, Font.PLAIN); 
+        Font    fuenteLetras = fuenteGlacial("res/GlacialIndifference-Regular.otf", 16, Font.PLAIN);
+        Font    fuenteLink = fuenteGlacial("res/GlacialIndifference-Regular.otf", 14, Font.BOLD);
+        Color   azulCuadros = new Color(0x0D47A1); // para el cuadro de crear cuenta
+        Color   azulPastelC = new Color(0xBBDEFB); // para el cuadro del form 
+        Color   Colormenu = new Color(0xE3F2FD);
+                IrAIniciarS = new JLabel();
+        //fondito
+        ImageIcon imagenFondo = new ImageIcon("res/FondoRegistro.png");
+        JPanel panelFondo = new JPanel(){
+            @Override 
+            protected void paintComponent(Graphics g){
+                super.paintComponent(g);
+                g.drawImage(imagenFondo.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
 
-        CuadroCentro panelForm = new CuadroCentro(40, Color.WHITE);
-        panelForm.setPreferredSize(new Dimension(400, 400)); // Tamaño del cuadro
-        panelForm.setLayout(null);
+        //para que se vea
+        panelFondo.setLayout(new GridBagLayout()); 
+        setContentPane(panelFondo);
+
+        //creacion del cuadro central
+        MiniVentanaUtil panelForm = new MiniVentanaUtil(40, azulPastelC, 500, 580, true, azulCuadros );
       
-        JLabel titulo = new JLabel("¿No tienes cuenta? ¡Créala!");// el texto q muestra eso
-        titulo.setBounds(110, 20, 200, 30);
-        panelForm.add(titulo);
+        JLabel titulo1 = new JLabel("¿No tienes cuenta?");// el texto q muestra eso
+        titulo1.setFont(fuenteT);
+        titulo1.setHorizontalAlignment(SwingConstants.CENTER);
+        titulo1.setBounds(0, 15, 500, 35);
+        panelForm.add(titulo1);
 
-        Font fuenteNormal = new Font("SansSerif", Font.PLAIN, 14);
-        Color bordeGris = new Color(200, 200, 200);
-        Color azulViaUCV = new Color(41, 128, 185);
+        JLabel titulo2 = new JLabel("¡Créala!");// el texto q muestra eso
+        titulo2.setFont(fuenteT);
+        titulo2.setHorizontalAlignment(SwingConstants.CENTER);
+        titulo2.setBounds(0, 50, 500, 35);
+        panelForm.add(titulo2);
 
-        //Nombre
+        //Correo
         JLabel correoR = new JLabel("Correo Electrónico");
-        correoR.setBounds(40, 70, 150, 20);
+        correoR.setBounds(50, 95, 200, 20);
+        correoR.setFont(fuenteLetras);
         panelForm.add(correoR);
 
-        //Crea cuadrito para que el user pueda poner su nombre
-        CampoTextoUtil cuadritoCorreo = new CampoTextoUtil(15, bordeGris, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
-        cuadritoCorreo.setBounds(40, 90, 300, 30);
+        //Crea cuadrito para que el user pueda poner su correo
+        CampoTextoUtil cuadritoCorreo = new CampoTextoUtil(15, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
+        cuadritoCorreo.setBounds(50, 120, 400, 40);
         panelForm.add(cuadritoCorreo);
 
         //cedula
         JLabel cedulaR = new JLabel("Cédula de Identidad");
-        cedulaR.setBounds(40, 130, 150, 20);
+        cedulaR.setBounds(50, 175, 200, 20);
+        cedulaR.setFont(fuenteLetras);
         panelForm.add(cedulaR);
 
         //Crea cuadrito para que el user pueda poner su cedula
-        CampoTextoUtil cuadritoCedula = new CampoTextoUtil(15, bordeGris, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
-        cuadritoCedula.setBounds(40, 150, 300, 30);
+        CampoTextoUtil cuadritoCedula = new CampoTextoUtil(15, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
+        cuadritoCedula.setBounds(50, 200, 400, 40);
         panelForm.add(cuadritoCedula);
 
         //contraseña
         JLabel contraseñaR = new JLabel("Contraseña"); 
-        contraseñaR.setBounds(40, 190, 300, 20);
+        contraseñaR.setBounds(50, 255, 200, 20);
+        contraseñaR.setFont(fuenteLetras);
         panelForm.add(contraseñaR);
 
         //Crea cuadrito para que el user pueda poner su contraseña
-        JPasswordField cuadritoContraseña = new JPasswordField(); //CAMBIAR AKIII
-        cuadritoContraseña.setBounds(40, 210, 300, 30);
+        CampoContrasenaUtil cuadritoContraseña = new CampoContrasenaUtil(15, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal); //CAMBIAR AKIII
+        cuadritoContraseña.setBounds(50, 280, 400, 40);
         panelForm.add(cuadritoContraseña);
 
+        //confirmar contraseña
+        JLabel confirmarC = new JLabel("Confirmar Contraseña");
+        confirmarC.setBounds(50,335,200,20);
+        confirmarC.setFont(fuenteLetras);
+        panelForm.add(confirmarC);
+
+        //Crea cuadrito para que el user pueda confirmar su contraseña
+        CampoContrasenaUtil cuadritoConfirmar = new CampoContrasenaUtil(15, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal); //CAMBIAR AKIII
+        cuadritoConfirmar.setBounds(50, 360, 400, 40);
+        panelForm.add(cuadritoConfirmar);
+
+        //texto para que escoja el rol
+        JLabel rolUser = new JLabel("Escoja su Rol: ");
+        rolUser.setFont(fuenteLetras);
+        rolUser.setBounds(50, 415, 300, 25);
+        panelForm.add(rolUser);
+
+        //cuadro en donde salen las opciones
+        String[] opciones= {"Administrador", "Conductor","Estudiante"};
+        MenuUtil menu = new MenuUtil(opciones, 15, Colormenu, Color.BLACK, Colormenu, fuenteNormal);
+        menu.setFont(fuenteNormal);
+        menu.setBackground(Colormenu);
+        menu.setBounds(50, 440, 400, 40);
+        panelForm.add(menu);
+
         //botoncito de registro
-
-        BotonUtil Registrar = new BotonUtil("Crear Cuenta", azulViaUCV, Color.WHITE, 20, new Font("SansSerif", Font.BOLD, 14), 180, 40);
-        Registrar.setBounds(100, 290, 180, 40);
-        Registrar.setBounds(100, 290, 180, 40);
-        panelForm.add(Registrar);
+        botonR= new BotonUtil("Crear Cuenta", azulCuadros, Color.WHITE, 20, new Font("SansSerif", Font.BOLD, 14), 180, 40);
+        botonR.setBounds(150, 499, 190, 46);
+        panelForm.add(botonR);
         
-        add(panelForm);
+        //link para ir a inicio de sesion
+        new TextosInteractivosUtil(IrAIniciarS, "¿Ya tienes una cuenta? Inicia Sesión", Color.GRAY, Color.darkGray, fuenteLink);
+        IrAIniciarS.setBounds(130,538,260,50);
+        panelForm.add(IrAIniciarS);
+        add(panelForm); //para que se vea todo
+
+        //encabezado
+        panelFondo.setLayout(new BorderLayout()); //para que pegue el encabezado a la parte superior de la pagina
+        encabezado = new EncabezadoUtil(azulPastelC);
+        panelFondo.add(encabezado, BorderLayout.NORTH);
+
+        JPanel Centro = new JPanel(new GridBagLayout()); // es como un panel invisible que coloca el cuadro del formulario en el centro
+        Centro.setOpaque(false); // transparente para que se vea la foto del fondo
+        Centro.add(panelForm); // el form encima
+
+        //se coloca el form en el centro de la ventana
+        panelFondo.add(Centro, BorderLayout.CENTER);
+
     }
 
-    class ImagenFondo extends JPanel{
-        private Image imagen;
-
-        public ImagenFondo(String InterfazViaUCV){
-
-            java.net.URL ruta = getClass().getResource(InterfazViaUCV);
-            
-            //Verifica si la encontró, lO USAMO PA VE Q PASO CON EL FONDO Q NO SE PONIA
-            if (ruta != null) {
-                imagen = new ImageIcon(ruta).getImage();
-            }  else {
-                // Si sale este mensaje en la terminal, hay un error en el nombre o ubicación
-                System.out.println(" Java no encontró la imagen: " + InterfazViaUCV);
-            }
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            if (imagen != null) {
-                g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
-            }
-        }
-            
-    }
-    class CuadroCentro extends JPanel{
-        private int radio;
-        private Color colorCuadro;
-
-        public CuadroCentro(int radio, Color color) {
-            this.radio = radio;
-            this.colorCuadro = color;
-            setOpaque(false); // para que las esquinas no se vean  grises
-        }
-
-        @Override
-        protected void paintComponent(Graphics graficos){
-            Graphics2D grafico = (Graphics2D) graficos;
-            grafico.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            grafico.setColor(colorCuadro);
-            grafico.fillRoundRect(0, 0, getWidth(), getHeight(), radio, radio);
-            super.paintComponent(graficos);
-        }
+    public BotonUtil getbotonR(){
+        return botonR;
     }
 
-    //  vamos a crear las cajas. En Java, los textos fijos son JLabel y las cajas para escribir son JTextField
+    public EncabezadoUtil getEncabezado() {
+        return encabezado;
+    }
+
+    public JLabel getIrAIniciarS(){
+        return IrAIniciarS;
+    }
     public static void main(String[] args){
         Registro interfazR = new Registro();
         interfazR.setVisible(true);
     }
-
 }
-

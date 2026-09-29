@@ -4,10 +4,7 @@ import java.awt.*;
 import java.io.File;
 
 //Import utilidades (Estilos del boton y del campo)
-import util.BotonUtil;
-import util.MiniVentanaUtil;
-import util.CampoTextoUtil;
-import util.CampoContrasenaUtil;
+import util.*;
 
 //Inicio sesion
 
@@ -17,6 +14,9 @@ public class InicioSesion extends JFrame {
     private JTextField campoUsuario;
     private JPasswordField contrasena; 
     private JButton boton;
+    private JLabel restaurarContrasena= new JLabel();  //Vacios, mas adelante se llama al instructor para el estilo
+    private JLabel registrarse= new JLabel();
+    private EncabezadoUtil encabezado;
 
     //fuente de letra "Glcial Indifference"
     private Font fuenteGlacial(String ruta, float tamano, int estilo){
@@ -34,7 +34,8 @@ public class InicioSesion extends JFrame {
 
         //Ventana general
         setTitle("ViaUCV - Inicio de Sesión");
-        setSize(1000, 600);
+        setSize(1000, 720);
+        setMinimumSize(new Dimension(950,680)); //para que no se achique menos de esto
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -50,27 +51,40 @@ public class InicioSesion extends JFrame {
         panelFondo.setLayout(new BorderLayout());
 
         //Agrega encabezado de arriba 
-
+        encabezado= new EncabezadoUtil(new Color(234,246,255));
 
         //Logo ViaUCV
         ImageIcon logoViaUCV= new ImageIcon("res/LogoViaUCV.png");
-        Image imgRedimensionada= logoViaUCV.getImage().getScaledInstance(160, -1, Image.SCALE_SMOOTH);
-        ImageIcon logoRedimensionado= new ImageIcon(imgRedimensionada);
-        JLabel logo= new JLabel(logoRedimensionado);
-        int alto= logoRedimensionado.getIconHeight();
-        logo.setBounds(25,10,160,alto);
+        Image imgRedimensionada= logoViaUCV.getImage().getScaledInstance(160, -1, Image.SCALE_SMOOTH); //el -1 para omitir el alto por ahora
+        ImageIcon logoRedimensionado= new ImageIcon(imgRedimensionada); //redimensiono la imagen
+        JLabel logo= new JLabel(logoRedimensionado);   //creo el "texto"
+        int alto= logoRedimensionado.getIconHeight();  //calculo el alto de la imagen segun el ancho que coloque
+        logo.setBounds(25,10,160,alto);    // posicion personalizada
+
+
+        //Textos de Registro y Olvidar contrasena (con util)
+        Font fuenteLink= fuenteGlacial("res/GlacialIndifference-Regular.otf", 14, Font.BOLD);
+
+        new TextosInteractivosUtil(restaurarContrasena, "¿Olvidaste tu contraseña?", Color.GRAY, Color.darkGray, fuenteLink);
+        restaurarContrasena.setBounds(190,315,260,50);
+
+        new TextosInteractivosUtil(registrarse, "¿Aun no tienes cuenta? Registrate!", Color.GRAY, Color.darkGray, fuenteLink);
+        registrarse.setBounds(83,420,260,50);
 
 
         //Panel pequeno con los campos y boton
-        MiniVentanaUtil miniVentana = new MiniVentanaUtil(30, Color.WHITE, 400, 450, true, new Color(2,58,144));
-
+        MiniVentanaUtil miniVentana = new MiniVentanaUtil(30, Color.WHITE, 400, 480, true, new Color(2,58,144));
 
         //Dentro de la miniventana
         JLabel titulo= new JLabel("Iniciar Sesión", JLabel .LEFT);
         titulo.setFont(new Font ("Open Sans", Font.BOLD, 35));
         titulo.setBounds(40,80,320,40);
         miniVentana.add(titulo);
-        miniVentana.add(logo); //Anadir el logo de la pag
+
+        //Mas detalles (Logo y links). 
+        miniVentana.add(logo); //Anadir el logo de la pag.
+        miniVentana.add(restaurarContrasena);
+        miniVentana.add(registrarse);
 
         //Campo de usuario 
         Font fuente1 = fuenteGlacial("res/GlacialIndifference-Regular.otf", 19, Font.PLAIN);
@@ -102,7 +116,7 @@ public class InicioSesion extends JFrame {
         Font fuente2 = fuenteGlacial("res/GlacialIndifference-Bold.otf", 16, Font.PLAIN);
 
         boton= new BotonUtil("Ingresar", new Color(2,58,144), Color.WHITE, 25, fuente2, 10, 60);
-        boton.setBounds(95, 360, 200, 50);
+        boton.setBounds(95, 370, 200, 50);
         miniVentana.add(boton);
 
         //Para poner la mini ventana a la derecha
@@ -110,14 +124,32 @@ public class InicioSesion extends JFrame {
         panelderecho.setOpaque(false);
 
         GridBagConstraints gbcDerecho = new GridBagConstraints();
-        gbcDerecho.insets = new Insets(80, 0, 0, 180);
-        panelderecho.setOpaque(false);
+        //Peso para que no colapse to
+        gbcDerecho.weightx= 1.0;
+        gbcDerecho.weighty=1.0;
+        gbcDerecho.anchor= GridBagConstraints.EAST; //se alinea a la der
+
+        gbcDerecho.insets = new Insets(0, 0, 0, 120);
+
+        //anade todo
         panelderecho.add(miniVentana,gbcDerecho);
+        panelFondo.add(panelderecho,BorderLayout.CENTER);
+        panelFondo.add(encabezado, BorderLayout.NORTH);
+        add(panelFondo);
         
 
-        panelFondo.add(panelderecho,BorderLayout.EAST);
-        add(panelFondo);
+    }
 
+   public JLabel getlinkRegistarse() {
+        return registrarse;
+    }
+
+    public EncabezadoUtil getEncabezado() {
+        return encabezado;
+    }
+
+    public JLabel getRestaurarContrasena() {
+        return restaurarContrasena;
     }
 
 }
