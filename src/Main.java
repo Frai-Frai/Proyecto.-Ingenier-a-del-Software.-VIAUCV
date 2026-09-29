@@ -2,7 +2,7 @@ import vista.Registro;
 import controlador.Controlador_Inicio;
 import vista.Inicio;
 import vista.InicioSesion;
-;
+
 
 public class Main {
     public static void main(String[] args) {

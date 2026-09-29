@@ -23,7 +23,7 @@ public class Controlador_Inicio {
 
     private void abrirRegistro() {
         Registro pantallaR = new Registro();
-        new Controlador_Registro(pantallaR); // pa q funcione el registro
+        new Controlador_Registro(pantallaR); // para q funcione el registro
         pantallaR.setVisible(true);
         pantallaI.dispose(); // Cierra el inicio
     }

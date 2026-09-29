@@ -148,4 +148,8 @@ public class InicioSesion extends JFrame {
         return encabezado;
     }
 
+    public JLabel getRestaurarContrasena() {
+        return restaurarContrasena;
+    }
+
 }
