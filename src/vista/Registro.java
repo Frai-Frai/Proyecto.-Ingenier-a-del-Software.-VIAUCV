@@ -33,6 +33,7 @@ public class Registro extends JFrame{
         Font    fuenteNormal = fuenteGlacial("res/GlacialIndifference-Regular.otf", 14, Font.PLAIN); 
         Font    fuenteLetras = fuenteGlacial("res/GlacialIndifference-Regular.otf", 16, Font.PLAIN);
         Font    fuenteLink = fuenteGlacial("res/GlacialIndifference-Regular.otf", 14, Font.BOLD);
+        Font    fuenteAviso = fuenteGlacial("res/GlacialIndifference-Regular.otf", 12, Font.PLAIN);
         Color   azulCuadros = new Color(0x0D47A1); // para el cuadro de crear cuenta
         Color   azulPastelC = new Color(0xBBDEFB); // para el cuadro del form 
         Color   Colormenu = new Color(0xE3F2FD);
@@ -102,9 +103,15 @@ public class Registro extends JFrame{
 
         //contraseña
         JLabel contraseñaR = new JLabel("Contraseña"); 
-        contraseñaR.setBounds(50, 335, 200, 20);
+        contraseñaR.setBounds(50, 328, 200, 20);
         contraseñaR.setFont(fuenteLetras);
         panelForm.add(contraseñaR);
+
+        JLabel avisoCont = new JLabel("Mínimo de 6 caracteres y Máximo 20"); 
+        avisoCont.setBounds(50, 346, 300, 15);
+        avisoCont.setFont(fuenteAviso);
+        avisoCont.setForeground(Color.GRAY);
+        panelForm.add(avisoCont);
 
         //Crea cuadrito para que el user pueda poner su contraseña
         CampoContrasenaUtil cuadritoContraseña = new CampoContrasenaUtil(15, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal); //CAMBIAR AKIII
@@ -129,7 +136,7 @@ public class Registro extends JFrame{
         panelForm.add(rolUser);
 
         //cuadro en donde salen las opciones
-        String[] opciones= {"Administrador", "Conductor","Estudiante"};
+        String[] opciones= {"Administrador", "Conductor","Estudiante", "Docente", "Público General"};
         MenuUtil menu = new MenuUtil(opciones, 15, Colormenu, Color.BLACK, Colormenu, fuenteNormal);
         menu.setFont(fuenteNormal);
         menu.setBackground(Colormenu);
@@ -159,6 +166,7 @@ public class Registro extends JFrame{
         //se coloca el form en el centro de la ventana
         panelFondo.add(Centro, BorderLayout.CENTER);
 
+        getRootPane().setDefaultButton(botonR); //para que el enter funcione como boton
     }
 
     public BotonUtil getbotonR(){
@@ -171,9 +179,6 @@ public class Registro extends JFrame{
 
     public JLabel getIrAIniciarS(){
         return IrAIniciarS;
-    }
-    public static void main(String[] args){
-        Registro interfazR = new Registro();
-        interfazR.setVisible(true);
-    }
+    }    
+  
 }
