@@ -1,4 +1,5 @@
 package controlador;
+
 import vista.Registro;
 import vista.Inicio;
 import vista.InicioSesion;
@@ -6,6 +7,7 @@ import vista.RecuperarCont;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JOptionPane;
 
 public class Controlador_IniciodeSesion {
 
@@ -34,6 +36,13 @@ public class Controlador_IniciodeSesion {
                 abrirRecuperarClave();
             }
         });
+
+        this.pantallaIS.getEncabezado().getSobreNosotros().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                mostrarMensajeUs();
+            }
+        });
     }
 
     private void irAlRegistro() {
@@ -54,5 +63,10 @@ public class Controlador_IniciodeSesion {
         RecuperarCont miniVentana = new RecuperarCont(pantallaIS); //crea la mini ventana
         new Controlador_RecuperarCont(miniVentana); //para que la pantalla al q lo redirija sirva
         miniVentana.setVisible(true); //se muestra
+    }
+
+    private void mostrarMensajeUs(){
+        JOptionPane.showMessageDialog(pantallaIS, " Fraidis Francos. Correo: fraidisf@gmail.com\n Mariam Battika. Correo: mariammbattikaahochee@gmail.com\n Eliany Morales. Correo: morales.eliany28@gmail.com", "Sobre Nosotros", JOptionPane.INFORMATION_MESSAGE);
+
     }
 }

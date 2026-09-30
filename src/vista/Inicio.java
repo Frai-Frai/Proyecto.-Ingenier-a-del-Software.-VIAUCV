@@ -11,6 +11,7 @@ public class Inicio extends JFrame {
 
     private BotonUtil botonR;
     private BotonUtil botonI;
+    private EncabezadoUtil encabezado;
     //Tipografia 
     private Font fuenteGlacial(String ruta, float tamano, int estilo){
         try {
@@ -83,7 +84,7 @@ public class Inicio extends JFrame {
         
         //encabezado
         panelFondo.setLayout(new BorderLayout()); 
-        EncabezadoUtil encabezado = new EncabezadoUtil(azulPastelC);
+        encabezado = new EncabezadoUtil(azulPastelC);
         panelFondo.add(encabezado, BorderLayout.NORTH);
         panelFondo.add(panelBontones,BorderLayout.CENTER);
     }
@@ -94,6 +95,10 @@ public class Inicio extends JFrame {
 
     public BotonUtil getbotonR(){
         return botonR;
+    }
+
+    public EncabezadoUtil getEncabezado() {
+        return encabezado;
     }
     public static void main(String[] args){
         Inicio interfazI = new Inicio();

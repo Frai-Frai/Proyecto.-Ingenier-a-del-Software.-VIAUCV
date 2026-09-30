@@ -5,13 +5,15 @@ import java.io.File;
 
 import util.*;
 
-public class RecuperarCont extends  JDialog{
+public class RecuperarCont extends JDialog{
 
-    private CampoTextoUtil cuadroUser;
+    private CampoTextoUtil cuadroCorreo;
+    private CampoTextoUtil cuadroOTP;
     private CampoContrasenaUtil cuadroNewClave;
     private CampoContrasenaUtil cuadroConfClave;
     private BotonUtil botonAceptar;
 
+    private JLabel textoC, textoOTP, textoNC, textoCNC;
     //Tipografia 
     private Font fuenteGlacial(String ruta, float tamano, int estilo){
         try {
@@ -50,51 +52,93 @@ public class RecuperarCont extends  JDialog{
         textoT.setBounds(0,20,380,30);
         panelForm.add(textoT);
 
+        //SE MUESTRA DE 1ERO
         //texto con Ingrese usuario y cedula
-        JLabel textoU = new JLabel ("Ingrese Usuario o Cédula:");
-        textoU.setFont(FuenteTexto);
-        textoU.setBounds(40,70,380,20);
-        panelForm.add(textoU);
+        JLabel textoC = new JLabel ("Ingrese Correo Electrónico:");
+        textoC.setFont(FuenteTexto);
+        textoC.setBounds(40,70,380,20);
+        panelForm.add(textoC);
 
         //cuadro/campo en donde lo puede escribir
-        cuadroUser = new CampoTextoUtil(15, azulPastelC, 300, 25, azulPastelC, Color.darkGray, FuentesCampos);
-        cuadroUser.setBounds(40,95,300,40);
-        panelForm.add(cuadroUser);
+        cuadroCorreo = new CampoTextoUtil(15, azulPastelC, 300, 25, azulPastelC, Color.darkGray, FuentesCampos);
+        cuadroCorreo.setBounds(40,95,300,40);
+        panelForm.add(cuadroCorreo);
 
+        //SE MUESTRA DE 2DO 
+        textoOTP = new JLabel("Ingrese el código de 6 dígitos:");
+        textoOTP.setFont(FuenteTexto);
+        textoOTP.setBounds(40, 130, 300, 20);
+        textoOTP.setVisible(false); //Para que este oculto al inicio
+        panelForm.add(textoOTP);
+
+        cuadroOTP = new CampoTextoUtil(15, azulPastelC, 300, 25, azulPastelC, Color.darkGray, FuentesCampos);
+        cuadroOTP.setBounds(40, 155, 300, 40);
+        cuadroOTP.setVisible(false);
+        panelForm.add(cuadroOTP);
+
+        //SE MUESTRAN DE 3ERO 
         //texto con Ingrese nueva cont
         JLabel textoNC = new JLabel ("Nueva Contraseña:");
         textoNC.setFont(FuenteTexto);
         textoNC.setBounds(40, 150, 300, 20);
+        textoNC.setVisible(false); //Para que este oculto al inicio
         panelForm.add(textoNC);
 
         //cuadro/campo en donde lo puede escribir
         cuadroNewClave = new CampoContrasenaUtil(15, azulPastelC, 300, 25, azulPastelC, Color.darkGray, FuentesCampos);
         cuadroNewClave.setBounds(40,175,300,40);
+        textoNC.setVisible(false); //Para que este oculto al inicio
         panelForm.add(cuadroNewClave);
 
         //texto con confirme la nueva cont
         JLabel textoCNC = new JLabel ("Confirmar Contraseña:");
         textoCNC.setFont(FuenteTexto);
         textoCNC.setBounds(40, 230, 300, 20);
+        textoCNC.setVisible(false); //Para que este oculto al inicio
         panelForm.add(textoCNC);
 
         //cuadro/campo en donde lo puede escribir
         cuadroConfClave = new CampoContrasenaUtil(15, azulPastelC, 300, 25, azulPastelC, Color.darkGray, FuentesCampos);
         cuadroConfClave.setBounds(40, 255, 300, 40);
+        textoCNC.setVisible(false); //Para que este oculto al inicio
         panelForm.add(cuadroConfClave);
 
-        //Boton para guardar nueva clave
-        botonAceptar = new BotonUtil("Aceptar", azulCuadros, ColorVentanaC, 20, FuenteTexto, 150, 45);
+        //Boton con varios usos
+        botonAceptar = new BotonUtil("Enviar Código", azulCuadros, ColorVentanaC, 20, FuenteTexto, 150, 45);
         botonAceptar.setBounds(115, 315, 150, 45);
         panelForm.add(botonAceptar);
     }
     
+    public void mostrarPaso2(){
+        textoC.setVisible(false);
+        cuadroCorreo.setVisible(false);
+
+        textoOTP.setVisible(true);
+        cuadroOTP.setVisible(true);
+        botonAceptar.setText("Verificar Código");
+    }
+
+    public void mostrarPaso3(){
+        textoOTP.setVisible(false);
+        cuadroOTP.setVisible(false);
+
+        textoNC.setVisible(true);
+        cuadroNewClave.setVisible(true);
+        textoCNC.setVisible(true);
+        cuadroConfClave.setVisible(true);
+        botonAceptar.setText("Actualizar Clave");
+    }
+
     public BotonUtil getBotonAceptar(){
         return botonAceptar;
     }
 
-    public CampoTextoUtil getCuadroUser(){
-        return cuadroUser;
+    public CampoTextoUtil getcuadroCorreo(){
+        return cuadroCorreo;
+    }
+
+    public CampoTextoUtil getCuadroOTP(){
+        return cuadroOTP;
     }
 
     public CampoContrasenaUtil getCuadroNewC(){

@@ -5,6 +5,8 @@ import vista.InicioSesion;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JOptionPane;
+
 public class Controlador_Registro{
 
     private Registro pantallaR;
@@ -29,6 +31,13 @@ public class Controlador_Registro{
                 volverAlInicio();
             }
         });
+
+        this.pantallaR.getEncabezado().getSobreNosotros().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                mostrarMensajeUs();
+            }
+        });
         
     }
 
@@ -51,6 +60,10 @@ public class Controlador_Registro{
         new Controlador_Inicio(pantallaI);
         pantallaI.setVisible(true);
         pantallaR.dispose();
+    }
+
+    private void mostrarMensajeUs(){
+        JOptionPane.showMessageDialog(pantallaR, " Fraidis Francos. Correo: fraidisf@gmail.com\n Mariam Battika. Correo: mariammbattikaahochee@gmail.com\n Eliany Morales. Correo: morales.eliany28@gmail.com", "Sobre Nosotros", JOptionPane.INFORMATION_MESSAGE);
     }
     
 }

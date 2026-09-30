@@ -133,4 +133,8 @@ public class EncabezadoUtil extends JPanel{
         return inicio;
     }
 
+    public JLabel getSobreNosotros(){
+        return sobreNosotros;
+    }
+
 }
