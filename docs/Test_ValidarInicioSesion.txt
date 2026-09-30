@@ -1,0 +1,57 @@
+ENTRADAS: 
+- Usuario o cédula: Valores por parámetro de tipo String (JTextField)
+- Contraseña: Valores por parámetro de tipo String (JPasswordField)
+
+PRECONDICIONES (Casos de prueba / Clases de equivalencia):
+
+1. Usuario vacío y contraseña vacía.
+2. Usuario vacío, pero contraseña con valor.
+3. Usuario con valor, pero contraseña vacía.
+4. Usuario incorrecto, con contraseña correcta.
+5. Usuario correcto, pero contraseña incorrecta.
+6. Usuario registrado y contraseña correcta (Caso de éxito).
+
+ESPECIFICACIONES:
+validarInicioSesion(): Devuelve true en caso de que el usuario/cédula exista en la base de datos y la contraseña coincida. Devuelve false si hay campos en blanco o credenciales erróneas.
+
+SALIDAS:
+
+1-false 
+2-false 
+3-false 
+4-false 
+5-false 
+6-true
+
+
+------------------------------------------------------------
+- FACTOR 1: Ambos campos vacíos
+- CLASES DE EQUIVALENCIA: ("", "")
+- ENTRADAS: "", ""
+- SALIDA: false
+------------------------------------------------------------
+- FACTOR 2: Usuario vacío, contraseña con valor
+- CLASES DE EQUIVALENCIA: ("", contraseña con valor)
+- ENTRADAS: "", "MiPassword123"
+- SALIDA: false
+------------------------------------------------------------
+- FACTOR 3: Usuario con valor, contraseña vacía
+- CLASES DE EQUIVALENCIA: (usuario con valor, "")
+- ENTRADAS: "usuario123", ""
+- SALIDA: false
+------------------------------------------------------------
+- FACTOR 4: Usuario incorrecto, contraseña correcta
+- CLASES DE EQUIVALENCIA: cédula no existe, contraseña válida
+- ENTRADAS: "99999999", "ClaveValida123"
+- SALIDA: false
+------------------------------------------------------------
+- FACTOR 5: Usuario correcto, contraseña incorrecta
+- CLASES DE EQUIVALENCIA: cédula válida, contraseña errónea
+- ENTRADAS: "123456", "ClaveFalsa"
+- SALIDA: false
+------------------------------------------------------------
+- FACTOR 6: Inicio exitoso (Caso de éxito)
+- CLASES DE EQUIVALENCIA: cédula y contraseña válidas
+- ENTRADAS: "123456", "ClaveCorrecta123"
+- SALIDA: true
+------------------------------------------------------------
