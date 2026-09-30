@@ -1,7 +1,4 @@
-package controlador;
-
-import modelo.Usuario;
-import modelo.UsuarioDAO;
+package modelo;
 
 public class Validador_IniciodeSesion {
     private UsuarioDAO usuarioDAO;
