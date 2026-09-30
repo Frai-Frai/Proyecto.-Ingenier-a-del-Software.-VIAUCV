@@ -5,12 +5,13 @@ import java.util.ArrayList;
 
 //DATA ACCESS
 public class UsuarioDAO {
-    private static final String Ruta_Usuario= "data/BDViaUCV.txt";
+    private static final String Ruta_BDViaUCV= "data/BDViaUCV.txt";
+    private static final String Ruta_BDUCV= "data/BDUCV.txt";
 
-    //PAra tener todo los usuarios 
+    //PAra tener todo los usuarios de la pagina
     public List<Usuario> obtenerUsuarios(){
         List<Usuario> lista= new ArrayList<>();
-        File f= new File(Ruta_Usuario);
+        File f= new File(Ruta_BDViaUCV);
 
         if(!f.exists()) return lista;
 
@@ -37,10 +38,10 @@ public class UsuarioDAO {
         return lista;
     }
 
-    //Retorna los que coincidan con el rol
+    //Retorna los que coincidan con el rol de la pagina
     public List<Usuario> buscarPorRol (String rolBuscado){
         List<Usuario> listaRol=new ArrayList<>();
-        File f= new File(Ruta_Usuario);
+        File f= new File(Ruta_BDViaUCV);
 
         if(!f.exists()){
             return listaRol; //si el archivo no existe 
@@ -73,9 +74,9 @@ public class UsuarioDAO {
         return listaRol; //Retorno lista de los usuarios con ese rol
     }
 
-    //Retorna el que coincide con la cedula
+    //Retorna el que coincide con la cedula de la pagina
         public Usuario buscarPorCedula (String cedulaBuscada){
-            File f=new File(Ruta_Usuario);
+            File f=new File(Ruta_BDViaUCV);
 
             if(!f.exists()) return null;
 
@@ -105,9 +106,9 @@ public class UsuarioDAO {
             return null;
         }
 
-        //Existe la cedula o no
-        boolean cedulaExistente(String cedulaBuscada){
-            File f= new File(Ruta_Usuario);
+        //Existe la cedula o no en la pagina
+        public boolean cedulaExistente(String cedulaBuscada){
+            File f= new File(Ruta_BDViaUCV);
             if(!f.exists()) return false;
 
             try(BufferedReader b=new BufferedReader(new FileReader(f))){
@@ -136,7 +137,7 @@ public class UsuarioDAO {
 
         //Actualizar cosas (lo que le des como parametro, saldo o clave)
         public boolean actualizarDatos(Usuario uModificado){
-            File f= new File(Ruta_Usuario);
+            File f= new File(Ruta_BDViaUCV);
             if(!f.exists())return false;
 
             List<Usuario> todos= obtenerUsuarios();
@@ -167,7 +168,7 @@ public class UsuarioDAO {
 
         //anadir nuevo usuario
         public boolean anadirUsuario(Usuario uNuevo){
-            File f= new File(Ruta_Usuario);
+            File f= new File(Ruta_BDViaUCV);
 
             try(BufferedWriter bw= new BufferedWriter(new FileWriter(f, true))) { //lo anade al final junto a lo demas
                 bw.write(uNuevo.EscribirFormatoTXT());
@@ -178,5 +179,67 @@ public class UsuarioDAO {
                 System.out.println("error al guardar en la base de datos: "+e.getMessage());
                 return false;
             }
+        }
+
+        //BD de la UCV (resgistro)
+        //retorna true si la cedula es de la BD de la universidad, false lo contrario
+        public boolean cedulaRegistradaEnLaUCV (String cedulaBuscada){
+            File f= new File(Ruta_BDUCV);
+            if(!f.exists()) return false;
+
+            try(BufferedReader b=new BufferedReader(new FileReader(f))){
+                String linea;
+
+                while((linea = b.readLine()) !=null){ //recorre toda la lista
+                if(linea.trim().isEmpty()) continue;
+
+                    String[] datos= linea.split("\\|");
+
+                    if (datos.length>=1){
+                    String cedulaUsuario= datos[0].trim(); //donde esta la cedula
+
+                        //comparar la cedula buscado
+                        if(cedulaUsuario.equalsIgnoreCase(cedulaBuscada.trim())){
+                            return true;     
+                        }
+                    } 
+                }   
+
+            }catch(IOException e){
+                System.out.println("Error al buscar la cedula: "+e.getMessage());;
+            }
+            return false;
+
+        }
+
+        //retorna true si el rol coincide con la de BD de la ucv
+        
+        public boolean rolCorresponde(String cedulaBuscada, String rolEsperado ){
+            File f= new File(Ruta_BDUCV);
+            if(!f.exists()) return false;
+
+            try(BufferedReader b=new BufferedReader(new FileReader(f))){
+                String linea;
+
+                while((linea = b.readLine()) !=null){ //recorre toda la lista
+                if(linea.trim().isEmpty()) continue;
+
+                    String[] datos= linea.split("\\|");
+
+                    if (datos.length>=2){
+                    String cedulaf= datos[0].trim(); //cedula en el file
+                    String rolf= datos[2].trim(); //donde esta el rol del file
+
+                        //comparar la cedula buscado y el rol seleccionado
+                        if(cedulaf.equals(cedulaBuscada.trim()) && rolf.equalsIgnoreCase(rolEsperado)){
+                            return true;     
+                        }
+                    } 
+                }   
+
+            }catch(IOException e){
+                System.out.println("Error al validar el rol: "+e.getMessage());;
+            }
+            return false;
         }
 }
