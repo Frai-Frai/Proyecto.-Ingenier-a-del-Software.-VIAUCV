@@ -7,13 +7,14 @@ import util.*;
 
 public class RecuperarCont extends JDialog{
 
-    private CampoTextoUtil cuadroCorreo;
+    private CampoTextoUtil cuadroCedula;
     private CampoTextoUtil cuadroOTP;
     private CampoContrasenaUtil cuadroNewClave;
     private CampoContrasenaUtil cuadroConfClave;
     private BotonUtil botonAceptar;
 
     private JLabel textoC, textoOTP, textoNC, textoCNC;
+    private MiniVentanaUtil panelForm;
     //Tipografia 
     private Font fuenteGlacial(String ruta, float tamano, int estilo){
         try {
@@ -43,8 +44,9 @@ public class RecuperarCont extends JDialog{
         setDefaultCloseOperation(DISPOSE_ON_CLOSE); //para que el X de la mini ventana funcione
         setLayout(null);
 
-        MiniVentanaUtil panelForm = new MiniVentanaUtil(30, ColorVentanaC, 380, 430, true, ColorVentanaC);
+        panelForm = new MiniVentanaUtil(30, ColorVentanaC, 380, 430, true, ColorVentanaC);
         panelForm.setBounds(0,0,380,430);
+        panelForm.setLayout(null);
         add(panelForm);
 
         JLabel textoT = new JLabel ("Restablecer Contraseña:", SwingConstants.CENTER);
@@ -54,53 +56,53 @@ public class RecuperarCont extends JDialog{
 
         //SE MUESTRA DE 1ERO
         //texto con Ingrese usuario y cedula
-        JLabel textoC = new JLabel ("Ingrese Correo Electrónico:");
+        textoC = new JLabel ("Ingrese Cédula:");
         textoC.setFont(FuenteTexto);
         textoC.setBounds(40,70,380,20);
         panelForm.add(textoC);
 
         //cuadro/campo en donde lo puede escribir
-        cuadroCorreo = new CampoTextoUtil(15, azulPastelC, 300, 25, azulPastelC, Color.darkGray, FuentesCampos);
-        cuadroCorreo.setBounds(40,95,300,40);
-        panelForm.add(cuadroCorreo);
+        cuadroCedula = new CampoTextoUtil(15, azulPastelC, 300, 25, azulPastelC, Color.darkGray, FuentesCampos);
+        cuadroCedula.setBounds(40,95,300,40);
+        panelForm.add(cuadroCedula);
 
         //SE MUESTRA DE 2DO 
         textoOTP = new JLabel("Ingrese el código de 6 dígitos:");
         textoOTP.setFont(FuenteTexto);
-        textoOTP.setBounds(40, 130, 300, 20);
+        textoOTP.setBounds(40, 110, 300, 20);
         textoOTP.setVisible(false); //Para que este oculto al inicio
         panelForm.add(textoOTP);
 
         cuadroOTP = new CampoTextoUtil(15, azulPastelC, 300, 25, azulPastelC, Color.darkGray, FuentesCampos);
-        cuadroOTP.setBounds(40, 155, 300, 40);
+        cuadroOTP.setBounds(40, 130, 300, 40);
         cuadroOTP.setVisible(false);
         panelForm.add(cuadroOTP);
 
         //SE MUESTRAN DE 3ERO 
         //texto con Ingrese nueva cont
-        JLabel textoNC = new JLabel ("Nueva Contraseña:");
+        textoNC = new JLabel ("Nueva Contraseña:");
         textoNC.setFont(FuenteTexto);
-        textoNC.setBounds(40, 150, 300, 20);
+        textoNC.setBounds(40, 170, 300, 20);
         textoNC.setVisible(false); //Para que este oculto al inicio
         panelForm.add(textoNC);
 
         //cuadro/campo en donde lo puede escribir
         cuadroNewClave = new CampoContrasenaUtil(15, azulPastelC, 300, 25, azulPastelC, Color.darkGray, FuentesCampos);
-        cuadroNewClave.setBounds(40,175,300,40);
-        textoNC.setVisible(false); //Para que este oculto al inicio
+        cuadroNewClave.setBounds(40,190,300,40);
+        cuadroNewClave.setVisible(false); //Para que este oculto al inicio
         panelForm.add(cuadroNewClave);
 
         //texto con confirme la nueva cont
-        JLabel textoCNC = new JLabel ("Confirmar Contraseña:");
+        textoCNC = new JLabel ("Confirmar Contraseña:");
         textoCNC.setFont(FuenteTexto);
-        textoCNC.setBounds(40, 230, 300, 20);
+        textoCNC.setBounds(40, 240, 300, 20);
         textoCNC.setVisible(false); //Para que este oculto al inicio
         panelForm.add(textoCNC);
 
         //cuadro/campo en donde lo puede escribir
         cuadroConfClave = new CampoContrasenaUtil(15, azulPastelC, 300, 25, azulPastelC, Color.darkGray, FuentesCampos);
-        cuadroConfClave.setBounds(40, 255, 300, 40);
-        textoCNC.setVisible(false); //Para que este oculto al inicio
+        cuadroConfClave.setBounds(40, 265, 300, 40);
+        cuadroConfClave.setVisible(false); //Para que este oculto al inicio
         panelForm.add(cuadroConfClave);
 
         //Boton con varios usos
@@ -110,31 +112,39 @@ public class RecuperarCont extends JDialog{
     }
     
     public void mostrarPaso2(){
-        textoC.setVisible(false);
-        cuadroCorreo.setVisible(false);
+        if(textoC != null) textoC.setVisible(false);
+        if(cuadroCedula != null) cuadroCedula.setVisible(false);
 
-        textoOTP.setVisible(true);
-        cuadroOTP.setVisible(true);
-        botonAceptar.setText("Verificar Código");
+        if(textoOTP != null) textoOTP.setVisible(true);
+        if(cuadroOTP != null) cuadroOTP.setVisible(true);
+        if(botonAceptar != null) botonAceptar.setText("Verificar Código");
+        
+        //para que se vuelvan a mostrat los textos
+        panelForm.revalidate();
+        panelForm.repaint(); 
     }
 
     public void mostrarPaso3(){
-        textoOTP.setVisible(false);
-        cuadroOTP.setVisible(false);
+        if(textoOTP != null) textoOTP.setVisible(false);
+        if(cuadroOTP != null) cuadroOTP.setVisible(false);
 
-        textoNC.setVisible(true);
-        cuadroNewClave.setVisible(true);
-        textoCNC.setVisible(true);
-        cuadroConfClave.setVisible(true);
-        botonAceptar.setText("Actualizar Clave");
+        if(textoNC != null) textoNC.setVisible(true);
+        if(cuadroNewClave != null) cuadroNewClave.setVisible(true);
+        if(textoCNC != null) textoCNC.setVisible(true);
+        if(cuadroConfClave != null) cuadroConfClave.setVisible(true);
+        if(botonAceptar != null) botonAceptar.setText("Actualizar Clave");
+        
+        //para que se vuelvan a mostrat los textos
+        panelForm.revalidate();
+        panelForm.repaint();
     }
 
     public BotonUtil getBotonAceptar(){
         return botonAceptar;
     }
 
-    public CampoTextoUtil getcuadroCorreo(){
-        return cuadroCorreo;
+    public CampoTextoUtil getcuadroCedula(){
+        return cuadroCedula;
     }
 
     public CampoTextoUtil getCuadroOTP(){

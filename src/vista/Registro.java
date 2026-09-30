@@ -52,7 +52,8 @@ public class Registro extends JFrame{
         setContentPane(panelFondo);
 
         //creacion del cuadro central
-        MiniVentanaUtil panelForm = new MiniVentanaUtil(40, azulPastelC, 500, 580, true, azulCuadros );
+        MiniVentanaUtil panelForm = new MiniVentanaUtil(40, azulPastelC, 500, 674, true, azulCuadros );
+        panelForm.setLayout(null);
       
         JLabel titulo1 = new JLabel("¿No tienes cuenta?");// el texto q muestra eso
         titulo1.setFont(fuenteT);
@@ -66,54 +67,65 @@ public class Registro extends JFrame{
         titulo2.setBounds(0, 50, 500, 35);
         panelForm.add(titulo2);
 
+        //Nombre
+        JLabel nombreR = new JLabel("Nombre y Apellido");
+        nombreR.setBounds(50, 95, 200, 20);
+        nombreR.setFont(fuenteLetras);
+        panelForm.add(nombreR);
+
+        //Crea cuadrito para que el user pueda poner su nombre
+        CampoTextoUtil cuadritoName = new CampoTextoUtil(15, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
+        cuadritoName.setBounds(50, 120, 400, 40);
+        panelForm.add(cuadritoName);
+
         //Correo
         JLabel correoR = new JLabel("Correo Electrónico");
-        correoR.setBounds(50, 95, 200, 20);
+        correoR.setBounds(50, 175, 200, 20);
         correoR.setFont(fuenteLetras);
         panelForm.add(correoR);
 
         //Crea cuadrito para que el user pueda poner su correo
         CampoTextoUtil cuadritoCorreo = new CampoTextoUtil(15, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
-        cuadritoCorreo.setBounds(50, 120, 400, 40);
+        cuadritoCorreo.setBounds(50, 200, 400, 40);
         panelForm.add(cuadritoCorreo);
 
         //cedula
         JLabel cedulaR = new JLabel("Cédula de Identidad");
-        cedulaR.setBounds(50, 175, 200, 20);
+        cedulaR.setBounds(50, 255, 200, 20);
         cedulaR.setFont(fuenteLetras);
         panelForm.add(cedulaR);
 
         //Crea cuadrito para que el user pueda poner su cedula
         CampoTextoUtil cuadritoCedula = new CampoTextoUtil(15, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
-        cuadritoCedula.setBounds(50, 200, 400, 40);
+        cuadritoCedula.setBounds(50, 280, 400, 40);
         panelForm.add(cuadritoCedula);
 
         //contraseña
         JLabel contraseñaR = new JLabel("Contraseña"); 
-        contraseñaR.setBounds(50, 255, 200, 20);
+        contraseñaR.setBounds(50, 335, 200, 20);
         contraseñaR.setFont(fuenteLetras);
         panelForm.add(contraseñaR);
 
         //Crea cuadrito para que el user pueda poner su contraseña
         CampoContrasenaUtil cuadritoContraseña = new CampoContrasenaUtil(15, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal); //CAMBIAR AKIII
-        cuadritoContraseña.setBounds(50, 280, 400, 40);
+        cuadritoContraseña.setBounds(50, 360, 400, 40);
         panelForm.add(cuadritoContraseña);
 
         //confirmar contraseña
         JLabel confirmarC = new JLabel("Confirmar Contraseña");
-        confirmarC.setBounds(50,335,200,20);
+        confirmarC.setBounds(50,415,200,20);
         confirmarC.setFont(fuenteLetras);
         panelForm.add(confirmarC);
 
         //Crea cuadrito para que el user pueda confirmar su contraseña
         CampoContrasenaUtil cuadritoConfirmar = new CampoContrasenaUtil(15, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal); //CAMBIAR AKIII
-        cuadritoConfirmar.setBounds(50, 360, 400, 40);
+        cuadritoConfirmar.setBounds(50, 440, 400, 40);
         panelForm.add(cuadritoConfirmar);
 
         //texto para que escoja el rol
         JLabel rolUser = new JLabel("Escoja su Rol: ");
         rolUser.setFont(fuenteLetras);
-        rolUser.setBounds(50, 415, 300, 25);
+        rolUser.setBounds(50, 495, 300, 25);
         panelForm.add(rolUser);
 
         //cuadro en donde salen las opciones
@@ -121,17 +133,17 @@ public class Registro extends JFrame{
         MenuUtil menu = new MenuUtil(opciones, 15, Colormenu, Color.BLACK, Colormenu, fuenteNormal);
         menu.setFont(fuenteNormal);
         menu.setBackground(Colormenu);
-        menu.setBounds(50, 440, 400, 40);
+        menu.setBounds(50, 520, 400, 40);
         panelForm.add(menu);
 
         //botoncito de registro
         botonR= new BotonUtil("Crear Cuenta", azulCuadros, Color.WHITE, 20, new Font("SansSerif", Font.BOLD, 14), 180, 40);
-        botonR.setBounds(150, 499, 190, 46);
+        botonR.setBounds(155, 580, 190, 46);
         panelForm.add(botonR);
         
         //link para ir a inicio de sesion
         new TextosInteractivosUtil(IrAIniciarS, "¿Ya tienes una cuenta? Inicia Sesión", Color.GRAY, Color.darkGray, fuenteLink);
-        IrAIniciarS.setBounds(130,538,260,50);
+        IrAIniciarS.setBounds(125,620,260,50);
         panelForm.add(IrAIniciarS);
         add(panelForm); //para que se vea todo
 

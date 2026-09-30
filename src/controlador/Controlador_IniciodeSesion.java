@@ -66,7 +66,7 @@ public class Controlador_IniciodeSesion {
     }
 
     private void mostrarMensajeUs(){
-        JOptionPane.showMessageDialog(pantallaIS, " Fraidis Francos. Correo: fraidisf@gmail.com\n Mariam Battika. Correo: mariammbattikaahochee@gmail.com\n Eliany Morales. Correo: morales.eliany28@gmail.com", "Sobre Nosotros", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(pantallaIS, " Fraidis Franco. Correo: fraidisf@gmail.com\n Mariam Battika. Correo: mariammbattikaahochee@gmail.com\n Eliany Morales. Correo: morales.eliany28@gmail.com", "Sobre Nosotros", JOptionPane.INFORMATION_MESSAGE);
 
     }
 }
