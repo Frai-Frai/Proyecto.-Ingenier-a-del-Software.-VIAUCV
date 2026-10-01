@@ -1,9 +1,9 @@
 PLACA14|Modelo|55|Fuera de servicio
-123ABC|Modelo|35|Activo
-PLACABU|Modelo|35|Activo
+PLACABU|Encava ENT-610|20|Activo
 B33697|Modelo|45|Activo
 B38801|Modelo|45|Activo
 B76249|Modelo|45|Activo
 B79525|Modelo|45|Activo
 adios|d|33|En mantenimiento
 holahola|d|33|Activo
+444567|habibi|50|Activo

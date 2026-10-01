@@ -53,4 +53,40 @@ public class UnidadesDAO {
             e.printStackTrace();
         }
     }
+
+    public List<UnidadBus> obtenerBusesPorEstado(String estadoDeseado) {
+    List<UnidadBus> lista = new ArrayList<>();
+    File archivo = new File("data/BDUnidadesRegistradas.txt");
+    
+    if (!archivo.exists()) {
+        return lista;
+    }
+
+    try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(archivo))) {
+        String linea;
+        while ((linea = br.readLine()) != null) {
+            if (linea.trim().isEmpty()) continue; // Ignorar líneas vacías
+
+            String[] datos = linea.split("\\|"); 
+            
+            // Verificamos que tenga las 4 partes exactas
+            if (datos.length >= 4) {
+                String placa = datos[0].trim();
+                String modelo = datos[1].trim();
+                String capacidad = datos[2].trim();
+                String estado = datos[3].trim();
+
+                // Comparamos el estado (ej. "Activo")
+                if (estado.equalsIgnoreCase(estadoDeseado)) {
+                    // Pasamos los 4 atributos tal como los tienes en tu TXT
+                    lista.add(new UnidadBus(placa, modelo, capacidad, estado));
+                }
+            }
+        }
+    } catch (Exception e) {
+        System.out.println("Error al leer el archivo de la base de datos: " + e.getMessage());
+    }
+
+    return lista;
+}
 }

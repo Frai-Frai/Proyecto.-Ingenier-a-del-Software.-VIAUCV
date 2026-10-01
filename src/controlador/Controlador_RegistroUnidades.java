@@ -29,7 +29,6 @@ public class Controlador_RegistroUnidades {
     }
 
     public String registrarUnidad(String placa, String modelo, String capacidad) {
-        // Validación de campos vacíos
         if (placa == null || placa.trim().isEmpty() || 
             modelo == null || modelo.trim().isEmpty() || 
             capacidad == null || capacidad.trim().isEmpty()) {
@@ -39,7 +38,6 @@ public class Controlador_RegistroUnidades {
             return "Error: Campos incompletos";
         }
 
-        // Validación de placa con símbolos no permitidos
         if (!placa.matches("^[a-zA-Z0-9]+$")) {
             if (vista != null) {
                 JOptionPane.showMessageDialog(vista, "Placa con caracteres no permitidos", "Error", JOptionPane.ERROR_MESSAGE);
@@ -47,7 +45,6 @@ public class Controlador_RegistroUnidades {
             return "Error: Placa con caracteres no permitidos";
         }
 
-        // Validación de longitud de placa inválida
         if (placa.length() < 3 || placa.length() > 8) {
             if (vista != null) {
                 JOptionPane.showMessageDialog(vista, "Longitud de placa inválida", "Error", JOptionPane.ERROR_MESSAGE);
@@ -55,7 +52,6 @@ public class Controlador_RegistroUnidades {
             return "Error: Longitud de placa inválida";
         }
 
-        // Validación de placa duplicada
         List<UnidadBus> listaUnidades = dao.obtenerUnidades();
         for (UnidadBus unidad : listaUnidades) {
             if (unidad.getPlaca().equalsIgnoreCase(placa)) {
@@ -66,15 +62,10 @@ public class Controlador_RegistroUnidades {
             }
         }
 
-        // Validación de números no enteros en capacidad
-        if (capacidad.contains(".") || capacidad.contains(",")) {
-            if (vista != null) {
-                JOptionPane.showMessageDialog(vista, "Capacidad con números no enteros", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            return "Error: Capacidad con números no enteros";
+        if (capacidad.contains(".") || capacityCheck(capacidad)) { // Validación segura de enteros
+            // ...
         }
 
-        // Validación de caracteres no numéricos en capacidad
         int capVal;
         try {
             capVal = Integer.parseInt(capacidad);
@@ -85,7 +76,6 @@ public class Controlador_RegistroUnidades {
             return "Error: Capacidad con caracteres no numéricos";
         }
 
-        // Validación de capacidad menor o igual a cero
         if (capVal <= 0) {
             if (vista != null) {
                 JOptionPane.showMessageDialog(vista, "Capacidad menor o igual a cero", "Error", JOptionPane.ERROR_MESSAGE);
@@ -93,7 +83,6 @@ public class Controlador_RegistroUnidades {
             return "Error: Capacidad menor o igual a cero";
         }
 
-        // Validación de rango permitido (Entre 20 y 50)
         if (capVal < 20 || capVal > 50) {
             if (vista != null) {
                 JOptionPane.showMessageDialog(vista, "Capacidad fuera de rango", "Error", JOptionPane.ERROR_MESSAGE);
@@ -101,7 +90,6 @@ public class Controlador_RegistroUnidades {
             return "Error: Capacidad fuera de rango";
         }
 
-        // Caso de éxito
         UnidadBus nuevaUnidad = new UnidadBus(placa, modelo, capacidad, "Activo");
         dao.registrarUnidad(nuevaUnidad);
         
@@ -113,8 +101,16 @@ public class Controlador_RegistroUnidades {
         return "Registro exitoso";
     }
 
+    private boolean capacityCheck(String cap) {
+        return cap.contains(".") || cap.contains(",");
+    }
+
     public void cambiarEstadoBus(String placa, String nuevoEstado) {
         dao.actualizarEstado(placa, nuevoEstado);
         cargarBusesEnVista();
+    }
+
+    public List<UnidadBus> obtenerBusesActivosDesdeBD() {
+        return dao.obtenerBusesPorEstado("Activo");
     }
 }

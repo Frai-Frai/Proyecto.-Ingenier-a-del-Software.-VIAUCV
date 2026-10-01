@@ -23,16 +23,13 @@ public class RegistroUnidades extends JFrame {
     private JPanel panelBuses; 
     private Controlador_RegistroUnidades controlador;
 
-    // Variables para la paginación
     private int paginaActual = 0;
     private final int ELEMENTOS_POR_PAGINA = 7;
     private List<UnidadBus> listaCompletaBuses = new ArrayList<>();
 
-    // Botones de flechas para controlar su navegación
     private BotonUtil btnAnterior;
     private BotonUtil btnSiguiente;
 
-    // Referencias a campos de texto
     private CampoTextoUtil txtPlaca;
     private CampoTextoUtil txtModelo;
     private CampoTextoUtil txtCapacidad;
@@ -183,11 +180,10 @@ public class RegistroUnidades extends JFrame {
 
         panelSuperior.add(panelNorteSuperior, BorderLayout.NORTH);
 
-        // CONTENEDOR CENTRAL DE LOS BUSES CON FLECHAS A LOS LADOS
+        // CONTENEDOR CENTRAL DE LOS BUSES CON FLECHAS
         JPanel panelCentroBusesConFlechas = new JPanel(new BorderLayout(10, 0));
         panelCentroBusesConFlechas.setOpaque(false);
 
-        // Cargar íconos independientes para cada flecha
         ImageIcon iconoFlechaDer = null;
         ImageIcon iconoFlechaIzq = null;
         try {
@@ -198,37 +194,26 @@ public class RegistroUnidades extends JFrame {
             ImageIcon originalFlechaIzq = new ImageIcon("res/flechacontraria.jpeg");
             Image scaledIzq = originalFlechaIzq.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH);
             iconoFlechaIzq = new ImageIcon(scaledIzq);
-        } catch (Exception e) {
-            System.out.println("Error al cargar las flechas: " + e.getMessage());
-        }
+        } catch (Exception e) {}
 
         Font fuenteRegularBtn = cargarFuente("res/GlacialIndifference-Regular.otf", 12f, Font.PLAIN);
 
-        // Botón Izquierdo (<)
         btnAnterior = new BotonUtil("", new Color(245, 245, 245), Color.BLACK, 15, fuenteRegularBtn, 55, 55);
-        if (iconoFlechaIzq != null) {
-            btnAnterior.setIcon(iconoFlechaIzq);
-        } else {
-            btnAnterior.setText("<");
-        }
+        if (iconoFlechaIzq != null) btnAnterior.setIcon(iconoFlechaIzq);
+        else btnAnterior.setText("<");
         
         JPanel panelBtnIzqWrapper = new JPanel(new GridBagLayout());
         panelBtnIzqWrapper.setOpaque(false);
         panelBtnIzqWrapper.add(btnAnterior);
 
-        // Botón Derecho (>)
         btnSiguiente = new BotonUtil("", new Color(245, 245, 245), Color.BLACK, 15, fuenteRegularBtn, 55, 55);
-        if (iconoFlechaDer != null) {
-            btnSiguiente.setIcon(iconoFlechaDer);
-        } else {
-            btnSiguiente.setText(">");
-        }
+        if (iconoFlechaDer != null) btnSiguiente.setIcon(iconoFlechaDer);
+        else btnSiguiente.setText(">");
 
         JPanel panelBtnDerWrapper = new JPanel(new GridBagLayout());
         panelBtnDerWrapper.setOpaque(false);
         panelBtnDerWrapper.add(btnSiguiente);
 
-        // Panel exclusivo para las 7 tarjetas de buses de la página actual
         panelBuses = new JPanel(new GridLayout(1, 7, 15, 0));
         panelBuses.setOpaque(false);
         panelBuses.setBorder(new EmptyBorder(5, 0, 5, 0));
@@ -239,12 +224,9 @@ public class RegistroUnidades extends JFrame {
 
         panelSuperior.add(panelCentroBusesConFlechas, BorderLayout.CENTER);
 
-        // Acciones de las flechas con límite (se detienen en la primera y última página)
         btnSiguiente.addActionListener(e -> {
             int totalPaginas = (int) Math.ceil((double) listaCompletaBuses.size() / ELEMENTOS_POR_PAGINA);
             if (totalPaginas == 0) totalPaginas = 1;
-            
-            // Avanza solo si no estás en la última página
             if (paginaActual < totalPaginas - 1) {
                 paginaActual++;
                 redibujarPaginaBuses();
@@ -252,7 +234,6 @@ public class RegistroUnidades extends JFrame {
         });
 
         btnAnterior.addActionListener(e -> {
-            // Retrocede solo si no estás en la primera página
             if (paginaActual > 0) {
                 paginaActual--;
                 redibujarPaginaBuses();
@@ -277,7 +258,6 @@ public class RegistroUnidades extends JFrame {
 
     public void actualizarPanelBuses(List<UnidadBus> listaUnidades) {
         this.listaCompletaBuses = listaUnidades;
-        // Opcional: reiniciar a la página 0 cuando se carguen nuevas unidades
         this.paginaActual = 0; 
         redibujarPaginaBuses();
     }
@@ -300,7 +280,6 @@ public class RegistroUnidades extends JFrame {
             unidadesPagina = listaCompletaBuses.subList(inicio, fin);
         }
 
-        // Pintar las unidades correspondientes a la página actual
         for (UnidadBus unidad : unidadesPagina) {
             JPanel panelItemBus = new JPanel();
             panelItemBus.setLayout(new BoxLayout(panelItemBus, BoxLayout.Y_AXIS));
@@ -330,7 +309,6 @@ public class RegistroUnidades extends JFrame {
             panelBuses.add(panelItemBus);
         }
 
-        // Rellenar espacios vacíos si hay menos de 7 elementos en la página
         int anadidos = unidadesPagina.size();
         for (int i = anadidos; i < ELEMENTOS_POR_PAGINA; i++) {
             panelBuses.add(new JLabel());
@@ -550,8 +528,11 @@ public class RegistroUnidades extends JFrame {
         panelImagenBus.setOpaque(false);
         panelImagenBus.setLayout(new BorderLayout());
 
-        BotonUtil btnEstadoOperativo = new BotonUtil("Unidades y estado operativo", new Color(40, 100, 160), Color.WHITE, 15, fuenteBold.deriveFont(15f), 0, 48);
+        // Botón inferior "Unidades en Estado Operativo" con su listener vinculado
+        BotonUtil btnEstadoOperativo = new BotonUtil("Unidades en Estado Operativo", new Color(40, 100, 160), Color.WHITE, 15, fuenteBold.deriveFont(15f), 0, 48);
         btnEstadoOperativo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 48));
+
+        btnEstadoOperativo.addActionListener(e -> mostrarVentanaBusesActivos());
 
         JPanel panelBtnEstadoWrapper = new JPanel();
         panelBtnEstadoWrapper.setLayout(new BoxLayout(panelBtnEstadoWrapper, BoxLayout.X_AXIS));
@@ -568,6 +549,63 @@ public class RegistroUnidades extends JFrame {
         gbcCentral.weightx = 0.62;
         gbcCentral.insets = new Insets(0, 10, 0, 0);
         panelDerechaCentro.add(panelDerechaCentroInterno, gbcCentral);
+    }
+
+    private void mostrarVentanaBusesActivos() {
+        Font fuenteBold = cargarFuente("res/GlacialIndifference-Bold.otf", 16f, Font.BOLD);
+        Font fuenteRegular = cargarFuente("res/GlacialIndifference-Regular.otf", 14f, Font.PLAIN);
+
+        JDialog dialogoActivos = new JDialog(this, "Autobuses Activos", true);
+        dialogoActivos.setSize(400, 450);
+        dialogoActivos.setLocationRelativeTo(this);
+        dialogoActivos.setLayout(new BorderLayout());
+
+        JPanel panelContenido = new JPanel(new BorderLayout());
+        panelContenido.setBorder(new EmptyBorder(15, 15, 15, 15));
+        panelContenido.setBackground(new Color(240, 243, 246));
+
+        JLabel lblTitulo = new JLabel("Unidades en Estado Activo", JLabel.CENTER);
+        lblTitulo.setFont(fuenteBold);
+        lblTitulo.setForeground(new Color(30, 80, 135));
+        lblTitulo.setBorder(new EmptyBorder(0, 0, 15, 0));
+        panelContenido.add(lblTitulo, BorderLayout.NORTH);
+
+        DefaultListModel<String> modeloLista = new DefaultListModel<>();
+        
+        try {
+            List<UnidadBus> activosBD = controlador.obtenerBusesActivosDesdeBD();
+
+            for (UnidadBus bus : activosBD) {
+                modeloLista.addElement("Placa: " + bus.getPlaca() + " - Modelo: " + bus.getModelo());
+            }
+
+            if (modeloLista.isEmpty()) {
+                modeloLista.addElement("No hay unidades activas registradas en la base de datos.");
+            }
+        } catch (Exception e) {
+            modeloLista.addElement("Error al consultar la base de datos.");
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        JList<String> listaBusesActivos = new JList<>(modeloLista);
+        listaBusesActivos.setFont(fuenteRegular);
+        listaBusesActivos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        JScrollPane scrollPane = new JScrollPane(listaBusesActivos);
+        panelContenido.add(scrollPane, BorderLayout.CENTER);
+
+        JButton btnCerrar = new JButton("Cerrar");
+        btnCerrar.setFont(fuenteBold.deriveFont(13f));
+        JPanel panelSur = new JPanel();
+        panelSur.setOpaque(false);
+        panelSur.setBorder(new EmptyBorder(10, 0, 0, 0));
+        panelSur.add(btnCerrar);
+        
+        btnCerrar.addActionListener(ev -> dialogoActivos.dispose());
+        panelContenido.add(panelSur, BorderLayout.SOUTH);
+
+        dialogoActivos.add(panelContenido);
+        dialogoActivos.setVisible(true);
     }
 
     private Font cargarFuente(String ruta, float tamano, int estilo) {
