@@ -1,0 +1,57 @@
+ENTRADAS: 
+- Usuario o cédula: Valores por parámetro de tipo String (JTextField)
+- Contraseña: Valores por parámetro de tipo String (JPasswordField)
+
+PRECONDICIONES (Casos de prueba / Clases de equivalencia):
+
+1. Usuario vacío y contraseña vacía.
+2. Usuario vacío, pero contraseña con valor.
+3. Usuario con valor, pero contraseña vacía.
+4. Usuario incorrecto, con contraseña correcta.
+5. Usuario correcto, pero contraseña incorrecta.
+6. Usuario registrado y contraseña correcta (Caso de éxito).
+
+ESPECIFICACIONES:
+validarInicioSesion(): Devuelve un mensaje de éxito (String) en caso de que el usuario/cédula exista en la base de datos y la contraseña coincida. Devuelve un mensaje descriptivo de error (String) si hay campos en blanco o credenciales erróneas.
+
+SALIDAS:
+
+1- Complete todos los campos
+2- El usuario no puede estar vacío
+3- La contraseña no puede estar vacía
+4- Usuario no encontrado
+5- Contraseña incorrecta
+6- Inicio de sesión exitoso
+
+
+------------------------------------------------------------
+- FACTOR 1: Ambos campos vacíos
+- CLASES DE EQUIVALENCIA: ("", "")
+- ENTRADAS: "", ""
+- SALIDA:  Complete todos los campos
+------------------------------------------------------------
+- FACTOR 2: Usuario vacío, contraseña con valor
+- CLASES DE EQUIVALENCIA: ("", contraseña con valor)
+- ENTRADAS: "", "MiPassword123"
+- SALIDA: El usuario no puede estar vacío
+------------------------------------------------------------
+- FACTOR 3: Usuario con valor, contraseña vacía
+- CLASES DE EQUIVALENCIA: (usuario con valor, "")
+- ENTRADAS: "usuario123", ""
+- SALIDA: La contraseña no puede estar vacía
+------------------------------------------------------------
+- FACTOR 4: Usuario incorrecto, contraseña correcta
+- CLASES DE EQUIVALENCIA: cédula no existe, contraseña válida
+- ENTRADAS: "99999999", "ClaveValida123"
+- SALIDA: Usuario no encontrado
+------------------------------------------------------------
+- FACTOR 5: Usuario correcto, contraseña incorrecta
+- CLASES DE EQUIVALENCIA: cédula válida, contraseña errónea
+- ENTRADAS: "123456", "ClaveFalsa"
+- SALIDA: Contraseña incorrecta
+------------------------------------------------------------
+- FACTOR 6: Inicio exitoso (Caso de éxito)
+- CLASES DE EQUIVALENCIA: cédula y contraseña válidas
+- ENTRADAS: "123456", "ClaveCorrecta123"
+- SALIDA: Inicio de sesión exitoso
+------------------------------------------------------------
