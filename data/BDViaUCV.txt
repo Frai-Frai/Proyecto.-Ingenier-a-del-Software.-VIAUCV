@@ -1,8 +1,8 @@
-32499046|Fraidis Franco|fraidisf@gmail.com|estudiante|f123|2405.32
+32499046|Fraidis Franco|fraidisf@gmail.com|Estudiante|f123456|2405.32
 31901633|Eliany Morales|elianymorales28@gmail.com|Administrador|ola|0.0
-32133876|Mariam Battika|mariammbattikaahochee@gmail.com|estudiante|habibi67|1260.04
-30564897|Alejandro Perez|alejoalt67@hotmail.com|profesor|071107|995.3
+32133876|Mariam Battika|mariammbattikaahochee@gmail.com|Estudiante|habibi67|1260.04
+30564897|Alejandro Perez|alejoalt67@hotmail.com|Docente|071107|995.3
 28543211|Maria Garcia|MariaGatosM@gmail.com|General|g_atitoss|5020.45
-16578923|Antonio Espinoza|Antonioespinoza27@hotmail.com|conductor|busdriver4|0.0
+16578923|Antonio Espinoza|Antonioespinoza27@hotmail.com|Conductor|busdriver4|0.0
 32114875|Mar Josefa|marJ@gmail.com|Público General|marjosefa|0.0
 31254789|Valeria Rojas|valeria@gmail.com|Público General|valeria|0.0
