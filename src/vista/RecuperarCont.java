@@ -109,6 +109,8 @@ public class RecuperarCont extends JDialog{
         botonAceptar = new BotonUtil("Enviar Código", azulCuadros, ColorVentanaC, 20, FuenteTexto, 150, 45);
         botonAceptar.setBounds(115, 315, 150, 45);
         panelForm.add(botonAceptar);
+
+        getRootPane().setDefaultButton(botonAceptar); //para que el enter funcione como boton
     }
     
     public void mostrarPaso2(){

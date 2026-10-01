@@ -13,8 +13,8 @@ public class InicioSesion extends JFrame {
     //Campos y botones
     private JTextField campoUsuario;
     private JPasswordField contrasena; 
-    private JButton boton;
-    private JLabel restaurarContrasena= new JLabel();  //Vacios, mas adelante se llama al instructor para el estilo
+    private BotonUtil boton;
+    private JLabel restaurarContrasena= new JLabel();  
     private JLabel registrarse= new JLabel();
     private EncabezadoUtil encabezado;
 
@@ -137,7 +137,7 @@ public class InicioSesion extends JFrame {
         panelFondo.add(encabezado, BorderLayout.NORTH);
         add(panelFondo);
         
-
+        getRootPane().setDefaultButton(boton); //para que el enter funcione como boton
     }
 
    public JLabel getlinkRegistarse() {
@@ -150,6 +150,17 @@ public class InicioSesion extends JFrame {
 
     public JLabel getRestaurarContrasena() {
         return restaurarContrasena;
+    }
+
+    public JTextField getCuadroUser(){
+        return campoUsuario;
+    }
+    public JTextField getCuadroCont(){
+        return contrasena;
+    }
+
+    public BotonUtil getBotonIngresar(){
+        return boton;
     }
 
 }

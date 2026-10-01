@@ -1,5 +1,5 @@
 32499046|Fraidis Franco|fraidisf@gmail.com|estudiante|f123|2405.32
-31901633|Eliany Morales|elianymorales28@gmail.com|admin|si|0.0
+31901633|Eliany Morales|elianymorales28@gmail.com|Administrador|ola|0.0
 32133876|Mariam Battika|mariammbattikaahochee@gmail.com|estudiante|habibi67|1260.04
 30564897|Alejandro Perez|alejoalt67@hotmail.com|profesor|071107|995.3
 28543211|Maria Garcia|MariaGatosM@gmail.com|General|g_atitoss|5020.45
