@@ -1,0 +1,3 @@
+123ABC|Modelo B|25|En mantenimiento
+456HFP|b|12|Fuera de servicio
+123LKJ|M|86|Activo

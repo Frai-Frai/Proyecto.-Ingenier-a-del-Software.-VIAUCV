@@ -1,6 +1,9 @@
 package vista;
 
 import util.*;
+import modelo.UnidadBus;
+import controlador.Controlador_RegistroUnidades;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -10,21 +13,37 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RegistroUnidades extends JFrame {
 
     private JPanel panelFormularioFlotante;
     private JPanel panelDerechaCentro;
+    private JPanel panelBuses; 
+    private Controlador_RegistroUnidades controlador;
+
+    // Variables para la paginación
+    private int paginaActual = 0;
+    private final int ELEMENTOS_POR_PAGINA = 7;
+    private List<UnidadBus> listaCompletaBuses = new ArrayList<>();
+
+    // Botones de flechas para controlar su navegación
+    private BotonUtil btnAnterior;
+    private BotonUtil btnSiguiente;
+
+    // Referencias a campos de texto
+    private CampoTextoUtil txtPlaca;
+    private CampoTextoUtil txtModelo;
+    private CampoTextoUtil txtCapacidad;
 
     public RegistroUnidades() {
-        // Configuración básica de la ventana
         setTitle("Registro de Unidades - UCV");
         setSize(1200, 750);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // Fuentes personalizadas Glacial Indifference
         Font fuenteRegular = cargarFuente("res/GlacialIndifference-Regular.otf", 15f, Font.PLAIN);
         Font fuenteBold = cargarFuente("res/GlacialIndifference-Bold.otf", 15f, Font.BOLD);
 
@@ -49,7 +68,6 @@ public class RegistroUnidades extends JFrame {
         panelMenu.setBorder(new EmptyBorder(35, 25, 35, 25));
         panelMenu.setLayout(new BoxLayout(panelMenu, BoxLayout.Y_AXIS));
         
-        // LOGO 
         JLabel lblLogo = new JLabel();
         lblLogo.setAlignmentX(Component.LEFT_ALIGNMENT);
         try {
@@ -121,8 +139,7 @@ public class RegistroUnidades extends JFrame {
         }
         panelMenu.add(Box.createVerticalGlue());
 
-       
-        //PANEL DERECHO 
+        // PANEL DERECHO 
         JPanel panelDerechoTotal = new JPanel(new BorderLayout());
         panelDerechoTotal.setBackground(new Color(240, 243, 246));
         panelDerechoTotal.setBorder(new EmptyBorder(12, 12, 12, 12));
@@ -165,7 +182,109 @@ public class RegistroUnidades extends JFrame {
         panelNorteSuperior.add(lineaDivisoria, BorderLayout.CENTER);
 
         panelSuperior.add(panelNorteSuperior, BorderLayout.NORTH);
+
+        // CONTENEDOR CENTRAL DE LOS BUSES CON FLECHAS A LOS LADOS
+        JPanel panelCentroBusesConFlechas = new JPanel(new BorderLayout(10, 0));
+        panelCentroBusesConFlechas.setOpaque(false);
+
+        // Cargar íconos independientes para cada flecha
+        ImageIcon iconoFlechaDer = null;
+        ImageIcon iconoFlechaIzq = null;
+        try {
+            ImageIcon originalFlechaDer = new ImageIcon("res/flecha.jpeg");
+            Image scaledDer = originalFlechaDer.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH);
+            iconoFlechaDer = new ImageIcon(scaledDer);
+            
+            ImageIcon originalFlechaIzq = new ImageIcon("res/flechacontraria.jpeg");
+            Image scaledIzq = originalFlechaIzq.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH);
+            iconoFlechaIzq = new ImageIcon(scaledIzq);
+        } catch (Exception e) {
+            System.out.println("Error al cargar las flechas: " + e.getMessage());
+        }
+
+        Font fuenteRegularBtn = cargarFuente("res/GlacialIndifference-Regular.otf", 12f, Font.PLAIN);
+
+        // Botón Izquierdo (<)
+        btnAnterior = new BotonUtil("", new Color(245, 245, 245), Color.BLACK, 15, fuenteRegularBtn, 55, 55);
+        if (iconoFlechaIzq != null) {
+            btnAnterior.setIcon(iconoFlechaIzq);
+        } else {
+            btnAnterior.setText("<");
+        }
         
+        JPanel panelBtnIzqWrapper = new JPanel(new GridBagLayout());
+        panelBtnIzqWrapper.setOpaque(false);
+        panelBtnIzqWrapper.add(btnAnterior);
+
+        // Botón Derecho (>)
+        btnSiguiente = new BotonUtil("", new Color(245, 245, 245), Color.BLACK, 15, fuenteRegularBtn, 55, 55);
+        if (iconoFlechaDer != null) {
+            btnSiguiente.setIcon(iconoFlechaDer);
+        } else {
+            btnSiguiente.setText(">");
+        }
+
+        JPanel panelBtnDerWrapper = new JPanel(new GridBagLayout());
+        panelBtnDerWrapper.setOpaque(false);
+        panelBtnDerWrapper.add(btnSiguiente);
+
+        // Panel exclusivo para las 7 tarjetas de buses de la página actual
+        panelBuses = new JPanel(new GridLayout(1, 7, 15, 0));
+        panelBuses.setOpaque(false);
+        panelBuses.setBorder(new EmptyBorder(5, 0, 5, 0));
+
+        panelCentroBusesConFlechas.add(panelBtnIzqWrapper, BorderLayout.WEST);
+        panelCentroBusesConFlechas.add(panelBuses, BorderLayout.CENTER);
+        panelCentroBusesConFlechas.add(panelBtnDerWrapper, BorderLayout.EAST);
+
+        panelSuperior.add(panelCentroBusesConFlechas, BorderLayout.CENTER);
+
+        // Acciones de las flechas con límite (se detienen en la primera y última página)
+        btnSiguiente.addActionListener(e -> {
+            int totalPaginas = (int) Math.ceil((double) listaCompletaBuses.size() / ELEMENTOS_POR_PAGINA);
+            if (totalPaginas == 0) totalPaginas = 1;
+            
+            // Avanza solo si no estás en la última página
+            if (paginaActual < totalPaginas - 1) {
+                paginaActual++;
+                redibujarPaginaBuses();
+            }
+        });
+
+        btnAnterior.addActionListener(e -> {
+            // Retrocede solo si no estás en la primera página
+            if (paginaActual > 0) {
+                paginaActual--;
+                redibujarPaginaBuses();
+            }
+        });
+
+        JPanel panelSuperiorWrapper = new JPanel(new BorderLayout());
+        panelSuperiorWrapper.setOpaque(false);
+        panelSuperiorWrapper.setBorder(new EmptyBorder(0, 0, 12, 0));
+        panelSuperiorWrapper.add(panelSuperior, BorderLayout.CENTER);
+
+        panelContenedorCentral();
+
+        panelDerechoTotal.add(panelSuperiorWrapper, BorderLayout.NORTH);
+        panelDerechoTotal.add(panelDerechaCentro, BorderLayout.CENTER);
+
+        add(panelMenu, BorderLayout.WEST);
+        add(panelDerechoTotal, BorderLayout.CENTER);
+
+        this.controlador = new Controlador_RegistroUnidades(this);
+    }
+
+    public void actualizarPanelBuses(List<UnidadBus> listaUnidades) {
+        this.listaCompletaBuses = listaUnidades;
+        // Opcional: reiniciar a la página 0 cuando se carguen nuevas unidades
+        this.paginaActual = 0; 
+        redibujarPaginaBuses();
+    }
+
+    private void redibujarPaginaBuses() {
+        panelBuses.removeAll();
+
         ImageIcon iconoBus = null;
         try {
             ImageIcon originalIcon = new ImageIcon("res/IconBus.jpeg");
@@ -173,19 +292,16 @@ public class RegistroUnidades extends JFrame {
             iconoBus = new ImageIcon(scaledImg);
         } catch (Exception e) {}
 
-        ImageIcon iconoFlecha = null;
-        try {
-            ImageIcon originalFlecha = new ImageIcon("res/flecha.jpeg");
-            Image scaledFlecha = originalFlecha.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH);
-            iconoFlecha = new ImageIcon(scaledFlecha);
-        } catch (Exception e) {}
+        int inicio = paginaActual * ELEMENTOS_POR_PAGINA;
+        int fin = Math.min(inicio + ELEMENTOS_POR_PAGINA, listaCompletaBuses.size());
 
-        JPanel panelBuses = new JPanel(new GridLayout(1, 6, 15, 0));
-        panelBuses.setOpaque(false);
-        panelBuses.setBorder(new EmptyBorder(5, 0, 5, 0));
-        
-        String[] placas = {"123ABC", "456DEF", "789GHI", "024JKL", "135MNO"};
-        for (String placa : placas) {
+        List<UnidadBus> unidadesPagina = new ArrayList<>();
+        if (inicio < listaCompletaBuses.size()) {
+            unidadesPagina = listaCompletaBuses.subList(inicio, fin);
+        }
+
+        // Pintar las unidades correspondientes a la página actual
+        for (UnidadBus unidad : unidadesPagina) {
             JPanel panelItemBus = new JPanel();
             panelItemBus.setLayout(new BoxLayout(panelItemBus, BoxLayout.Y_AXIS));
             panelItemBus.setOpaque(false);
@@ -194,8 +310,8 @@ public class RegistroUnidades extends JFrame {
             JLabel lblIcono = new JLabel(iconoBus);
             lblIcono.setAlignmentX(Component.CENTER_ALIGNMENT);
             
-            JLabel lblPlaca = new JLabel(placa);
-            lblPlaca.setFont(fuenteBold.deriveFont(13f));
+            JLabel lblPlaca = new JLabel(unidad.getPlaca());
+            lblPlaca.setFont(cargarFuente("res/GlacialIndifference-Bold.otf", 13f, Font.BOLD));
             lblPlaca.setAlignmentX(Component.CENTER_ALIGNMENT);
             
             panelItemBus.add(Box.createVerticalGlue());
@@ -204,45 +320,30 @@ public class RegistroUnidades extends JFrame {
             panelItemBus.add(lblPlaca);
             panelItemBus.add(Box.createVerticalGlue());
 
-            // Menú flotante 
             panelItemBus.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    mostrarMenuFlotanteEstado(panelItemBus, placa, fuenteRegular, fuenteBold);
+                    mostrarMenuFlotanteEstado(panelItemBus, unidad.getPlaca());
                 }
             });
             
             panelBuses.add(panelItemBus);
         }
-        
-        JPanel panelBtnWrapper = new JPanel(new GridBagLayout());
-        panelBtnWrapper.setOpaque(false);
-        
-        BotonUtil btnMas = new BotonUtil("", new Color(245, 245, 245), Color.BLACK, 15, fuenteRegular.deriveFont(12f), 55, 55);
-        if (iconoFlecha != null) btnMas.setIcon(iconoFlecha);
-        else btnMas.setText(">");
-        panelBtnWrapper.add(btnMas);
-        panelBuses.add(panelBtnWrapper);
-        
-        panelSuperior.add(panelBuses, BorderLayout.CENTER);
 
-        JPanel panelSuperiorWrapper = new JPanel(new BorderLayout());
-        panelSuperiorWrapper.setOpaque(false);
-        panelSuperiorWrapper.setBorder(new EmptyBorder(0, 0, 12, 0));
-        panelSuperiorWrapper.add(panelSuperior, BorderLayout.CENTER);
+        // Rellenar espacios vacíos si hay menos de 7 elementos en la página
+        int anadidos = unidadesPagina.size();
+        for (int i = anadidos; i < ELEMENTOS_POR_PAGINA; i++) {
+            panelBuses.add(new JLabel());
+        }
 
-       
-        // PANEL CENTRAL
-        panelContenedorCentral();
-
-        panelDerechoTotal.add(panelSuperiorWrapper, BorderLayout.NORTH);
-        panelDerechoTotal.add(panelDerechaCentro, BorderLayout.CENTER);
-
-        add(panelMenu, BorderLayout.WEST);
-        add(panelDerechoTotal, BorderLayout.CENTER);
+        panelBuses.revalidate();
+        panelBuses.repaint();
     }
 
-    private void mostrarMenuFlotanteEstado(Component invoker, String placaBus, Font fuenteRegular, Font fuenteBold) {
+    private void mostrarMenuFlotanteEstado(Component invoker, String placaBus) {
+        Font fuenteRegular = cargarFuente("res/GlacialIndifference-Regular.otf", 15f, Font.PLAIN);
+        Font fuenteBold = cargarFuente("res/GlacialIndifference-Bold.otf", 15f, Font.BOLD);
+
         JDialog popupDialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), false);
         popupDialog.setUndecorated(true);
         popupDialog.setBackground(new Color(0, 0, 0, 0));
@@ -277,6 +378,14 @@ public class RegistroUnidades extends JFrame {
         menuEstado.setPreferredSize(tamanoCombo);
         menuEstado.setMaximumSize(tamanoCombo);
         menuEstado.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        menuEstado.addActionListener(e -> {
+            String nuevoEstado = (String) menuEstado.getSelectedItem();
+            if (nuevoEstado != null && !nuevoEstado.equals("Seleccione estado operativo")) {
+                controlador.cambiarEstadoBus(placaBus, nuevoEstado);
+                popupDialog.dispose();
+            }
+        });
 
         panelContenidoPopup.add(lblInfo);
         panelContenidoPopup.add(Box.createRigidArea(new Dimension(0, 8)));
@@ -338,15 +447,15 @@ public class RegistroUnidades extends JFrame {
         panelCentroCamposBtn.setLayout(new BoxLayout(panelCentroCamposBtn, BoxLayout.Y_AXIS));
         panelCentroCamposBtn.setOpaque(false);
 
-        CampoTextoUtil txtPlaca = new CampoTextoUtil(15, new Color(150, 150, 150), 0, 48, Color.WHITE, Color.GRAY, fuenteRegular.deriveFont(15f));
+        txtPlaca = new CampoTextoUtil(15, new Color(150, 150, 150), 0, 48, Color.WHITE, Color.GRAY, fuenteRegular.deriveFont(15f));
         txtPlaca.setText("Placa");
         configurarPlaceholder(txtPlaca, "Placa");
 
-        CampoTextoUtil txtModelo = new CampoTextoUtil(15, new Color(150, 150, 150), 0, 48, Color.WHITE, Color.GRAY, fuenteRegular.deriveFont(15f));
+        txtModelo = new CampoTextoUtil(15, new Color(150, 150, 150), 0, 48, Color.WHITE, Color.GRAY, fuenteRegular.deriveFont(15f));
         txtModelo.setText("Modelo");
         configurarPlaceholder(txtModelo, "Modelo");
 
-        CampoTextoUtil txtCapacidad = new CampoTextoUtil(15, new Color(150, 150, 150), 0, 48, Color.WHITE, Color.GRAY, fuenteRegular.deriveFont(15f));
+        txtCapacidad = new CampoTextoUtil(15, new Color(150, 150, 150), 0, 48, Color.WHITE, Color.GRAY, fuenteRegular.deriveFont(15f));
         txtCapacidad.setText("Capacidad de pasajeros");
         configurarPlaceholder(txtCapacidad, "Capacidad de pasajeros");
 
@@ -361,6 +470,18 @@ public class RegistroUnidades extends JFrame {
         BotonUtil btnRegistrar = new BotonUtil("Registrar unidad", new Color(40, 100, 160), Color.WHITE, 15, fuenteBold.deriveFont(15f), 0, 48);
         btnRegistrar.setMaximumSize(campoSize);
         btnRegistrar.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        btnRegistrar.addActionListener(e -> {
+            String placa = txtPlaca.getText().equals("Placa") ? "" : txtPlaca.getText().trim();
+            String modelo = txtModelo.getText().equals("Modelo") ? "" : txtModelo.getText().trim();
+            String capacidad = txtCapacidad.getText().equals("Capacidad de pasajeros") ? "" : txtCapacidad.getText().trim();
+
+            controlador.registrarUnidad(placa, modelo, capacidad);
+            
+            txtPlaca.setText("Placa"); txtPlaca.setForeground(Color.GRAY);
+            txtModelo.setText("Modelo"); txtModelo.setForeground(Color.GRAY);
+            txtCapacidad.setText("Capacidad de pasajeros"); txtCapacidad.setForeground(Color.GRAY);
+        });
 
         int interlineado1_5cm = 55;
 
@@ -409,7 +530,7 @@ public class RegistroUnidades extends JFrame {
                     int imgAlto = img.getHeight(null);
                     
                     if (imgAncho > 0 && imgAlto > 0) {
-                        double escala = Math.max((double) (w - (margen * 2)) / imgAncho, (double) (h - (margen * 2)) / imgAlto);
+                        double escala = Math.min((double) (w - (margen * 2)) / imgAncho, (double) (h - (margen * 2)) / imgAlto);
                         int nuevoAncho = (int) (imgAncho * escala);
                         int nuevoAlto = (int) (imgAlto * escala);
                         int imgX = margen + ((w - (margen * 2)) - nuevoAncho) / 2;
@@ -461,19 +582,12 @@ public class RegistroUnidades extends JFrame {
 
     private void ejecutarAccionMenu(String opcion) {
         switch (opcion) {
-            case "Planificar itinerario":
-                break;
-            case "Registrar personal":
-                break;
-            case "Pasajeros diarios":
-                break;
-            case "Generar reporte":
-                break;
-            case "Cerrar sesión":
-                dispose();
-                break;
-            default:
-                break;
+            case "Planificar itinerario": break;
+            case "Registrar personal": break;
+            case "Pasajeros diarios": break;
+            case "Generar reporte": break;
+            case "Cerrar sesión": dispose(); break;
+            default: break;
         }
     }
 
