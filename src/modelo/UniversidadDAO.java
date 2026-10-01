@@ -11,7 +11,10 @@ import java.util.List;
 
 public class UniversidadDAO {
     //DATA ACCESS
-    private static final String Ruta_BDUCV= "data/BDUCV.txt";
+    private String Ruta_BDUCV;
+
+    public UniversidadDAO(){this.Ruta_BDUCV= "data/BDUCV.txt";} //Constructor vacio por defecto
+    public UniversidadDAO(String rutaBDUCV){this.Ruta_BDUCV= rutaBDUCV;} //Constructor con string para la creacion de temp en pruebas unitarias
 
     //Para tener toda la comunidad universitaria
     public List<Usuario> obtenerUsuarios(){
@@ -26,11 +29,10 @@ public class UniversidadDAO {
             while((linea = b.readLine()) !=null){ //recorre toda la lista
                 if(linea.trim().isEmpty()) continue;
 
-                String[] datos= linea.split("\\|");
+                String[] datos= linea.split("\\|",-1);
 
                 if (datos.length==6){
-                    double saldo= Double.parseDouble(datos[5].trim()); //Pasar de string a double
-                    Usuario u=new Usuario(datos[0], datos[1], datos[2], datos[3], datos[4], saldo);
+                    Usuario u=new Usuario(datos[0], "", datos[2], datos[3], "", 0.0);
                     lista.add(u); //anadir a la lista 
                     
                 } 
@@ -57,15 +59,14 @@ public class UniversidadDAO {
             while((linea = b.readLine()) !=null){ //recorre toda la lista
                 if(linea.trim().isEmpty()) continue;
 
-                String[] datos= linea.split("\\|");
+                String[] datos= linea.split("\\|",-1);//que no se pierdan los ultimos campos vacios
 
                 if (datos.length==6){
                     String rolUsuario= datos[3].trim(); //donde esta el rol
 
                     //comparar el rol buscado
                     if(rolUsuario.equalsIgnoreCase(rolBuscado.trim())){
-                        double saldo= Double.parseDouble(datos[5].trim()); //Pasar de string a double
-                        Usuario u=new Usuario(datos[0], datos[1], datos[2], datos[3], datos[4], saldo);
+                        Usuario u=new Usuario(datos[0].trim(), "", datos[2].trim(), datos[3].trim(), "", 0.0);
                         listaRol.add(u); //anadir a la lista si es el rol que se busca
                     }
                 } 
@@ -90,15 +91,15 @@ public class UniversidadDAO {
             while((linea = b.readLine()) !=null){ //recorre toda la lista
                 if(linea.trim().isEmpty()) continue;
 
-                String[] datos= linea.split("\\|");
+                String[] datos= linea.split("\\|",-1);//que no se pierdan los ultimos campos vacios
 
-                if (datos.length==6){
+                if (datos.length>=3){
                     String cedulaUsuario= datos[0].trim(); //donde esta la cedula
+                    
 
                     //comparar la cedula buscado
                     if(cedulaUsuario.equalsIgnoreCase(cedulaBuscada.trim())){
-                        double saldo= Double.parseDouble(datos[5].trim()); //Pasar de string a double
-                        return new Usuario(datos[0], datos[1], datos[2], datos[3], datos[4], saldo);     
+                        return new Usuario(datos[0].trim(), "", datos[1].trim(), datos[2].trim(), "", 0.0);  
                     }
                 } 
 
@@ -121,9 +122,9 @@ public class UniversidadDAO {
                 while((linea = b.readLine()) !=null){ //recorre toda la lista
                 if(linea.trim().isEmpty()) continue;
 
-                    String[] datos= linea.split("\\|");
+                    String[] datos= linea.split("\\|",-1); //que no se pierdan los ultimos campos vacios
 
-                    if (datos.length>=1){
+                    if (datos.length>=3){
                     String cedulaUsuario= datos[0].trim(); //donde esta la cedula
 
                         //comparar la cedula buscado
