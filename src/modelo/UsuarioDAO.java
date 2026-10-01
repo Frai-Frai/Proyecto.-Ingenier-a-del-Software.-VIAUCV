@@ -21,10 +21,10 @@ public class UsuarioDAO {
                 if(linea.trim().isEmpty()) continue;
 
                 String[] datos= linea.split("\\|");
-                double saldo= Double.parseDouble(datos[5].trim()); //Pasar de string a double
+                
 
                 if (datos.length==6){
-                        
+                    double saldo= Double.parseDouble(datos[5].trim()); //Pasar de string a double
                     Usuario u=new Usuario(datos[0], datos[1], datos[2], datos[3], datos[4], saldo);
                     lista.add(u); //anadir a la lista 
                     
