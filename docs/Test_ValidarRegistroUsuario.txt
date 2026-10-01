@@ -99,6 +99,6 @@ SALIDAS:
 ------------------------------------------------------------
 - FACTOR 13: Todos los campos válidos y autorizados. (Caso de éxito)
 - CLASES DE EQUIVALENCIA: todos los campos son válidos
-- ENTRADAS: "32499046","Fraidis Franco","fraidisf@gmail.com","estudiante","f123","f123"
+- ENTRADAS: "32499046","Fraidis Franco","fraidisf@gmail.com","estudiante","f123456","f123456"
 - SALIDA: "Registro exitoso."
 ------------------------------------------------------------
