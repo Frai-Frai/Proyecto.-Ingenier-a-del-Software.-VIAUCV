@@ -8,6 +8,9 @@ public class Registro extends JFrame{
     private BotonUtil botonR;
     private JLabel  IrAIniciarS;
     private EncabezadoUtil encabezado;
+    private CampoTextoUtil cuadritoCorreo, cuadritoName, cuadritoCedula;
+    private CampoContrasenaUtil cuadritoContraseña, cuadritoConfirmar;
+    private MenuUtil menu;
     //Tipografia 
     private Font fuenteGlacial(String ruta, float tamano, int estilo){
         try {
@@ -75,7 +78,7 @@ public class Registro extends JFrame{
         panelForm.add(nombreR);
 
         //Crea cuadrito para que el user pueda poner su nombre
-        CampoTextoUtil cuadritoName = new CampoTextoUtil(15, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
+        cuadritoName = new CampoTextoUtil(15, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
         cuadritoName.setBounds(50, 120, 400, 40);
         panelForm.add(cuadritoName);
 
@@ -86,7 +89,7 @@ public class Registro extends JFrame{
         panelForm.add(correoR);
 
         //Crea cuadrito para que el user pueda poner su correo
-        CampoTextoUtil cuadritoCorreo = new CampoTextoUtil(15, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
+        cuadritoCorreo = new CampoTextoUtil(15, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
         cuadritoCorreo.setBounds(50, 200, 400, 40);
         panelForm.add(cuadritoCorreo);
 
@@ -97,7 +100,7 @@ public class Registro extends JFrame{
         panelForm.add(cedulaR);
 
         //Crea cuadrito para que el user pueda poner su cedula
-        CampoTextoUtil cuadritoCedula = new CampoTextoUtil(15, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
+        cuadritoCedula = new CampoTextoUtil(15, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
         cuadritoCedula.setBounds(50, 280, 400, 40);
         panelForm.add(cuadritoCedula);
 
@@ -114,7 +117,7 @@ public class Registro extends JFrame{
         panelForm.add(avisoCont);
 
         //Crea cuadrito para que el user pueda poner su contraseña
-        CampoContrasenaUtil cuadritoContraseña = new CampoContrasenaUtil(15, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal); //CAMBIAR AKIII
+        cuadritoContraseña = new CampoContrasenaUtil(15, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal); //CAMBIAR AKIII
         cuadritoContraseña.setBounds(50, 360, 400, 40);
         panelForm.add(cuadritoContraseña);
 
@@ -125,7 +128,7 @@ public class Registro extends JFrame{
         panelForm.add(confirmarC);
 
         //Crea cuadrito para que el user pueda confirmar su contraseña
-        CampoContrasenaUtil cuadritoConfirmar = new CampoContrasenaUtil(15, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal); //CAMBIAR AKIII
+        cuadritoConfirmar = new CampoContrasenaUtil(15, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal); //CAMBIAR AKIII
         cuadritoConfirmar.setBounds(50, 440, 400, 40);
         panelForm.add(cuadritoConfirmar);
 
@@ -137,7 +140,7 @@ public class Registro extends JFrame{
 
         //cuadro en donde salen las opciones
         String[] opciones= {"Administrador", "Conductor","Estudiante", "Docente", "Público General"};
-        MenuUtil menu = new MenuUtil(opciones, 15, Colormenu, Color.BLACK, Colormenu, fuenteNormal);
+        menu = new MenuUtil(opciones, 15, Colormenu, Color.BLACK, Colormenu, fuenteNormal);
         menu.setFont(fuenteNormal);
         menu.setBackground(Colormenu);
         menu.setBounds(50, 520, 400, 40);
@@ -179,6 +182,29 @@ public class Registro extends JFrame{
 
     public JLabel getIrAIniciarS(){
         return IrAIniciarS;
-    }    
-  
+    }
+    
+    public CampoTextoUtil getNombre(){
+        return cuadritoName;
+    }
+    
+    public CampoTextoUtil getCorreo(){
+        return cuadritoCorreo;
+    }
+
+    public CampoTextoUtil getCedula(){
+        return cuadritoCedula;
+    }
+
+    public CampoContrasenaUtil getContraseña(){
+        return cuadritoContraseña;
+    }
+
+    public CampoContrasenaUtil getConfContraseña(){
+        return cuadritoConfirmar;
+    }
+
+    public MenuUtil getMenu(){
+        return menu;
+    }
 }
