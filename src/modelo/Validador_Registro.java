@@ -2,9 +2,11 @@ package modelo;
 
 public class Validador_Registro {
     private UsuarioDAO usuarioDAO;
+    private UniversidadDAO uniDAO;
 
-    public Validador_Registro(UsuarioDAO u){
+    public Validador_Registro(UsuarioDAO u, UniversidadDAO universidadDAO){
         this.usuarioDAO=u;
+        this.uniDAO= universidadDAO;
     }
 
     public String validarRegistro(String campoCedula, String nombre, String correo, String rol, String campoClave, String confirmarClave){
@@ -20,11 +22,14 @@ public class Validador_Registro {
         if(nombre.trim().isEmpty()){
             errores.append("- El campo de nombre y apellido no puede estar vacío.\n");
         }else if(!nombre.trim().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")){
-            return "- El nombre de usuario no permite caracateres especiales.\n";
+            errores.append( "- El nombre de usuario no permite caracateres especiales.\n");
         }
 
+        //correo vacio, correo formato incorrecto
         if(correo.trim().isEmpty()){
             errores.append("- El campo de correo no puede estar vacío.\n");
+        }else if(!correo.trim().contains("@") || !correo.trim().contains(".") || correo.indexOf("@") > correo.lastIndexOf(".")){
+            errores.append("- El correo ingresado no tiene un formato válido.\n");
         }
         
         //cedula vacia, contrasena llena, contrasena invalida
@@ -32,13 +37,6 @@ public class Validador_Registro {
             errores.append("- El campo de cédula no puede estar vacío\n");
         }else if(!campoCedula.trim().matches("\\d+")){
             errores.append("- La cédula solo debe contener números.\n");
-        }
-
-        //correo vacio, correo formato incorrecto
-        if(correo.trim().isEmpty()){
-            errores.append("- El campo de correo no puede estar vacío.\n");
-        }else if(!correo.trim().contains("@") || !correo.trim().contains(".") || correo.indexOf("@") > correo.lastIndexOf(".")){
-            errores.append("- El correo ingresado no tiene un formato válido .\n");
         }
 
         //contrasena vacia,por lo menos 6 de length y menor a 20
@@ -51,7 +49,7 @@ public class Validador_Registro {
         }
 
         if(!confirmarClave.equals(campoClave)){
-            errores.append("-  .\n");
+            errores.append("- Las contraseñas no coinciden.\n");
         };
 
 
@@ -70,7 +68,7 @@ public class Validador_Registro {
         if(rol.equalsIgnoreCase("estudiante") || rol.equalsIgnoreCase("profesor") 
             || rol.equalsIgnoreCase("admin") || rol.equalsIgnoreCase("conductor")){
 
-            Usuario usuarioUCV= usuarioDAO.buscarPorCedula(campoCedula);
+            Usuario usuarioUCV= uniDAO.buscarPorCedula(campoCedula); //ahora si busca en la BD de la UCV
 
             //buscar en la BD de la UCV
             if(usuarioUCV==null){
@@ -78,12 +76,11 @@ public class Validador_Registro {
             }
 
             //rol erroneo
-            if(!usuarioDAO.rolCorresponde(campoCedula, rol)){
+            if(!usuarioUCV.getRol().equalsIgnoreCase(rol)){
                 return "- El rol que ha seleccionado ("+rol+") no coincide con su registro en la UCV ("+usuarioUCV.getRol()+") .\n";
             }
 
         }
-
 
         //si todo salio bien
         return "Registro exitoso.";

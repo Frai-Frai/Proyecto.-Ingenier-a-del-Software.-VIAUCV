@@ -1,0 +1,104 @@
+ENTRADAS: 
+- Valores por parámetro de tipo String 
+
+PRECONDICIONES (Casos de prueba / Clases de equivalencia):
+
+1. Todos los campos del formulario vacíos.
+2. Campo de nombre vacío, los demás llenos.
+3. Campo de nombre con valores distintos a letras
+4. Campo de correo vacío, los demás llenos.
+5. Campo de correo inválido (sin @, . o el @ antes del . ), lo demás bien
+6. Campo de cédula vacío, los demás llenos.
+7. Campo de cédula con valores distintos a los numéricos.
+8. Campo de contraseña vacío, los demás llenos.
+9. Campo de contraseña menor a 6.
+10. Campo de contraseña y confirmar contraseña distintos.
+11. Cédula ya registrada en la web
+12. Cédula no registrada en la UCV
+13.Todos los campos completos, validos y datos pertenecientes a la BD de la UCV.
+
+ESPECIFICACIONES:
+Validar_Registro(): Devuelve un string con un mensaje dependiendo de la falla conseguida. Devuelve un string con un mensaje de registro exitoso.
+
+SALIDAS:
+
+1-"Por favor, complete todos lo campos del formulario."
+2-"- El campo de nombre y apellido no puede estar vacío."
+3-"- El nombre de usuario no permite caracteres especiales."
+4-"- El campo de correo no puede estar vacío."
+5-"- El correo ingresado no tiene un formato válido."
+6-"- El campo de cédula no puede estar vacío"
+7-"- La cédula solo debe contener números."
+8-"- El campo de la contraseña no puede estar vacío."
+9-"- La contraseña debe tener al menos 6 caracteres."
+10-"- Las contraseñas no coinciden."
+11-"- El usuario con la cédula ingresada ya se encuentra registrado"
+12-"- La cédula no se encuentra registrada en la base de datos de la UCV."
+13-"Registro exitoso."
+
+------------------------------------------------------------
+- FACTOR 1: Todos los campos del formulario vacíos
+- CLASES DE EQUIVALENCIA: ("") en todos los campos
+- ENTRADAS: "" en todos los campos
+- SALIDA: "Por favor, complete todos lo campos del formulario."
+------------------------------------------------------------
+- FACTOR 2: Nombre vacío
+- CLASES DE EQUIVALENCIA: ("")
+- ENTRADAS: ""
+- SALIDA: "- El campo de nombre y apellido no puede estar vacío."
+------------------------------------------------------------
+- FACTOR 3: Nombre inválido
+- CLASES DE EQUIVALENCIA: nombre con caracteres no alfabéticos
+- ENTRADAS: "Usuario 123", ""
+- SALIDA: "- El nombre de usuario no permite caracteres especiales."
+------------------------------------------------------------
+- FACTOR 4: Correo vacío
+- CLASES DE EQUIVALENCIA: ("")
+- ENTRADAS: ""
+- SALIDA:"- El campo de correo no puede estar vacío."
+------------------------------------------------------------
+- FACTOR 5: Correo inválido
+- CLASES DE EQUIVALENCIA: no tiene @ ||  . || el . antes que @ 
+- ENTRADAS: "Mariam@com"
+- SALIDA: "- El correo ingresado no tiene un formato válido."
+------------------------------------------------------------
+- FACTOR 6: Cédula vacía
+- CLASES DE EQUIVALENCIA: ("")
+- ENTRADAS: ""
+- SALIDA: "- El campo de cédula no puede estar vacío"
+------------------------------------------------------------
+- FACTOR 7: Cédula inválida.
+- CLASES DE EQUIVALENCIA: con letras || caracteres especiales
+- ENTRADAS: "3244f56t"
+- SALIDA: "- La cédula solo debe contener números."
+------------------------------------------------------------
+- FACTOR 8: Contraseña vacía
+- CLASES DE EQUIVALENCIA: ("")
+- ENTRADAS: ""
+- SALIDA: "- El campo de la contraseña no puede estar vacío."
+------------------------------------------------------------
+- FACTOR 9: Contraseña inválida.
+- CLASES DE EQUIVALENCIA: Longitud < 6
+- ENTRADAS: "123"
+- SALIDA: "- La contraseña debe tener al menos 6 caracteres."
+------------------------------------------------------------
+- FACTOR 10: Contraseñas distintas.
+- CLASES DE EQUIVALENCIA: contraseña != confirmarContraseña
+- ENTRADAS: "99999999","ClaveValida123"
+- SALIDA: "- Las contraseñas no coinciden."
+------------------------------------------------------------
+- FACTOR 11: Cédula ya registrada en la web
+- CLASES DE EQUIVALENCIA: user.buscarEnBD()!=null
+- ENTRADAS: "32499046", 
+- SALIDA: "- El usuario con la cédula ingresada ya se encuentra registrado"
+------------------------------------------------------------
+- FACTOR 12: Cédula no registrada en la UCV
+- CLASES DE EQUIVALENCIA: user.buscarEnBD()==null
+- ENTRADAS: "12345678"
+- SALIDA: "- La cédula no se encuentra registrada en la base de datos de la UCV."
+------------------------------------------------------------
+- FACTOR 13: Todos los campos válidos y autorizados. (Caso de éxito)
+- CLASES DE EQUIVALENCIA: todos los campos son válidos
+- ENTRADAS: "32499046","Fraidis Franco","fraidisf@gmail.com","estudiante","f123","f123"
+- SALIDA: "Registro exitoso."
+------------------------------------------------------------

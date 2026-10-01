@@ -1,16 +1,22 @@
 package modelo;
-import java.io.*;
-import java.util.List;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
-//DATA ACCESS
-public class UsuarioDAO {
-    private static final String Ruta_BDViaUCV= "data/BDViaUCV.txt";
+public class UniversidadDAO {
+    //DATA ACCESS
+    private static final String Ruta_BDUCV= "data/BDUCV.txt";
 
-    //PAra tener todo los usuarios de la pagina
+    //Para tener toda la comunidad universitaria
     public List<Usuario> obtenerUsuarios(){
         List<Usuario> lista= new ArrayList<>();
-        File f= new File(Ruta_BDViaUCV);
+        File f= new File(Ruta_BDUCV);
 
         if(!f.exists()) return lista;
 
@@ -40,7 +46,7 @@ public class UsuarioDAO {
     //Retorna los que coincidan con el rol de la pagina
     public List<Usuario> buscarPorRol (String rolBuscado){
         List<Usuario> listaRol=new ArrayList<>();
-        File f= new File(Ruta_BDViaUCV);
+        File f= new File(Ruta_BDUCV);
 
         if(!f.exists()){
             return listaRol; //si el archivo no existe 
@@ -75,7 +81,7 @@ public class UsuarioDAO {
 
     //Retorna el que coincide con la cedula de la pagina
         public Usuario buscarPorCedula (String cedulaBuscada){
-            File f=new File(Ruta_BDViaUCV);
+            File f=new File(Ruta_BDUCV);
 
             if(!f.exists()) return null;
 
@@ -107,7 +113,7 @@ public class UsuarioDAO {
 
         //Existe la cedula o no en la pagina
         public boolean cedulaExistente(String cedulaBuscada){
-            File f= new File(Ruta_BDViaUCV);
+            File f= new File(Ruta_BDUCV);
             if(!f.exists()) return false;
 
             try(BufferedReader b=new BufferedReader(new FileReader(f))){
@@ -136,7 +142,7 @@ public class UsuarioDAO {
 
         //Actualizar cosas (lo que le des como parametro, saldo o clave)
         public boolean actualizarDatos(Usuario uModificado){
-            File f= new File(Ruta_BDViaUCV);
+            File f= new File(Ruta_BDUCV);
             if(!f.exists())return false;
 
             List<Usuario> todos= obtenerUsuarios();
@@ -164,20 +170,4 @@ public class UsuarioDAO {
 
             return encontrado;
         }
-
-        //anadir nuevo usuario
-        public boolean anadirUsuario(Usuario uNuevo){
-            File f= new File(Ruta_BDViaUCV);
-
-            try(BufferedWriter bw= new BufferedWriter(new FileWriter(f, true))) { //lo anade al final junto a lo demas
-                bw.write(uNuevo.EscribirFormatoTXT());
-                bw.newLine();
-                return true;
-
-            }catch(IOException e){
-                System.out.println("error al guardar en la base de datos: "+e.getMessage());
-                return false;
-            }
-        }
-
 }
