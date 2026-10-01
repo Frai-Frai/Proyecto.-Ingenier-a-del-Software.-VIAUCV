@@ -65,8 +65,8 @@ public class Validador_Registro {
         }
 
         //si es estudiante, profesor, admin o conductor, se busca en la de la universidad
-        if(rol.equalsIgnoreCase("estudiante") || rol.equalsIgnoreCase("profesor") 
-            || rol.equalsIgnoreCase("admin") || rol.equalsIgnoreCase("conductor")){
+        if(rol.equalsIgnoreCase("Estudiante") || rol.equalsIgnoreCase("Docente") 
+            || rol.equalsIgnoreCase("Administrador") || rol.equalsIgnoreCase("Conductor")){
 
             Usuario usuarioUCV= uniDAO.buscarPorCedula(campoCedula); //ahora si busca en la BD de la UCV
 

@@ -4,3 +4,5 @@
 30564897|Alejandro Perez|alejoalt67@hotmail.com|profesor|071107|995.3
 28543211|Maria Garcia|MariaGatosM@gmail.com|General|g_atitoss|5020.45
 16578923|Antonio Espinoza|Antonioespinoza27@hotmail.com|conductor|busdriver4|0.0
+32114875|Mar Josefa|marJ@gmail.com|Público General|marjosefa|0.0
+31254789|Valeria Rojas|valeria@gmail.com|Público General|valeria|0.0

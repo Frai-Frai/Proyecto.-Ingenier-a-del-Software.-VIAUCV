@@ -1,5 +1,5 @@
-32499046|fraidisf@gmail.com|estudiante
-32133876|mariammbattikaahochee@gmail.com|estudiante
-30564897|alejoalt67@hotmail.com|profesor
-16578923|Antonioespinoza27@hotmail.com|conductor
+32499046|fraidisf@gmail.com|Estudiante
+32133876|mariammbattikaahochee@gmail.com|Estudiante
+30564897|alejoalt67@hotmail.com|Docente
+16578923|Antonioespinoza27@hotmail.com|Conductor
 31901633|elianymorales28@gmail.com|Administrador
