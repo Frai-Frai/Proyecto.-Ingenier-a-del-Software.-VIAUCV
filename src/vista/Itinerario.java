@@ -18,7 +18,7 @@ public class Itinerario extends JFrame {
     private JPanel panelPines;
    // private JLabel  CerrarS, placa, tipoRuta, destino, ptollegada, ptosalida, conductor;
     private JLabel  opPlanificar, opRegistrarP, opPDiarios, opGestionU, opGenR, opCerrarS;
-    private CampoTextoUtil cuadritoPlaca, cuadritoTipoRuta, cuadritoDestino, cuadritoPtoLlegada, cuadritoPtoPartida, cuadritoHorario, cuadritoConductor;
+    private CampoTextoUtil cuadritoPlaca, cuadritoTipoRuta, cuadritoDestino, cuadritoPtoLlegada, cuadritoPtoPartida, cuadritoHora, cuadritoDia,cuadritoConductor;
     //private CampoContrasenaUtil cuadritoContraseña, cuadritoConfirmar;
 
     //Tipografia 
@@ -162,7 +162,7 @@ public class Itinerario extends JFrame {
         
         //COMPLETAR ESTO
 
-        MiniVentanaUtil panelForm = new MiniVentanaUtil(30, Color.WHITE, 750, 380, true, azulCuadros);
+        MiniVentanaUtil panelForm = new MiniVentanaUtil(30, Color.WHITE, 750, 390, true, azulCuadros);
         panelForm.setBounds(270,300,525,380);
         panelForm.setLayout(null);
         add(panelForm);
@@ -174,7 +174,7 @@ public class Itinerario extends JFrame {
         LocalDate finS = inicioS.plusDays(6); //ver que dia es hoy y sumarle 6 para saber el dia que termina esa semana
        
         JLabel Semana = new JLabel("Semana: " + inicioS + " - " + finS);
-        Semana.setBounds(30,20,300,30);
+        Semana.setBounds(30,10,300,30);
         Semana.setFont(fuenteSubT);
         Semana.setForeground(Color.BLACK);//color
         panelForm.add(Semana);
@@ -183,73 +183,83 @@ public class Itinerario extends JFrame {
 
         //placa
         JLabel placa = new JLabel("Transporte Asignado (Placa): ");
-        placa.setBounds(30,70,200,30);
+        placa.setBounds(30,55,200,30);
         placa.setFont(fuenteLetras);
         panelForm.add(placa);
 
         cuadritoPlaca = new CampoTextoUtil(10, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
-        cuadritoPlaca.setBounds(250,70,240,32);
+        cuadritoPlaca.setBounds(250,55,240,32);
         panelForm.add(cuadritoPlaca);
 
         //tipo ruta
         JLabel Tpruta = new JLabel("Tipo de Ruta: ");
-        Tpruta.setBounds(30,110,200,30);
+        Tpruta.setBounds(30,95,200,30);
         Tpruta.setFont(fuenteLetras);
         panelForm.add(Tpruta);
 
         cuadritoTipoRuta = new CampoTextoUtil(10, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
-        cuadritoTipoRuta.setBounds(250,110,240,32);
+        cuadritoTipoRuta.setBounds(250,95,240,32);
         panelForm.add(cuadritoTipoRuta);
 
         //pto de llegada
         JLabel destino = new JLabel("Destino: ");
-        destino.setBounds(30,150,200,30);
+        destino.setBounds(30,135,200,30);
         destino.setFont(fuenteLetras);
         panelForm.add(destino);
 
         cuadritoDestino = new CampoTextoUtil(10, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
-        cuadritoDestino.setBounds(250,150,240,32);
+        cuadritoDestino.setBounds(250,135,240,32);
         panelForm.add(cuadritoDestino);
 
         //pto de partida
 
         JLabel ptoPartida = new JLabel("Punto de Partida: ");
-        ptoPartida.setBounds(30,190,200,30);
+        ptoPartida.setBounds(30,175,200,30);
         ptoPartida.setFont(fuenteLetras);
         panelForm.add(ptoPartida);
 
         cuadritoPtoPartida = new CampoTextoUtil(10, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
-        cuadritoPtoPartida.setBounds(250,190,240,32);
+        cuadritoPtoPartida.setBounds(250,175,240,32);
         panelForm.add(cuadritoPtoPartida);
 
         //pto de llegada
         JLabel ptollegada = new JLabel("Punto de Llegada: ");
-        ptollegada.setBounds(30,230,200,30);
+        ptollegada.setBounds(30,215,200,30);
         ptollegada.setFont(fuenteLetras);
         panelForm.add(ptollegada);
 
         cuadritoPtoLlegada = new CampoTextoUtil(10, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
-        cuadritoPtoLlegada.setBounds(250,230,240,32);
+        cuadritoPtoLlegada.setBounds(250,215,240,32);
         panelForm.add(cuadritoPtoLlegada);
 
-        //Horarios
-        JLabel horario = new JLabel("Horarios: ");
-        horario.setBounds(30,270,200,30);
-        horario.setFont(fuenteLetras);
-        panelForm.add(horario);
+        //Hora
+        JLabel dia = new JLabel("Día de la Semana: ");
+        dia.setBounds(30,255,200,30);
+        dia.setFont(fuenteLetras);
+        panelForm.add(dia);
 
-        cuadritoHorario = new CampoTextoUtil(10, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
-        cuadritoHorario.setBounds(250,270,240,30);
-        panelForm.add(cuadritoHorario);
+        cuadritoDia = new CampoTextoUtil(10, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
+        cuadritoDia.setBounds(250,255,240,30);
+        panelForm.add(cuadritoDia);
+
+        //Hora
+        JLabel hora = new JLabel("Hora: ");
+        hora.setBounds(30,295,200,30);
+        hora.setFont(fuenteLetras);
+        panelForm.add(hora);
+
+        cuadritoHora = new CampoTextoUtil(10, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
+        cuadritoHora.setBounds(250,295,240,30);
+        panelForm.add(cuadritoHora);
         
         //conductor
         JLabel conductor = new JLabel("Conductor Asignado: ");
-        conductor.setBounds(30,310,200,30);
+        conductor.setBounds(30,332,200,30);
         conductor.setFont(fuenteLetras);
         panelForm.add(conductor);
 
         cuadritoConductor = new CampoTextoUtil(10, azulCuadros, 300, 30, Color.WHITE, Color.BLACK, fuenteNormal);
-        cuadritoConductor.setBounds(250,310,240,32);
+        cuadritoConductor.setBounds(250,335,240,32);
         panelForm.add(cuadritoConductor);
 
         botonP = new BotonUtil("Subir itinerario", azulCuadros, Color.WHITE, 15, fuenteSubT, 180, 40);
@@ -292,8 +302,12 @@ public class Itinerario extends JFrame {
         return cuadritoPtoLlegada; 
     }
 
-    public CampoTextoUtil getCuadritoHorario(){
-        return cuadritoHorario; 
+    public CampoTextoUtil getCuadritoDia(){
+        return cuadritoDia; 
+    }
+
+    public CampoTextoUtil getCuadritoHora(){
+        return cuadritoHora; 
     }
 
     public CampoTextoUtil getCuadritoConductor(){ 

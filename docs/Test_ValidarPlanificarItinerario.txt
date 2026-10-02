@@ -81,4 +81,3 @@ FACTOR 8: Horario duplicado.
 
 
 
-SALIDAS:
