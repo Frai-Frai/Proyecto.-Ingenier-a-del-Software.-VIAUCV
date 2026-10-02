@@ -1,0 +1,83 @@
+ENTRADAS:
+- Valores por parámetros tipo Sring.
+
+PRECONDICIONES:
+1.Placa vacía, los demás campos llenos.
+2.Tipo de ruta vacía, los demás campos llenos.
+3.Destino vacío, los demás campos llenos.
+4.Punto de Partida vacío, los demás campos llenos.
+5.Punto de Llegada vacío, los demás campos llenos.
+6.Horario vacío, los demás campos llenos.
+7.Conductor Asignado vacío, los demás campos llenos.
+8.Solapamiento entre horarios de una Ruta ya establecida anteriormente.
+9.Conductor asignado que no ha sido registrado en la base de datos de ViaUcv anteriormente;
+10.Placa ingresada que no se encuentra en la base de datos de ViaUcv.
+11.Número de placa con simbolos no permitidos.
+12.Punto de partida que no coincide con un lugar de la ciudad Universitaria (UCV).
+13.Horario ingresado incorrecto(horas no válidas o no posibles)
+14.Todos los datos completos y correctos.
+
+ESPECIFICACIONES:
+Validar_Itinerario(); Devuelve un string con un mensaje dependiendo de la falla conseguida. Devuelve un string con un mensaje de registro exitoso.
+
+SALIDAS:
+1-"Por favor, complete todos lo campos del formulario."
+2-"Por favor, complete todos lo campos del formulario."
+3-"Por favor, complete todos lo campos del formulario."
+4-"Por favor, complete todos lo campos del formulario."
+5-"Por favor, complete todos lo campos del formulario."
+6-"Por favor, complete todos lo campos del formulario."
+7-"Por favor, complete todos lo campos del formulario."
+8."Para esta ruta ya se encuentra este horario registrado"
+9."El conductor ingresado no se encuentra registrado"
+10."La placa ingresada no coincide con ninguna unidad registrada"
+11."Placa ingresada inválida"
+12."El punto de partida no coincide con la ciudad Universitaria" 
+13."Registro exitoso"
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+FACTOR 1: Placa vacía.
+- CLASES DE EQUIVALENCIA: ("", tipo de ruta válida, destino válido, punto de partida válida, punto de llegada válido, horario válido, conductor válido )
+- ENTRADAS: " "
+- SALIDA: "Por favor, complete todos lo campos del formulario."
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+FACTOR 2: Tipo de Ruta vacía.
+- CLASES DE EQUIVALENCIA: (Placa válida, " ", destino válido, punto de partida válida, punto de llegada válido, horario válido, conductor válido )
+- ENTRADAS: " "
+- SALIDA: "Por favor, complete todos lo campos del formulario."
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+FACTOR 3: Destino vacío.
+- CLASES DE EQUIVALENCIA: (Placa válida, tipo de ruta válida, " ", punto de partida válida, punto de llegada válido, horario válido, conductor válido )
+- ENTRADAS: " "
+- SALIDA: "Por favor, complete todos lo campos del formulario."
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+FACTOR 4: Punto de Partida vacío.
+- CLASES DE EQUIVALENCIA: (Placa válida, tipo de ruta válida, destino válido," ", punto de llegada válido, horario válido, conductor válido )
+- ENTRADAS: " "
+- SALIDA: "Por favor, complete todos lo campos del formulario."
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+FACTOR 5: Punto de Llegada vacío.
+- CLASES DE EQUIVALENCIA: (Placa válida, tipo de ruta válida, destino válido, punto de partida válida, " ", horario válido, conductor válido)
+- ENTRADAS: " "
+- SALIDA: "Por favor, complete todos lo campos del formulario."
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+FACTOR 6: Horario vacío.
+- CLASES DE EQUIVALENCIA: (Placa válida, tipo de ruta válida, destino válido, punto de partida válida, punto de llegada válido, " ", conductor válido)
+- ENTRADAS: " "
+- SALIDA: "Por favor, complete todos lo campos del formulario."
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+FACTOR 7: Conductor Asignado vacío.
+- CLASES DE EQUIVALENCIA: (Placa válida, tipo de ruta válida, destino válido, punto de partida válida, punto de llegada válido, horario válido, " ")
+- ENTRADAS: " "
+- SALIDA: "Por favor, complete todos lo campos del formulario."
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+FACTOR 8: Horario duplicado.
+- CLASES DE EQUIVALENCIA: horario == itineraroDao.getHorario();
+- ENTRADAS: " 10 am"
+- SALIDA: "Por favor, complete todos lo campos del formulario."
+
+
+
+
+
