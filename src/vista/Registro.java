@@ -147,7 +147,7 @@ public class Registro extends JFrame{
         panelForm.add(menu);
 
         //botoncito de registro
-        botonR= new BotonUtil("Crear Cuenta", azulCuadros, Color.WHITE, 20, new Font("SansSerif", Font.BOLD, 14), 180, 40);
+        botonR = new BotonUtil("Crear Cuenta", azulCuadros, Color.WHITE, 20, new Font("SansSerif", Font.BOLD, 14), 180, 40);
         botonR.setBounds(155, 580, 190, 46);
         panelForm.add(botonR);
         

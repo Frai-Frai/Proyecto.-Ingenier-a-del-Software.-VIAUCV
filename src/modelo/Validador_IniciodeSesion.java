@@ -20,7 +20,7 @@ public class Validador_IniciodeSesion {
         //cedula vacia, contrasena llena, contrasena invalida
         if(campoCedula.trim().isEmpty()){
             errores.append("- El campo de cédula no puede estar vacío.\n");
-        }else if(!campoCedula.trim().matches("([a-zA-Z]+ {1}[a-zA-Z]+)|\\d+")){
+        }else if(!campoCedula.trim().matches("\\d+")){
             errores.append("- La cédula solo debe contener números.\n");
         }
 
@@ -48,8 +48,6 @@ public class Validador_IniciodeSesion {
         }
 
         //si todo salio bien
-        return "Ingreso exitoso.";
-
-        
+        return "Ingreso exitoso."; 
     }
 }
