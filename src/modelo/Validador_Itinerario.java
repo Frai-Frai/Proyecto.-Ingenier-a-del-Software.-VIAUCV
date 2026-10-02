@@ -55,17 +55,15 @@ public class Validador_Itinerario {
         //dia vacio, dia de semana invalido
         if(itinerario.getDia().trim().isEmpty()){
             errores.append("- El campo de día no puede estar vacío.\n");
-        }else if(itinerario.getDia()!="Lunes" && itinerario.getDia()!="Martes" && itinerario.getDia()!="Miércoles" && itinerario.getDia()!="Jueves" && itinerario.getDia()!="Viernes"){
+        }else if(!itinerario.getDia().equalsIgnoreCase("Lunes") && !itinerario.getDia().equalsIgnoreCase("Martes") && !itinerario.getDia().equalsIgnoreCase("Miércoles") && !itinerario.getDia().equalsIgnoreCase("Jueves") && !itinerario.getDia().equalsIgnoreCase("Viernes")){
             errores.append("- El campo de día debe ser un día de la semana válido (Lunes, Martes, Miércoles, Jueves, Viernes).\n");
         }
 
-        //hora vacia, formato invalido, mayor a 4
+        //hora vacia, formato invalido, mayor a 6
         if(itinerario.getHora().trim().isEmpty()){
             errores.append("- El campo de hora no puede estar vacío.\n");
-        }else if(!itinerario.getHora().matches("^([01]?\\d|2[0-3]):[0-5]\\d$")){
-            errores.append("- El campo de hora debe tener un formato válido (HH:mm).\n");
-        }else if(itinerario.getHora().length()>4){
-            errores.append("- El campo de hora debe contener solo una hora establecida de una ruta específica.\n");
+        }else if(!itinerario.getHora().matches("^([01]?\\d|2[0-3]):[0-5]\\d\\s?(am|pm|AM|PM)?$")){
+            errores.append("- El campo de hora debe tener un formato válido (HH:mm)(am/pm).\n");
         }
 
         //conductor vacio (cedula), formato invalido (solo numeros)
@@ -93,7 +91,7 @@ public class Validador_Itinerario {
         }
 
         //el itinerario solapa con otro itinerario existente
-        if(!itinerarioDao.itinerarioSolapado(itinerario)){
+        if(itinerarioDao.itinerarioSolapado(itinerario)){
             return "- El itinerario se solapa con otro itinerario existente.";
         }
 

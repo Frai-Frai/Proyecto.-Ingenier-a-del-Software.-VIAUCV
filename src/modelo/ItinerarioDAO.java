@@ -44,9 +44,13 @@ public class ItinerarioDAO {
     public boolean itinerarioSolapado(ItinerarioModelo itinerario) {
         List<ItinerarioModelo> lista= obtenerRutas();
 
+        if(lista==null || itinerario==null){
+            return false;
+        }
+
         for(ItinerarioModelo i: lista){
-            if(i.getPlacaAsignada().equals(itinerario.getPlacaAsignada()) && i.getDia().equals(itinerario.getDia()) &&
-            i.getHora().equals(itinerario.getHora())){ //si ambos tienen la misma placa, mismo dia y hora entonces se solapan
+            if(i.getPlacaAsignada().equalsIgnoreCase(itinerario.getPlacaAsignada()) && i.getDia().equalsIgnoreCase(itinerario.getDia()) &&
+            i.getHora().equalsIgnoreCase(itinerario.getHora())){ //si ambos tienen la misma placa, mismo dia y hora entonces se solapan
                 return true;
             }
         }
