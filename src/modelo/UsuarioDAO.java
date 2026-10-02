@@ -5,7 +5,10 @@ import java.util.ArrayList;
 
 //DATA ACCESS
 public class UsuarioDAO {
-    private static final String Ruta_BDViaUCV= "data/BDViaUCV.txt";
+    private String Ruta_BDViaUCV;
+
+    public UsuarioDAO(){this.Ruta_BDViaUCV= "data/BDViaUCV.txt";} //Constructor vacio por defecto
+    public UsuarioDAO(String rutaBDViaUCV){this.Ruta_BDViaUCV= rutaBDViaUCV;} //Constructor con string para la creacion de temp en pruebas unitarias
 
     //PAra tener todo los usuarios de la pagina
     public List<Usuario> obtenerUsuarios(){

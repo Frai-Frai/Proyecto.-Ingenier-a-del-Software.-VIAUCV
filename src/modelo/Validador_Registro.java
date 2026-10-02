@@ -22,7 +22,7 @@ public class Validador_Registro {
         if(nombre.trim().isEmpty()){
             errores.append("- El campo de nombre y apellido no puede estar vacío.\n");
         }else if(!nombre.trim().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")){
-            errores.append( "- El nombre de usuario no permite caracateres especiales.\n");
+            errores.append( "- El nombre de usuario no permite caracteres especiales.\n");
         }
 
         //correo vacio, correo formato incorrecto
@@ -34,7 +34,7 @@ public class Validador_Registro {
         
         //cedula vacia, contrasena llena, contrasena invalida
         if(campoCedula.trim().isEmpty()){
-            errores.append("- El campo de cédula no puede estar vacío\n");
+            errores.append("- El campo de cédula no puede estar vacío.\n");
         }else if(!campoCedula.trim().matches("\\d+")){
             errores.append("- La cédula solo debe contener números.\n");
         }
@@ -77,7 +77,7 @@ public class Validador_Registro {
 
             //rol erroneo
             if(!usuarioUCV.getRol().equalsIgnoreCase(rol)){
-                return "- El rol que ha seleccionado ("+rol+") no coincide con su registro en la UCV ("+usuarioUCV.getRol()+") .\n";
+                return "- El rol que ha seleccionado ("+rol+") no coincide con su registro en la UCV ("+usuarioUCV.getRol()+").\n";
             }
 
         }
