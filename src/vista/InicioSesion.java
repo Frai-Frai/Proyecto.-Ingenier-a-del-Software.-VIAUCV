@@ -89,7 +89,7 @@ public class InicioSesion extends JFrame {
         //Campo de usuario 
         Font fuente1 = fuenteGlacial("res/GlacialIndifference-Regular.otf", 19, Font.PLAIN);
 
-        JLabel subtitulo1= new JLabel("Ingresa tu usuario o cédula", JLabel.LEFT);
+        JLabel subtitulo1= new JLabel("Ingresa tu cédula", JLabel.LEFT);
         subtitulo1.setFont(fuente1);
         subtitulo1.setBounds(40,145,320,30);
         miniVentana.add(subtitulo1);

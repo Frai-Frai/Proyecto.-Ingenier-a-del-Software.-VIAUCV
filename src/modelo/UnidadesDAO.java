@@ -89,4 +89,40 @@ public class UnidadesDAO {
 
     return lista;
 }
+
+    //buscar por placa 
+    public UnidadBus buscarPorPlaca (String placaBuscada){
+            File f=new File(RUTA_TXT);
+
+            if(!f.exists()) return null;
+
+            try(BufferedReader b=new BufferedReader(new FileReader(f))){
+                String linea;
+
+            while((linea = b.readLine()) !=null){ //recorre toda la lista
+                if(linea.trim().isEmpty()) continue;
+
+                String[] datos= linea.split("\\|");
+
+                if (datos.length==4){
+                    String placa= datos[0].trim(); //donde esta la placa
+
+                    //comparar la placa buscada
+                    if(placa.equalsIgnoreCase(placaBuscada.trim())){
+                        String modelo= datos[1].trim();
+                        String capacidad= datos[2].trim();
+                        String estado= datos[3].trim();
+                        return new UnidadBus(placa, modelo, capacidad, estado);
+                    }
+                }
+
+            }
+            }catch(IOException e){
+                System.out.println("Error al buscar la placa: "+e.getMessage());;
+            }
+
+            return null;
+        }
+
+
 }

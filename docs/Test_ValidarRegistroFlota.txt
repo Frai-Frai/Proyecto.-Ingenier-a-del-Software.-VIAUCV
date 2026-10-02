@@ -12,7 +12,7 @@ PRECONDICIONES (Casos de prueba / Clases de equivalencia):
 5. Placa y modelo vacíos, pero con capacidad válida.
 6. Placa y capacidad vacías, pero con modelo válido.
 7. Modelo y capacidad vacíos, pero con placa válida.
-8. Placa con ímbolos no permitidos.  
+8. Placa con símbolos no permitidos.  
 9. Placa duplicada.
 10. Placa con longitud inválida.
 11. Capacidad con caracteres no numéricos.

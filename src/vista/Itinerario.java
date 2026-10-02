@@ -4,6 +4,9 @@ import modelo.*;
 
 import java.io.File;
 import javax.swing.border.EmptyBorder;
+
+import controlador.Controlador_Itinerario;
+
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.awt.geom.RoundRectangle2D;
@@ -328,7 +331,9 @@ public class Itinerario extends JFrame {
         SwingUtilities.invokeLater(() -> {
           //  Usuario admin = new Usuario(null);
             Usuario admin = new Usuario("01236547", "adminprueba", "correo@gmail.com", "Administrador", "admin12", 0.0);
-            new Itinerario(admin).setVisible(true);
+            Itinerario vista=new Itinerario(admin);
+            new Controlador_Itinerario(vista);
+            vista.setVisible(true);
         });
     }
 
