@@ -41,8 +41,9 @@ public class RegistroUnidades extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        Font fuenteRegular = cargarFuente("res/GlacialIndifference-Regular.otf", 15f, Font.PLAIN);
-        Font fuenteBold = cargarFuente("res/GlacialIndifference-Bold.otf", 15f, Font.BOLD);
+        // Fuentes regular y bold actualizadas a tamaño 18f
+        Font fuenteRegular = cargarFuente("res/GlacialIndifference-Regular.otf", 18f, Font.PLAIN);
+        Font fuenteBold = cargarFuente("res/GlacialIndifference-Bold.otf", 18f, Font.BOLD);
 
         // PANEL IZQUIERDO
         JPanel panelMenu = new JPanel() {
@@ -81,11 +82,12 @@ public class RegistroUnidades extends JFrame {
         }
         
         panelMenu.add(lblLogo);
-        panelMenu.add(Box.createRigidArea(new Dimension(0, 35)));
+        panelMenu.add(Box.createRigidArea(new Dimension(0, 30)));
 
+        // Opciones principales del menú
         String[] opciones = {
             "Planificar itinerario", "Registrar personal", "Pasajeros diarios",
-            "Gestión de unidades", "Generar reporte", "Cerrar sesión"
+            "Gestión de unidades", "Generar reporte"
         };
 
         for (int i = 0; i < opciones.length; i++) {
@@ -93,7 +95,7 @@ public class RegistroUnidades extends JFrame {
 
             if (i == 3) {
                 JLabel lblOpcion = new JLabel(textoOpcion);
-                lblOpcion.setFont(fuenteBold.deriveFont(15f));
+                lblOpcion.setFont(fuenteBold);
                 
                 JPanel panelActivoWrapper = new JPanel(new BorderLayout());
                 panelActivoWrapper.setOpaque(true);
@@ -105,7 +107,7 @@ public class RegistroUnidades extends JFrame {
                 panelMenu.add(panelActivoWrapper);
             } else {
                 JLabel lblOpcion = new JLabel(textoOpcion);
-                lblOpcion.setFont(fuenteRegular.deriveFont(15f));
+                lblOpcion.setFont(fuenteBold);
                 lblOpcion.setBorder(new EmptyBorder(0, 15, 0, 0));
                 lblOpcion.setAlignmentX(Component.LEFT_ALIGNMENT);
                 lblOpcion.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -131,9 +133,37 @@ public class RegistroUnidades extends JFrame {
             }
             
             if (i < opciones.length - 1) {
-                panelMenu.add(Box.createRigidArea(new Dimension(0, 22)));
+                panelMenu.add(Box.createRigidArea(new Dimension(0, 18)));
             }
         }
+
+        // Espacio mayor para empujar "Cerrar sesión" más hacia abajo
+        panelMenu.add(Box.createRigidArea(new Dimension(0, 80)));
+        
+        JLabel lblCerrarSesion = new JLabel("Cerrar sesión");
+        lblCerrarSesion.setFont(fuenteBold);
+        lblCerrarSesion.setBorder(new EmptyBorder(0, 15, 0, 0));
+        lblCerrarSesion.setAlignmentX(Component.LEFT_ALIGNMENT);
+        lblCerrarSesion.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        lblCerrarSesion.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                lblCerrarSesion.setForeground(new Color(30, 85, 145));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                lblCerrarSesion.setForeground(Color.BLACK);
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ejecutarAccionMenu("Cerrar sesión");
+            }
+        });
+        panelMenu.add(lblCerrarSesion);
+
         panelMenu.add(Box.createVerticalGlue());
 
         // PANEL DERECHO 
@@ -528,7 +558,6 @@ public class RegistroUnidades extends JFrame {
         panelImagenBus.setOpaque(false);
         panelImagenBus.setLayout(new BorderLayout());
 
-        // Botón inferior "Unidades en Estado Operativo" con su listener vinculado
         BotonUtil btnEstadoOperativo = new BotonUtil("Unidades en Estado Operativo", new Color(40, 100, 160), Color.WHITE, 15, fuenteBold.deriveFont(15f), 0, 48);
         btnEstadoOperativo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 48));
 
