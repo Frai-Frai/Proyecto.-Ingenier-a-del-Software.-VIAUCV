@@ -48,8 +48,8 @@ public class Controlador_Itinerario {
         pantalla.getCuadritoDestino().getText().trim(), 
         pantalla.getCuadritoPtoPartida().getText().trim(), 
         pantalla.getCuadritoPtoLlegada().getText().trim(), 
-        pantalla.getCuadritoHorario().getText().trim(),  //CAMBIAR A LA DE DIA
-        pantalla.getCuadritoHorario().getText().trim(), //CAMBIAR A LA DE HORA
+        pantalla.getCuadritoDia().getText().trim(),  
+        pantalla.getCuadritoHora().getText().trim(), 
         pantalla.getCuadritoConductor().getText().trim()
     );
 
