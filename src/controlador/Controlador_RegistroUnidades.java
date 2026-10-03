@@ -1,12 +1,14 @@
 package controlador;
 
-import modelo.UnidadBus;
-import modelo.UnidadesDAO;
-import vista.RegistroUnidades;
-
+import modelo.*;
+import vista.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.*;
+
 import java.awt.*;
 import java.util.List;
+
 
 public class Controlador_RegistroUnidades {
     
@@ -15,11 +17,26 @@ public class Controlador_RegistroUnidades {
 
     public Controlador_RegistroUnidades(RegistroUnidades vista) {
         this.vista = vista;
+        this.vista.setControlador(this);
         this.dao = new UnidadesDAO();
         
         if (this.vista != null) {
             cargarBusesEnVista();
         }
+
+        this.vista.getOpPlanificar().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                IrAItinerario();
+            }
+        });
+
+        this.vista.getOpCerrarS().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                irInicio();
+            }
+        });
     }
 
     public void cargarBusesEnVista() {
@@ -161,5 +178,28 @@ public class Controlador_RegistroUnidades {
 
         dialogoActivos.add(panelContenido);
         dialogoActivos.setVisible(true);
+    }
+
+    public void IrAItinerario(){
+         // 1. Rescatas al usuario de la ventana de unidades
+        this.vista.setVisible(false);
+        this.vista.dispose(); //se cierra la pantalla de g de unidades
+        
+        Usuario admin = vista.getAdminActual();
+ 
+        Itinerario pantallaItinerario = new Itinerario(admin); //se crea la pantalla de itinerario
+        new Controlador_Itinerario(pantallaItinerario);
+        pantallaItinerario.setVisible(true);
+    }
+
+
+    private void irInicio(){
+        
+        this.vista.setVisible(false);
+        this.vista.dispose();
+        Inicio pantallaI = new Inicio();
+        new Controlador_Inicio(pantallaI);
+        pantallaI.setVisible(true);
+        
     }
 }

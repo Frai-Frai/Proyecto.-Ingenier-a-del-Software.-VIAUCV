@@ -1,7 +1,7 @@
 package vista;
 
 import util.*;
-import modelo.UnidadBus;
+import modelo.*;
 import controlador.Controlador_RegistroUnidades;
 
 import javax.swing.*;
@@ -18,6 +18,7 @@ import java.util.List;
 
 public class RegistroUnidades extends JFrame {
 
+    private Usuario adminActual;
     private JPanel panelFormularioFlotante;
     private JPanel panelDerechaCentro;
     private JPanel panelBuses; 
@@ -35,7 +36,11 @@ public class RegistroUnidades extends JFrame {
     private CampoTextoUtil txtCapacidad;
     private BotonUtil btnRegistrar;
 
-    public RegistroUnidades() {
+    private JLabel opPlanificar, opRegistrarP, opPDiarios, opGestionU, opGenR, opCerrarS;
+    
+    public RegistroUnidades(Usuario admin) {
+
+        this.adminActual = admin;
         setTitle("Registro de Unidades - UCV");
         setSize(1200, 750);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,23 +48,65 @@ public class RegistroUnidades extends JFrame {
         setLayout(new BorderLayout());
 
         Font fuenteBold = cargarFuente("res/GlacialIndifference-Bold.otf", 18f, Font.BOLD);
+        Font fuenteLink = cargarFuente("res/GlacialIndifference-Bold.otf", 16f, Font.BOLD);
+        Color azulCuadros = new Color(0x0D47A1); 
+        Color Colormenu = new Color(214, 233, 245);
+        
+        JPanel panelMenu = new JPanel(new BorderLayout());
+        panelMenu.setOpaque(false);
+        panelMenu.setBorder(new EmptyBorder(12, 12, 12, 0)); // Margen exterior
 
-        // 1. PANEL MENU
-        JPanel panelMenu = InterfazUtil.crearPanelMenu(
-            new String[] {
-                "Planificar itinerario", "Registrar personal", "Pasajeros diarios",
-                "Gestión de unidades", "Generar reporte", 
-            },
-            new Color(205, 228, 238), 
-            opcion -> ejecutarAccionMenu(opcion)
-        );
+        MiniVentanaUtil menuIzq = new MiniVentanaUtil(30, Colormenu, 240, 700, false, Colormenu);
+        menuIzq.setPreferredSize(new Dimension(240, 0)); // Fija el ancho en el BorderLayout
+        menuIzq.setLayout(null);
 
-        // 2. PANEL DERECHO TOTAL
+        // Logo
+        ImageIcon logoViaUCV = new ImageIcon("res/LogoViaUCV.png");
+        Image imgRedimensionada = logoViaUCV.getImage().getScaledInstance(160, -1, Image.SCALE_SMOOTH); 
+        JLabel logo = new JLabel(new ImageIcon(imgRedimensionada));   
+        logo.setBounds(30, 20, 160, 100);    
+        menuIzq.add(logo);
+        
+        // Opciones del menú
+        opPlanificar = new JLabel("Planificar Itinerario");
+        opPlanificar.setBounds(30, 150, 180, 30);
+        new TextosInteractivosUtil(opPlanificar, "Planificar Itinerario", Color.BLACK, azulCuadros, fuenteLink);
+        menuIzq.add(opPlanificar);
+        
+        opRegistrarP = new JLabel("Registrar Personal");
+        opRegistrarP.setBounds(30, 200, 180, 30);
+        new TextosInteractivosUtil(opRegistrarP, "Registrar Personal", Color.BLACK, azulCuadros, fuenteLink);
+        menuIzq.add(opRegistrarP);
+        
+        opPDiarios = new JLabel("Pasajeros Diarios");
+        opPDiarios.setBounds(30, 250, 180, 30);
+        new TextosInteractivosUtil(opPDiarios, "Pasajeros Diarios", Color.BLACK, azulCuadros, fuenteLink);
+        menuIzq.add(opPDiarios);
+
+        opGestionU = new JLabel("Gestión de Unidades");
+        opGestionU.setBounds(30, 300, 180, 30);
+        new TextosInteractivosUtil(opGestionU, "Gestión de Unidades", Color.BLACK, azulCuadros, fuenteLink);
+        menuIzq.add(opGestionU);
+
+        opGenR = new JLabel("Generar Reporte");
+        opGenR.setBounds(30, 350, 180, 30);
+        new TextosInteractivosUtil(opGenR, "Generar Reporte", Color.BLACK, azulCuadros, fuenteLink);
+        menuIzq.add(opGenR);
+
+        opCerrarS = new JLabel("Cerrar Sesión");
+        opCerrarS.setBounds(30, 450, 180, 30);
+        new TextosInteractivosUtil(opCerrarS, "Cerrar Sesión", Color.BLACK, azulCuadros, fuenteLink);
+        menuIzq.add(opCerrarS);
+
+        panelMenu.add(menuIzq, BorderLayout.CENTER);
+        add(panelMenu, BorderLayout.WEST);
+        
+        // Panel derecho
         JPanel panelDerechoTotal = new JPanel(new BorderLayout());
         panelDerechoTotal.setBackground(new Color(205, 228, 238));
         panelDerechoTotal.setBorder(new EmptyBorder(12, 12, 12, 12));
 
-        // PANEL SUPERIOR
+        // Panel superior
         JPanel panelSuperior = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -98,7 +145,7 @@ public class RegistroUnidades extends JFrame {
 
         panelSuperior.add(panelNorteSuperior, BorderLayout.NORTH);
 
-        // CONTENEDOR CENTRAL DE LOS BUSES CON FLECHAS
+        // donde se ven los buses
         JPanel panelCentroBusesConFlechas = new JPanel(new BorderLayout(10, 0));
         panelCentroBusesConFlechas.setOpaque(false);
 
@@ -168,13 +215,12 @@ public class RegistroUnidades extends JFrame {
         panelDerechoTotal.add(panelSuperiorWrapper, BorderLayout.NORTH);
         panelDerechoTotal.add(panelDerechaCentro, BorderLayout.CENTER);
 
-        add(panelMenu, BorderLayout.WEST);
         add(panelDerechoTotal, BorderLayout.CENTER);
-
-        // Inicializar controlador pasándole la vista
-        this.controlador = new Controlador_RegistroUnidades(this);
     }
 
+    public void setControlador(Controlador_RegistroUnidades controlador){
+        this.controlador = controlador;
+    }
     public void actualizarPanelBuses(List<UnidadBus> listaUnidades) {
         this.listaCompletaBuses = listaUnidades;
         this.paginaActual = 0; 
@@ -470,17 +516,6 @@ public class RegistroUnidades extends JFrame {
         }
     }
 
-    private void ejecutarAccionMenu(String opcion) {
-        switch (opcion) {
-            case "Planificar itinerario": break;
-            case "Registrar personal": break;
-            case "Pasajeros diarios": break;
-            case "Generar reporte": break;
-            case "Cerrar sesión": dispose(); break;
-            default: break;
-        }
-    }
-
     private void configurarPlaceholder(JTextField campo, String placeholderText) {
         campo.addFocusListener(new FocusListener() {
             @Override
@@ -502,15 +537,51 @@ public class RegistroUnidades extends JFrame {
     }
 
     // Getters para acceder a los campos 
-    public CampoTextoUtil getTxtPlaca() { return txtPlaca; }
-    public CampoTextoUtil getTxtModelo() { return txtModelo; }
-    public CampoTextoUtil getTxtCapacidad() { return txtCapacidad; }
+    public CampoTextoUtil getTxtPlaca(){ 
+        return txtPlaca; 
+    }
 
-    public static void main(String[] args) {
+    public CampoTextoUtil getTxtModelo(){ 
+        return txtModelo; 
+    }
+
+    public CampoTextoUtil getTxtCapacidad(){ 
+        return txtCapacidad; 
+    }
+
+    public Usuario getAdminActual(){
+        return adminActual;
+    }
+
+    public JLabel getOpPlanificar(){ 
+        return opPlanificar; 
+    }
+
+    public JLabel getOpRegistrarP(){ 
+        return opRegistrarP; 
+    }
+
+    public JLabel getOpPDiarios(){ 
+        return opPDiarios; 
+    }
+
+    public JLabel getOpGestionU(){ 
+        return opGestionU; 
+    }
+
+    public JLabel getOpGenR(){ 
+        return opGenR; 
+    }
+
+    public JLabel getOpCerrarS(){ 
+        return opCerrarS; 
+    }
+
+   /*public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             RegistroUnidades vista = new RegistroUnidades();
             new Controlador_RegistroUnidades(vista);
             vista.setVisible(true);
         });
-    }
+    }*/
 }

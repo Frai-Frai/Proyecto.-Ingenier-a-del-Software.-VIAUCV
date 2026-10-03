@@ -31,6 +31,7 @@ public class Itinerario extends JFrame {
     private int paginaActualPines = 0;
     private final int ELEMENTOS_POR_PAGINA_PINES = 7;
     private List<String> listaCompletaPines = new ArrayList<>();
+    private Usuario adminActual;
 
     //Tipografia 
     private Font fuenteGlacial(String ruta, float tamano, int estilo){
@@ -55,6 +56,7 @@ public class Itinerario extends JFrame {
 
     public Itinerario(Usuario admin){
 
+        this.adminActual = admin;
         setTitle ("VIAUCV - ADMINISTRADOR -- PLANIFICAR ITINERARIO");
         setSize(1000, 870); 
         setMinimumSize(new Dimension(980, 750)); 
@@ -88,7 +90,7 @@ public class Itinerario extends JFrame {
         saludo.setBounds(30, 30, 500, 30);
         Bienvenida.add(saludo);
 
-        JLabel subtitulo = new JLabel("¡Sigue manteniendo todo en control!");
+        JLabel subtitulo = new JLabel("Sigue manteniendo todo en control!");
         subtitulo.setFont(fuenteSubT);
         subtitulo.setForeground(Color.WHITE);
         subtitulo.setBounds(30, 65, 500, 20);
@@ -556,12 +558,8 @@ public class Itinerario extends JFrame {
         return opCerrarS; 
     } 
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            Usuario admin = new Usuario("01236547", "adminprueba", "correo@gmail.com", "Administrador", "admin12", 0.0);
-            Itinerario vista = new Itinerario(admin);
-            new Controlador_Itinerario(vista);
-            vista.setVisible(true);
-        });
+    public Usuario getAdminActual(){
+        return adminActual;
     }
+
 }

@@ -1,12 +1,7 @@
 package controlador;
 
 import vista.*;
-import modelo.Validador_Itinerario;
-import modelo.ItinerarioModelo;
-
-import modelo.ItinerarioDAO;
-import modelo.UnidadesDAO;
-import modelo.UsuarioDAO;
+import modelo.*;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -31,10 +26,10 @@ public class Controlador_Itinerario {
         });
         
         this.pantalla.getOpGestionU().addMouseListener(new MouseAdapter() {
-            @Override 
-            public void mouseClicked(MouseEvent e){
-                IrAGestion();
-            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+                IrAGestion();     
+        }
         });
 
         this.pantalla.getBotonP().addActionListener(e -> {
@@ -165,19 +160,21 @@ public class Controlador_Itinerario {
     }
 
     private void irInicio(){
+        this.pantalla.setVisible(false);
         this.pantalla.dispose();
-        Inicio pantallaIS = new Inicio();
-        new Controlador_Inicio(pantallaIS);
-        pantallaIS.setVisible(true);
+        Inicio pantallaI = new Inicio();
+        new Controlador_Inicio(pantallaI);
+        pantallaI.setVisible(true);
     }
 
-    
-
     private void IrAGestion(){
+        this.pantalla.setVisible(false);
         this.pantalla.dispose();
-        RegistroUnidades pantallaIS = new RegistroUnidades();
-        new Controlador_RegistroUnidades(pantallaIS);
-        pantallaIS.setVisible(true);
+        Usuario admin = pantalla.getAdminActual();
+        
+        RegistroUnidades pantallaUnidades = new RegistroUnidades(admin);
+        new Controlador_RegistroUnidades(pantallaUnidades);
+        pantallaUnidades.setVisible(true);
     }
 }
 

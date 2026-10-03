@@ -1,10 +1,6 @@
 package controlador;
 
-import vista.Registro;
-import vista.RegistroUnidades;
-import vista.Inicio;
-import vista.InicioSesion;
-import vista.RecuperarCont;
+import vista.*;
 import modelo.*;
 
 import java.awt.event.MouseAdapter;
@@ -22,7 +18,6 @@ public class Controlador_IniciodeSesion {
     public Controlador_IniciodeSesion(InicioSesion pantallaIS){
         this.pantallaIS = pantallaIS;
         this.EncontroUser = new UsuarioDAO();
-
 
         this.pantallaIS.getBotonIngresar().addActionListener(new ActionListener() {
             @Override
@@ -69,7 +64,7 @@ public class Controlador_IniciodeSesion {
        
         for( Usuario u : AllUsers){
 
-            if(u.getCedula().equals(User) || u.getNombreUsuario().equals(User)){
+            if(u.getCedula().equals(User) || u.getNombreUsuario().equals(User) || u.getCorreo().equals(User)){
 
                 if(u.getClave().equals(cont)){
                 UserAu =  u;
@@ -87,8 +82,12 @@ public class Controlador_IniciodeSesion {
             
             if(rol.equalsIgnoreCase("Administrador")){
                 //abre las interfaces del admin, por ahora solo la de itinerario y gestionar unidades
-                RegistroUnidades RUnidades = new RegistroUnidades();
-                RUnidades.setVisible(true);
+                Itinerario vistaItinerario = new Itinerario(UserAu);
+                new Controlador_Itinerario(vistaItinerario);
+                vistaItinerario.setVisible(true);
+
+                /*RegistroUnidades RUnidades = new RegistroUnidades();
+                RUnidades.setVisible(true);*/
 
             }else if(rol.equalsIgnoreCase("Conductor")){
                 //abre las interfaces del conductor

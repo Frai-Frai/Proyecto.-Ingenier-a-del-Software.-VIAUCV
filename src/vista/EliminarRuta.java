@@ -9,7 +9,6 @@ import java.util.List;
 import util.*;
 import modelo.*;
 
-
 public class EliminarRuta extends JDialog {
     private BotonUtil botonElim, botonCancelar;
     private List <JCheckBox> listaSeleccionadas;
