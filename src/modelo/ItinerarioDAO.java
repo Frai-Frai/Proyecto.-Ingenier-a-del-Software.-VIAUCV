@@ -93,7 +93,7 @@ public class ItinerarioDAO {
     }
     
     //actualizar la BD de itinerario
-    private void actualizarDB(List<ItinerarioModelo> lista){
+    public boolean actualizarDB(List<ItinerarioModelo> lista){
             File f= new File(Ruta_BDItinerario);
 
             try (BufferedWriter bw =new BufferedWriter(new FileWriter(f,false))){
@@ -102,9 +102,11 @@ public class ItinerarioDAO {
                     bw.write(i.EscribirFormatoTXT()); //escribir en el txt lo de la lista
                     bw.newLine();
                 }
+                return true;
                 
             }catch(IOException e){
                 System.out.println("Error al actualizar la base de datos: "+e.getMessage());
-            }
+                return false;
+        }
     }
 }
