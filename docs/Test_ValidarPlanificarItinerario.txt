@@ -78,7 +78,7 @@ FACTOR 5: Destino vacío.
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 FACTOR 6: Destino inválido.
 - CLASES DE EQUIVALENCIA: con letras || guiones || espacios
-- ENTRADAS: "urbanaaa"
+- ENTRADAS: "Palo_Verde"
 - SALIDA: "El destino no permite caracteres especiales (Excepto guiones y espacios)."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 FACTOR 7: Punto de Partida vacío.
@@ -88,7 +88,7 @@ FACTOR 7: Punto de Partida vacío.
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 FACTOR 8: Punto de Partida inválido.
 - CLASES DE EQUIVALENCIA: con letras || guiones || espacios
-- ENTRADAS: "12Pasillo5Las_BanderasUCV5"
+- ENTRADAS: "Ciudad_Universitaria"
 - SALIDA: "El punto de partida no permite caracteres especiales (Excepto guiones y espacios)."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 FACTOR 9: Punto de Llegada vacío.
@@ -98,7 +98,7 @@ FACTOR 9: Punto de Llegada vacío.
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 FACTOR 10: Punto de Llegada inválido.
 - CLASES DE EQUIVALENCIA: con letras || guiones || espacios
-- ENTRADAS: "12Av_Urdaneta5"
+- ENTRADAS: "Metro14 de Palo Verde"
 - SALIDA: "El punto de llegada no permite caracteres especiales (Excepto guiones y espacios)."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 FACTOR 11: Dia de la semana vacío.
@@ -108,7 +108,7 @@ FACTOR 11: Dia de la semana vacío.
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 FACTOR 12: Dia de la semana inválido.
 - CLASES DE EQUIVALENCIA: Lunes || Martes ||Miércoles || Jueves || Viernes
-- ENTRADAS: " Domingo"
+- ENTRADAS: "Domingo"
 - SALIDA: "El campo de día debe ser un día de la semana válido (Lunes, Martes, Miércoles, Jueves, Viernes)."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 FACTOR 13: Hora vacía.
@@ -118,7 +118,7 @@ FACTOR 13: Hora vacía.
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 FACTOR 14: Hora inválida.
 - CLASES DE EQUIVALENCIA: !(HH:mm)(am/pm)
-- ENTRADAS: " 10 am"
+- ENTRADAS: "3 pm"
 - SALIDA: "El campo de hora debe tener un formato válido (HH:mm)(am/pm)."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 FACTOR 15: Conductor asignado vacío.
@@ -128,27 +128,27 @@ FACTOR 15: Conductor asignado vacío.
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 FACTOR 16: Cédula de conductor inválida.
 - CLASES DE EQUIVALENCIA: !(números)
-- ENTRADAS: " aaa5879m"
+- ENTRADAS: "V-31485799"
 - SALIDA: "La cédula del conductor solo debe contener números."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 17: Placa inexistente.
+FACTOR 17: Placa No Registrada.
 - CLASES DE EQUIVALENCIA: La placa no fue registrada
-- ENTRADAS: " PLACASI"
+- ENTRADAS: "616167"
 - SALIDA: "La placa asignada no existe en la base de datos."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 FACTOR 18: Unidad inactiva.
 - CLASES DE EQUIVALENCIA: Placa de una unidad inactiva.
-- ENTRADAS: " PLACASI"
-- SALIDA: "La placa asignada no existe en la base de datos."
+- ENTRADAS: "444567"
+- SALIDA: "La unidad ingresada no se encuentra activa."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 FACTOR 19: Conductor no registrado.
 - CLASES DE EQUIVALENCIA: user.buscarEnBD() == null
-- ENTRADAS: " 20548766"
+- ENTRADAS: "16785444"
 - SALIDA: "La cédula del conductor no existe en la base de datos."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 FACTOR 20: Solapamiento entre itinerarios.
 - CLASES DE EQUIVALENCIA: nuevoItinerario == valida.buscarRutas();
-- ENTRADAS: "B38801|Urbana|Palo Verde|Plaza Venezuela|Metro Palo Verde|Lunes|3:00pm|16578923"
+- ENTRADAS: "676767|Urbana|La Candelaria|Plaza Venezuela|Sambil de la Candelaria|Lunes|3:00pm|16578923"
 - SALIDA: "El itinerario se solapa con otro itinerario existente."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 FACTOR 21: Regsitro de itinerario exitoso.
