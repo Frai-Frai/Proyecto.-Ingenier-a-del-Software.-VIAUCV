@@ -5,14 +5,16 @@ import modelo.*;
 import java.io.File;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import javax.swing.border.EmptyBorder;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import controlador.Controlador_Itinerario;
 
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
-import java.awt.geom.RoundRectangle2D;
 import java.time.DayOfWeek;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 import java.awt.*;
 import util.*;
@@ -24,6 +26,11 @@ public class Itinerario extends JFrame {
     private MiniVentanaUtil menuIzq, Bienvenida, panelRutas, panelForm;
     private JLabel  opPlanificar, opRegistrarP, opPDiarios, opGestionU, opGenR, opCerrarS;
     private CampoTextoUtil cuadritoPlaca, cuadritoTipoRuta, cuadritoDestino, cuadritoPtoLlegada, cuadritoPtoPartida, cuadritoHora, cuadritoDia, cuadritoConductor;
+
+    // Configurado a un máximo de 7 elementos por página
+    private int paginaActualPines = 0;
+    private final int ELEMENTOS_POR_PAGINA_PINES = 7;
+    private List<String> listaCompletaPines = new ArrayList<>();
 
     //Tipografia 
     private Font fuenteGlacial(String ruta, float tamano, int estilo){
@@ -100,8 +107,8 @@ public class Itinerario extends JFrame {
         panelRutas.setLayout(null);
         add(panelRutas);
 
-        // Título del panel superior con fuente bold aplicada
-        JLabel tituloSuperior = new JLabel("Itinerario Semanal", SwingConstants.CENTER);
+        // Título del panel superior
+        JLabel tituloSuperior = new JLabel("Itinerario semanal", SwingConstants.CENTER);
         tituloSuperior.setFont(fuenteLetras);
         tituloSuperior.setForeground(azulCuadros);
         tituloSuperior.setBounds(0, 10, anchoUtilInicial, 20);
@@ -130,10 +137,18 @@ public class Itinerario extends JFrame {
         botonFlechaD.setBounds(anchoUtilInicial - 55, posYElementos, 40, 40);
         panelRutas.add(botonFlechaD);
 
-        panelPines = new JPanel(null); 
+        // Panel central de pines con GridLayout de 1 fila y 7 columnas
+        panelPines = new JPanel(new GridLayout(1, 7, 15, 0)); 
         panelPines.setBounds(65, 45, anchoUtilInicial - 130, altoPanelRutas - 50);
         panelPines.setOpaque(false); 
         panelRutas.add(panelPines);
+
+        // Listeners para las flechas de paginación
+        botonSiguienteAccion();
+        botonAnteriorAccion();
+
+        // Cargar destinos desde BDItinerario
+        cargarDestinosDesdeBD();
 
         // Ancho del panel del formulario central
         int anchoFormInicial = anchoUtilInicial - 220; 
@@ -154,96 +169,92 @@ public class Itinerario extends JFrame {
         Semana.setForeground(Color.BLACK);
         panelForm.add(Semana);
 
-        // Cálculo para centrar verticalmente el bloque de campos con interlineado de 1.5 cm (~56 px)
-        int espacioY = 56; 
-        int alturaTotalBloque = (7 * espacioY) + 32; 
-        int yInicio = (altoFormInicial - alturaTotalBloque) / 2 + 15; 
+        int espacioY = 45; 
+        int nuevoYInicio = 42;
         
         int xLabel = 35;
-        int anchoLabel = 250; // Ampliado para que quepa perfectamente el texto en Bold sin truncarse
+        int anchoLabel = 250; 
         int xCuadro = xLabel + anchoLabel + 15;
         int anchoCuadro = anchoFormInicial - xCuadro - 35; 
 
         JLabel placa = new JLabel("Transporte Asignado (Placa): ");
-        placa.setBounds(xLabel, yInicio, anchoLabel, 28);
+        placa.setBounds(xLabel, nuevoYInicio, anchoLabel, 28);
         placa.setFont(fuenteLetras);
         panelForm.add(placa);
 
         cuadritoPlaca = new CampoTextoUtil(10, azulCuadros, anchoCuadro, 32, Color.WHITE, Color.BLACK, fuenteNormal);
-        cuadritoPlaca.setBounds(xCuadro, yInicio, anchoCuadro, 32);
+        cuadritoPlaca.setBounds(xCuadro, nuevoYInicio, anchoCuadro, 32);
         panelForm.add(cuadritoPlaca);
 
         JLabel Tpruta = new JLabel("Tipo de Ruta: ");
-        Tpruta.setBounds(xLabel, yInicio + espacioY, anchoLabel, 28);
+        Tpruta.setBounds(xLabel, nuevoYInicio + espacioY, anchoLabel, 28);
         Tpruta.setFont(fuenteLetras);
         panelForm.add(Tpruta);
 
         cuadritoTipoRuta = new CampoTextoUtil(10, azulCuadros, anchoCuadro, 32, Color.WHITE, Color.BLACK, fuenteNormal);
-        cuadritoTipoRuta.setBounds(xCuadro, yInicio + espacioY, anchoCuadro, 32);
+        cuadritoTipoRuta.setBounds(xCuadro, nuevoYInicio + espacioY, anchoCuadro, 32);
         panelForm.add(cuadritoTipoRuta);
 
         JLabel destino = new JLabel("Destino: ");
-        destino.setBounds(xLabel, yInicio + (espacioY * 2), anchoLabel, 28);
+        destino.setBounds(xLabel, nuevoYInicio + (espacioY * 2), anchoLabel, 28);
         destino.setFont(fuenteLetras);
         panelForm.add(destino);
 
         cuadritoDestino = new CampoTextoUtil(10, azulCuadros, anchoCuadro, 32, Color.WHITE, Color.BLACK, fuenteNormal);
-        cuadritoDestino.setBounds(xCuadro, yInicio + (espacioY * 2), anchoCuadro, 32);
+        cuadritoDestino.setBounds(xCuadro, nuevoYInicio + (espacioY * 2), anchoCuadro, 32);
         panelForm.add(cuadritoDestino);
 
         JLabel ptoPartida = new JLabel("Punto de Partida: ");
-        ptoPartida.setBounds(xLabel, yInicio + (espacioY * 3), anchoLabel, 28);
+        ptoPartida.setBounds(xLabel, nuevoYInicio + (espacioY * 3), anchoLabel, 28);
         ptoPartida.setFont(fuenteLetras);
         panelForm.add(ptoPartida);
 
         cuadritoPtoPartida = new CampoTextoUtil(10, azulCuadros, anchoCuadro, 32, Color.WHITE, Color.BLACK, fuenteNormal);
-        cuadritoPtoPartida.setBounds(xCuadro, yInicio + (espacioY * 3), anchoCuadro, 32);
+        cuadritoPtoPartida.setBounds(xCuadro, nuevoYInicio + (espacioY * 3), anchoCuadro, 32);
         panelForm.add(cuadritoPtoPartida);
 
         JLabel ptollegada = new JLabel("Punto de Llegada: ");
-        ptollegada.setBounds(xLabel, yInicio + (espacioY * 4), anchoLabel, 28);
+        ptollegada.setBounds(xLabel, nuevoYInicio + (espacioY * 4), anchoLabel, 28);
         ptollegada.setFont(fuenteLetras);
         panelForm.add(ptollegada);
 
         cuadritoPtoLlegada = new CampoTextoUtil(10, azulCuadros, anchoCuadro, 32, Color.WHITE, Color.BLACK, fuenteNormal);
-        cuadritoPtoLlegada.setBounds(xCuadro, yInicio + (espacioY * 4), anchoCuadro, 32);
+        cuadritoPtoLlegada.setBounds(xCuadro, nuevoYInicio + (espacioY * 4), anchoCuadro, 32);
         panelForm.add(cuadritoPtoLlegada);
 
         JLabel dia = new JLabel("Día de la Semana: ");
-        dia.setBounds(xLabel, yInicio + (espacioY * 5), anchoLabel, 28);
+        dia.setBounds(xLabel, nuevoYInicio + (espacioY * 5), anchoLabel, 28);
         dia.setFont(fuenteLetras);
         panelForm.add(dia);
 
         cuadritoDia = new CampoTextoUtil(10, azulCuadros, anchoCuadro, 32, Color.WHITE, Color.BLACK, fuenteNormal);
-        cuadritoDia.setBounds(xCuadro, yInicio + (espacioY * 5), anchoCuadro, 32);
+        cuadritoDia.setBounds(xCuadro, nuevoYInicio + (espacioY * 5), anchoCuadro, 32);
         panelForm.add(cuadritoDia);
 
         JLabel hora = new JLabel("Hora: ");
-        hora.setBounds(xLabel, yInicio + (espacioY * 6), anchoLabel, 28);
+        hora.setBounds(xLabel, nuevoYInicio + (espacioY * 6), anchoLabel, 28);
         hora.setFont(fuenteLetras);
         panelForm.add(hora);
 
         cuadritoHora = new CampoTextoUtil(10, azulCuadros, anchoCuadro, 32, Color.WHITE, Color.BLACK, fuenteNormal);
-        cuadritoHora.setBounds(xCuadro, yInicio + (espacioY * 6), anchoCuadro, 32);
+        cuadritoHora.setBounds(xCuadro, nuevoYInicio + (espacioY * 6), anchoCuadro, 32);
         panelForm.add(cuadritoHora);
         
         JLabel conductor = new JLabel("Conductor Asignado: ");
-        conductor.setBounds(xLabel, yInicio + (espacioY * 7), anchoLabel, 28);
+        conductor.setBounds(xLabel, nuevoYInicio + (espacioY * 7), anchoLabel, 28);
         conductor.setFont(fuenteLetras);
         panelForm.add(conductor);
 
         cuadritoConductor = new CampoTextoUtil(10, azulCuadros, anchoCuadro, 32, Color.WHITE, Color.BLACK, fuenteNormal);
-        cuadritoConductor.setBounds(xCuadro, yInicio + (espacioY * 7), anchoCuadro, 32);
+        cuadritoConductor.setBounds(xCuadro, nuevoYInicio + (espacioY * 7), anchoCuadro, 32);
         panelForm.add(cuadritoConductor);
 
-        // Posición de los botones laterales derechos
         int xBotonesInicial = 270 + anchoFormInicial + 15;
-
-        int posYBotonInicial= 335+altoFormInicial-42;
-        int posYERboton= posYBotonInicial-42-10;
+        int posYBotonInicial= 335 + altoFormInicial - 42;
+        int posYERboton= posYBotonInicial - 42 - 10;
 
         botonER = new BotonUtil("Seleccionar rutas", azulCuadros, Color.WHITE, 15, fuenteSubT, 180, 40);
-        botonER.setBounds(xBotonesInicial,posYERboton, 180, 42);
+        botonER.setBounds(xBotonesInicial, posYERboton, 180, 42);
 
         botonP = new BotonUtil("Subir itinerario", azulCuadros, Color.WHITE, 15, fuenteSubT, 180, 40);
         botonP.setBounds(xBotonesInicial, posYBotonInicial, 180, 42);
@@ -251,7 +262,7 @@ public class Itinerario extends JFrame {
         add(botonER);
         add(botonP);
 
-        // Listener dinámico adaptado para redimensionar con la ventana
+        // Listener de redimensionamiento
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -259,13 +270,9 @@ public class Itinerario extends JFrame {
                 int nuevoAnchoUtil = getContentPane().getWidth() - 290;
 
                 if (alturaUtil > 40 && nuevoAnchoUtil > 200) {
-                    // Adaptar menú izquierdo
                     menuIzq.setBounds(20, 20, 240, alturaUtil - 40);
-                    
-                    // Adaptar bienvenida
                     Bienvenida.setBounds(270, 20, nuevoAnchoUtil, 120);
                     
-                    // Adaptar panel de rutas superior
                     int nuevoAltoRutas = 170;
                     panelRutas.setBounds(270, 155, nuevoAnchoUtil, nuevoAltoRutas);
                     tituloSuperior.setBounds(0, 10, nuevoAnchoUtil, 20);
@@ -276,15 +283,10 @@ public class Itinerario extends JFrame {
                     botonFlechaD.setBounds(nuevoAnchoUtil - 55, nuevoPosYElem, 40, 40);
                     panelPines.setBounds(65, 45, nuevoAnchoUtil - 130, nuevoAltoRutas - 50);
 
-                    // Adaptar tamaño del panel del formulario central
                     int nuevoAnchoForm = nuevoAnchoUtil - 220;
                     int nuevoAltoForm = alturaUtil - 385;
                     panelForm.setBounds(270, 335, nuevoAnchoForm, nuevoAltoForm);
 
-                    // Recalcular el centrado vertical dinámicamente al redimensionar
-                    //int nuevoYInicio = (nuevoAltoForm - alturaTotalBloque) / 2 + 15;
-                    int nuevoYInicio = 42;
-                    int espacioY=45; //para el espacio entre campos del formulario
                     int nuevoAnchoCuadro = nuevoAnchoForm - xCuadro - 35;
 
                     placa.setBounds(xLabel, nuevoYInicio, anchoLabel, 28);
@@ -311,11 +313,10 @@ public class Itinerario extends JFrame {
                     conductor.setBounds(xLabel, nuevoYInicio + (espacioY * 7), anchoLabel, 28);
                     cuadritoConductor.setBounds(xCuadro, nuevoYInicio + (espacioY * 7), nuevoAnchoCuadro, 32);
 
-                    // Adaptar posición de los botones laterales derechos
                     int nuevoXBotones = 270 + nuevoAnchoForm + 15;
-                    int nuevoPosYBotonP = 335 + nuevoAltoForm-42;
-                    int posYBotonER= nuevoPosYBotonP-42-10;
-                    botonER.setBounds(nuevoXBotones,posYBotonER, 180, 42);
+                    int nuevoPosYBotonP = 335 + nuevoAltoForm - 42;
+                    int posYBotonER = nuevoPosYBotonP - 42 - 10;
+                    botonER.setBounds(nuevoXBotones, posYBotonER, 180, 42);
                     botonP.setBounds(nuevoXBotones, nuevoPosYBotonP, 180, 42);
 
                     revalidate();
@@ -335,35 +336,152 @@ public class Itinerario extends JFrame {
         // Opciones del menú
         opPlanificar = new JLabel("Planificar Itinerario");
         opPlanificar.setBounds(30, 150, 180, 30);
-        new TextosInteractivosUtil(opPlanificar, "Planificar Itinerario", Color.DARK_GRAY, azulCuadros, fuenteLink);
+        new TextosInteractivosUtil(opPlanificar, "Planificar Itinerario", Color.BLACK, azulCuadros, fuenteLink);
         menuIzq.add(opPlanificar);
         
         opRegistrarP = new JLabel("Registrar Personal");
         opRegistrarP.setBounds(30, 200, 180, 30);
-        new TextosInteractivosUtil(opRegistrarP, "Registrar Personal", Color.DARK_GRAY, azulCuadros, fuenteLink);
+        new TextosInteractivosUtil(opRegistrarP, "Registrar Personal", Color.BLACK, azulCuadros, fuenteLink);
         menuIzq.add(opRegistrarP);
         
         opPDiarios = new JLabel("Pasajeros Diarios");
         opPDiarios.setBounds(30, 250, 180, 30);
-        new TextosInteractivosUtil(opPDiarios, "Pasajeros Diarios", Color.DARK_GRAY, azulCuadros, fuenteLink);
+        new TextosInteractivosUtil(opPDiarios, "Pasajeros Diarios", Color.BLACK, azulCuadros, fuenteLink);
         menuIzq.add(opPDiarios);
 
         opGestionU = new JLabel("Gestión de Unidades");
         opGestionU.setBounds(30, 300, 180, 30);
-        new TextosInteractivosUtil(opGestionU, "Gestión de Unidades", Color.DARK_GRAY, azulCuadros, fuenteLink);
+        new TextosInteractivosUtil(opGestionU, "Gestión de Unidades", Color.BLACK, azulCuadros, fuenteLink);
         menuIzq.add(opGestionU);
 
         opGenR = new JLabel("Generar Reporte");
         opGenR.setBounds(30, 350, 180, 30);
-        new TextosInteractivosUtil(opGenR, "Generar Reporte", Color.DARK_GRAY, azulCuadros, fuenteLink);
+        new TextosInteractivosUtil(opGenR, "Generar Reporte", Color.BLACK, azulCuadros, fuenteLink);
         menuIzq.add(opGenR);
 
         opCerrarS = new JLabel("Cerrar Sesión");
         opCerrarS.setBounds(30, 450, 180, 30);
-        new TextosInteractivosUtil(opCerrarS, "Cerrar Sesión", Color.DARK_GRAY, azulCuadros, fuenteLink);
+        new TextosInteractivosUtil(opCerrarS, "Cerrar Sesión", Color.BLACK, azulCuadros, fuenteLink);
         menuIzq.add(opCerrarS);
 
         getRootPane().setDefaultButton(botonP);
+    }
+
+    // Consulta BDItinerario a través de ItinerarioDAO
+    private void cargarDestinosDesdeBD() {
+        try {
+            ItinerarioDAO dao = new ItinerarioDAO();
+            List<ItinerarioModelo> listaRutas = dao.obtenerRutas();
+            List<String> destinos = new ArrayList<>();
+
+            if (listaRutas != null) {
+                for (ItinerarioModelo ruta : listaRutas) {
+                    if (ruta.getDestino() != null && !destinos.contains(ruta.getDestino())) {
+                        destinos.add(ruta.getDestino());
+                    }
+                }
+            }
+
+            if (destinos.isEmpty()) {
+                destinos.add("Capitolio");
+                destinos.add("Zona rental");
+                destinos.add("La Guaira");
+                destinos.add("Los Teques");
+                destinos.add("Guatire");
+            }
+
+            actualizarPanelPines(destinos);
+        } catch (Exception e) {
+            System.out.println("Error al cargar destinos de BDItinerario: " + e.getMessage());
+        }
+    }
+
+    public void actualizarPanelPines(List<String> nuevaListaPines) {
+        this.listaCompletaPines = nuevaListaPines;
+        this.paginaActualPines = 0;
+        redibujarPaginaPines();
+    }
+
+    private void redibujarPaginaPines() {
+        panelPines.removeAll();
+
+        ImageIcon iconoPin = null;
+        try {
+            ImageIcon originalIcon = new ImageIcon("res/IconoLocation.jpeg");
+            // Icono más grande (80x80 píxeles) para que los perfiles se vean más prominentes
+            Image scaledImg = originalIcon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+            iconoPin = new ImageIcon(scaledImg);
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar res/IconoLocation.jpeg: " + e.getMessage());
+        }
+
+        int inicio = paginaActualPines * ELEMENTOS_POR_PAGINA_PINES;
+        int fin = Math.min(inicio + ELEMENTOS_POR_PAGINA_PINES, listaCompletaPines.size());
+
+        List<String> pinesPagina = new ArrayList<>();
+        if (inicio < listaCompletaPines.size()) {
+            pinesPagina = listaCompletaPines.subList(inicio, fin);
+        }
+
+        // Tipografía ligeramente mayor para acompañar al icono grande
+        Font fuentePin = fuenteGlacial("res/GlacialIndifference-Bold.otf", 14f, Font.BOLD);
+
+        for (String nombrePin : pinesPagina) {
+            JPanel panelItemPin = new JPanel();
+            panelItemPin.setLayout(new BoxLayout(panelItemPin, BoxLayout.Y_AXIS));
+            panelItemPin.setOpaque(false);
+            panelItemPin.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            
+            JLabel lblIcono = new JLabel(iconoPin);
+            lblIcono.setAlignmentX(Component.CENTER_ALIGNMENT);
+            
+            JLabel lblTexto = new JLabel(nombrePin);
+            lblTexto.setFont(fuentePin);
+            lblTexto.setAlignmentX(Component.CENTER_ALIGNMENT);
+            
+            panelItemPin.add(Box.createVerticalGlue());
+            panelItemPin.add(lblIcono);
+            panelItemPin.add(Box.createRigidArea(new Dimension(0, 4)));
+            panelItemPin.add(lblTexto);
+            panelItemPin.add(Box.createVerticalGlue());
+
+            panelItemPin.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    cuadritoDestino.setText(nombrePin);
+                }
+            });
+            
+            panelPines.add(panelItemPin);
+        }
+
+        int anadidos = pinesPagina.size();
+        for (int i = anadidos; i < ELEMENTOS_POR_PAGINA_PINES; i++) {
+            panelPines.add(new JLabel());
+        }
+
+        panelPines.revalidate();
+        panelPines.repaint();
+    }
+
+    private void botonSiguienteAccion() {
+        botonFlechaD.addActionListener(e -> {
+            int totalPaginas = (int) Math.ceil((double) listaCompletaPines.size() / ELEMENTOS_POR_PAGINA_PINES);
+            if (totalPaginas == 0) totalPaginas = 1;
+            if (paginaActualPines < totalPaginas - 1) {
+                paginaActualPines++;
+                redibujarPaginaPines();
+            }
+        });
+    }
+
+    private void botonAnteriorAccion() {
+        botonFlechaI.addActionListener(e -> {
+            if (paginaActualPines > 0) {
+                paginaActualPines--;
+                redibujarPaginaPines();
+            }
+        });
     }
 
     public BotonUtil getBotonFlechaI(){ 

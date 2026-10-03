@@ -33,6 +33,7 @@ public class RegistroUnidades extends JFrame {
     private CampoTextoUtil txtPlaca;
     private CampoTextoUtil txtModelo;
     private CampoTextoUtil txtCapacidad;
+    private BotonUtil btnRegistrar;
 
     public RegistroUnidades() {
         setTitle("Registro de Unidades - UCV");
@@ -41,22 +42,21 @@ public class RegistroUnidades extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        Font fuenteRegular = cargarFuente("res/GlacialIndifference-Regular.otf", 18f, Font.PLAIN);
         Font fuenteBold = cargarFuente("res/GlacialIndifference-Bold.otf", 18f, Font.BOLD);
 
-        // AGREGAR OPCIONES
+        // 1. PANEL MENU
         JPanel panelMenu = InterfazUtil.crearPanelMenu(
             new String[] {
                 "Planificar itinerario", "Registrar personal", "Pasajeros diarios",
                 "Gestión de unidades", "Generar reporte", 
             },
-            new Color(165, 205, 235), // CAMBIAR COLOR
+            new Color(205, 228, 238), 
             opcion -> ejecutarAccionMenu(opcion)
         );
 
-        // 2. PANEL DERECHO 
+        // 2. PANEL DERECHO TOTAL
         JPanel panelDerechoTotal = new JPanel(new BorderLayout());
-        panelDerechoTotal.setBackground(new Color(240, 243, 246));
+        panelDerechoTotal.setBackground(new Color(205, 228, 238));
         panelDerechoTotal.setBorder(new EmptyBorder(12, 12, 12, 12));
 
         // PANEL SUPERIOR
@@ -171,6 +171,7 @@ public class RegistroUnidades extends JFrame {
         add(panelMenu, BorderLayout.WEST);
         add(panelDerechoTotal, BorderLayout.CENTER);
 
+        // Inicializar controlador pasándole la vista
         this.controlador = new Controlador_RegistroUnidades(this);
     }
 
@@ -247,7 +248,7 @@ public class RegistroUnidades extends JFrame {
         JPanel panelContenidoPopup = new JPanel();
         panelContenidoPopup.setLayout(new BoxLayout(panelContenidoPopup, BoxLayout.Y_AXIS));
         panelContenidoPopup.setBorder(new EmptyBorder(12, 12, 12, 12));
-        panelContenidoPopup.setBackground(new Color(205, 228, 238));
+        panelContenidoPopup.setBackground(new Color(165, 205, 235));
 
         JLabel lblInfo = new JLabel("Bus: " + placaBus);
         lblInfo.setFont(fuenteBold.deriveFont(13f));
@@ -322,7 +323,7 @@ public class RegistroUnidades extends JFrame {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 RoundRectangle2D rectRedondeado = new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, 30, 30);
-                g2.setColor(new Color(205, 228, 238));
+                g2.setColor(new Color(165, 205, 235));
                 g2.fill(rectRedondeado);
                 g2.setColor(Color.BLACK);
                 g2.setStroke(new BasicStroke(1.5f));
@@ -363,21 +364,12 @@ public class RegistroUnidades extends JFrame {
         txtModelo.setAlignmentX(Component.LEFT_ALIGNMENT);
         txtCapacidad.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        BotonUtil btnRegistrar = new BotonUtil("Registrar unidad", new Color(40, 100, 160), Color.WHITE, 15, fuenteBold.deriveFont(15f), 0, 48);
+        btnRegistrar = new BotonUtil("Registrar unidad", new Color(40, 100, 160), Color.WHITE, 15, fuenteBold.deriveFont(15f), 0, 48);
         btnRegistrar.setMaximumSize(campoSize);
         btnRegistrar.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        btnRegistrar.addActionListener(e -> {
-            String placa = txtPlaca.getText().equals("Placa") ? "" : txtPlaca.getText().trim();
-            String modelo = txtModelo.getText().equals("Modelo") ? "" : txtModelo.getText().trim();
-            String capacidad = txtCapacidad.getText().equals("Capacidad de pasajeros") ? "" : txtCapacidad.getText().trim();
-
-            controlador.registrarUnidad(placa, modelo, capacidad);
-            
-            txtPlaca.setText("Placa"); txtPlaca.setForeground(Color.GRAY);
-            txtModelo.setText("Modelo"); txtModelo.setForeground(Color.GRAY);
-            txtCapacidad.setText("Capacidad de pasajeros"); txtCapacidad.setForeground(Color.GRAY);
-        });
+        // Vincular acción del botón al controlador
+        btnRegistrar.addActionListener(e -> controlador.manejarRegistroUnidad());
 
         int interlineado1_5cm = 55;
 
@@ -449,7 +441,7 @@ public class RegistroUnidades extends JFrame {
         BotonUtil btnEstadoOperativo = new BotonUtil("Unidades en Estado Operativo", new Color(40, 100, 160), Color.WHITE, 15, fuenteBold.deriveFont(15f), 0, 48);
         btnEstadoOperativo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 48));
 
-        btnEstadoOperativo.addActionListener(e -> mostrarVentanaBusesActivos());
+        btnEstadoOperativo.addActionListener(e -> controlador.mostrarVentanaBusesActivos());
 
         JPanel panelBtnEstadoWrapper = new JPanel();
         panelBtnEstadoWrapper.setLayout(new BoxLayout(panelBtnEstadoWrapper, BoxLayout.X_AXIS));
@@ -468,63 +460,6 @@ public class RegistroUnidades extends JFrame {
         panelDerechaCentro.add(panelDerechaCentroInterno, gbcCentral);
     }
 
-    private void mostrarVentanaBusesActivos() {
-        Font fuenteBold = cargarFuente("res/GlacialIndifference-Bold.otf", 16f, Font.BOLD);
-        Font fuenteRegular = cargarFuente("res/GlacialIndifference-Regular.otf", 14f, Font.PLAIN);
-
-        JDialog dialogoActivos = new JDialog(this, "Autobuses Activos", true);
-        dialogoActivos.setSize(400, 450);
-        dialogoActivos.setLocationRelativeTo(this);
-        dialogoActivos.setLayout(new BorderLayout());
-
-        JPanel panelContenido = new JPanel(new BorderLayout());
-        panelContenido.setBorder(new EmptyBorder(15, 15, 15, 15));
-        panelContenido.setBackground(new Color(240, 243, 246));
-
-        JLabel lblTitulo = new JLabel("Unidades en Estado Activo", JLabel.CENTER);
-        lblTitulo.setFont(fuenteBold);
-        lblTitulo.setForeground(new Color(30, 80, 135));
-        lblTitulo.setBorder(new EmptyBorder(0, 0, 15, 0));
-        panelContenido.add(lblTitulo, BorderLayout.NORTH);
-
-        DefaultListModel<String> modeloLista = new DefaultListModel<>();
-        
-        try {
-            List<UnidadBus> activosBD = controlador.obtenerBusesActivosDesdeBD();
-
-            for (UnidadBus bus : activosBD) {
-                modeloLista.addElement("Placa: " + bus.getPlaca() + " - Modelo: " + bus.getModelo());
-            }
-
-            if (modeloLista.isEmpty()) {
-                modeloLista.addElement("No hay unidades activas registradas en la base de datos.");
-            }
-        } catch (Exception e) {
-            modeloLista.addElement("Error al consultar la base de datos.");
-            System.out.println("Error: " + e.getMessage());
-        }
-
-        JList<String> listaBusesActivos = new JList<>(modeloLista);
-        listaBusesActivos.setFont(fuenteRegular);
-        listaBusesActivos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
-        JScrollPane scrollPane = new JScrollPane(listaBusesActivos);
-        panelContenido.add(scrollPane, BorderLayout.CENTER);
-
-        JButton btnCerrar = new JButton("Cerrar");
-        btnCerrar.setFont(fuenteBold.deriveFont(13f));
-        JPanel panelSur = new JPanel();
-        panelSur.setOpaque(false);
-        panelSur.setBorder(new EmptyBorder(10, 0, 0, 0));
-        panelSur.add(btnCerrar);
-        
-        btnCerrar.addActionListener(ev -> dialogoActivos.dispose());
-        panelContenido.add(panelSur, BorderLayout.SOUTH);
-
-        dialogoActivos.add(panelContenido);
-        dialogoActivos.setVisible(true);
-    }
-
     private Font cargarFuente(String ruta, float tamano, int estilo) {
         try {
             Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
@@ -535,7 +470,6 @@ public class RegistroUnidades extends JFrame {
         }
     }
 
-    // EJECUTAS OPCIONES
     private void ejecutarAccionMenu(String opcion) {
         switch (opcion) {
             case "Planificar itinerario": break;
@@ -567,9 +501,16 @@ public class RegistroUnidades extends JFrame {
         });
     }
 
+    // Getters para acceder a los campos 
+    public CampoTextoUtil getTxtPlaca() { return txtPlaca; }
+    public CampoTextoUtil getTxtModelo() { return txtModelo; }
+    public CampoTextoUtil getTxtCapacidad() { return txtCapacidad; }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new RegistroUnidades().setVisible(true);
+            RegistroUnidades vista = new RegistroUnidades();
+            new Controlador_RegistroUnidades(vista);
+            vista.setVisible(true);
         });
     }
 }
