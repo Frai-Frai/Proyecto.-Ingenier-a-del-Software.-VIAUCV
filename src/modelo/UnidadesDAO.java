@@ -6,9 +6,19 @@ import java.util.List;
 
 public class UnidadesDAO {
     
-    private static final String RUTA_TXT = "data/BDUnidadesRegistradas.txt";
+    private String RUTA_TXT;
 
-    // 1. Método para leer todas las unidades del TXT
+    // Constructor vacío (Usa la bd real)
+    public UnidadesDAO() {
+        this.RUTA_TXT = "data/BDUnidadesRegistradas.txt";
+    }
+
+    // Constructor para las Pruebas Unitarias (Usa el archivo temporal)
+    public UnidadesDAO(String ruta) {
+        this.RUTA_TXT = ruta;
+    }
+
+    //Método para leer todas las unidades del TXT
     public List<UnidadBus> obtenerUnidades() {
         List<UnidadBus> lista = new ArrayList<>();
         File archivo = new File(RUTA_TXT);
@@ -28,7 +38,7 @@ public class UnidadesDAO {
         return lista;
     }
 
-    // 2. Método para agregar una nueva unidad al TXT
+    //Método para agregar una nueva unidad al txt
     public void registrarUnidad(UnidadBus unidad) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(RUTA_TXT, true))) {
             bw.write(unidad.getPlaca() + "|" + unidad.getModelo() + "|" + unidad.getCapacidad() + "|" + unidad.getEstado());
@@ -38,7 +48,7 @@ public class UnidadesDAO {
         }
     }
 
-    // 3. Método para actualizar el estado operativo de un bus específico en el TXT
+    //Método para actualizar el estado operativo de un bus específico en la bd
     public void actualizarEstado(String placaBuscada, String nuevoEstado) {
         List<UnidadBus> lista = obtenerUnidades();
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(RUTA_TXT, false))) {

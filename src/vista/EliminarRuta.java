@@ -50,7 +50,6 @@ public class EliminarRuta extends JDialog {
 
         Font    fuenteT =  League("res/LeagueSpartan-Bold.otf", 20, Font.BOLD); // fuentes y asi
         Font    fuenteSubT = new Font("res/GlacialIndifference-Bold.otf", Font.BOLD, 16); // tipografias
-        Font    fuenteNormal = fuenteGlacial("res/GlacialIndifference-Regular.otf", 14, Font.PLAIN); 
         Font    fuenteLetras = fuenteGlacial("res/GlacialIndifference-Regular.otf", 16, Font.PLAIN);
         
         Color   azulCuadros = new Color(0x0D47A1); // para el cuadro de crear cuenta

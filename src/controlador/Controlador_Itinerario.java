@@ -6,6 +6,7 @@ import modelo.ItinerarioModelo;
 
 import modelo.ItinerarioDAO;
 import modelo.UnidadesDAO;
+import modelo.UsuarioDAO;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -47,8 +48,9 @@ public class Controlador_Itinerario {
 
         ItinerarioDAO itinerarioDao = new ItinerarioDAO();
         UnidadesDAO unidadesDao = new UnidadesDAO();
+        UsuarioDAO usuarioDao = new UsuarioDAO();
 
-        Validador_Itinerario validador = new Validador_Itinerario(itinerarioDao, unidadesDao);
+        Validador_Itinerario validador = new Validador_Itinerario(itinerarioDao, unidadesDao, usuarioDao);
 
         ItinerarioModelo itinerario = new ItinerarioModelo(
         pantalla.getCuadritoPlaca().getText().trim(),

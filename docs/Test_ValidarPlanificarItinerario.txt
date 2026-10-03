@@ -22,6 +22,7 @@ PRECONDICIONES:
 18.Placa ingresada de una Unidad inactiva.
 19.Conductor no registrado.
 20.Solapamiento entre itinerarios.
+21.Todos los campos vacíos.
 21.Todos los campos validos.
 
 ESPECIFICACIONES:
@@ -48,7 +49,8 @@ SALIDAS:
 18."La unidad ingresada no se encuentra activa."
 19."La cédula del conductor no existe en la base de datos."
 20."El itinerario se solapa con otro itinerario existente."
-21. "Ruta válida"
+21."Por favor, complete todos lo campos del formulario."
+22. "Ruta válida"
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 FACTOR 1: Placa vacía.
@@ -151,11 +153,15 @@ FACTOR 20: Solapamiento entre itinerarios.
 - ENTRADAS: "676767|Urbana|La Candelaria|Plaza Venezuela|Sambil de la Candelaria|Lunes|3:00pm|16578923"
 - SALIDA: "El itinerario se solapa con otro itinerario existente."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 21: Regsitro de itinerario exitoso.
+FACTOR 21: Todos los campos vacíos.
+- CLASES DE EQUIVALENCIA: itinerario.IsEmpty() == true;
+- ENTRADAS: " | | | | | | | "
+- SALIDA: "Por favor, complete todos lo campos del formulario."
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+FACTOR 22: Regsitro de itinerario exitoso.
 - CLASES DE EQUIVALENCIA: todos los campos válidos.
 - ENTRADAS: "B38921|Urbana|Catia|Tierra de nadie UCV|Centro de Catia|Lunes|12:00pm|16578923"
 - SALIDA: "Ruta válida"
-
 
 
 

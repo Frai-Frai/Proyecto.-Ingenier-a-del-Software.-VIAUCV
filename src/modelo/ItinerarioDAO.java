@@ -5,9 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItinerarioDAO {
-    private static final String Ruta_BDItinerario = "data/BDItinerario.txt";
+    private String Ruta_BDItinerario;
 
-    public ItinerarioDAO() {}
+    // Constructor vacío por defecto (BD real)
+    public ItinerarioDAO() {
+        this.Ruta_BDItinerario = "data/BDItinerario.txt";
+    }
+        
+    // Constructor para Pruebas Unitarias (Archivo temporal)
+    public ItinerarioDAO(String rutaTemp) {
+        this.Ruta_BDItinerario = rutaTemp;
+    }
         
     public void RegistrarRutaEnBD(ItinerarioModelo itinerario) {
 

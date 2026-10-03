@@ -5,15 +5,17 @@ import java.util.ArrayList;
 public class Validador_Itinerario {
     private ItinerarioDAO itinerarioDao;
     private UnidadesDAO unidadesDao;
+    private UsuarioDAO usuarioDao;
 
-    public Validador_Itinerario(ItinerarioDAO itinerarioDao, UnidadesDAO unidadesDao) {
+    public Validador_Itinerario(ItinerarioDAO itinerarioDao, UnidadesDAO unidadesDao, UsuarioDAO usuarioDao) {
         this.itinerarioDao = itinerarioDao;
         this.unidadesDao = unidadesDao;
+        this.usuarioDao = usuarioDao;
     }
 
     public String validarItinerario(ItinerarioModelo itinerario) {
         //Todos los campos vacios
-        if(itinerario.getPlacaAsignada().isEmpty() && itinerario.getTipoRuta().isEmpty() && itinerario.getDestino().isEmpty() && itinerario.getPuntoPartida().isEmpty() && itinerario.getPuntoLLegada().isEmpty() && itinerario.getDia().isEmpty() && itinerario.getHora().isEmpty() && itinerario.getConductor().isEmpty()) {
+        if(itinerario.getPlacaAsignada().trim().isEmpty() && itinerario.getTipoRuta().trim().isEmpty() && itinerario.getDestino().trim().isEmpty() && itinerario.getPuntoPartida().trim().isEmpty() && itinerario.getPuntoLLegada().trim().isEmpty() && itinerario.getDia().trim().isEmpty() && itinerario.getHora().trim().isEmpty() && itinerario.getConductor().trim().isEmpty()) {
             return "Por favor, complete todos lo campos del formulario.";
         }  
 
