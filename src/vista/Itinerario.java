@@ -49,8 +49,8 @@ public class Itinerario extends JFrame {
     public Itinerario(Usuario admin){
 
         setTitle ("VIAUCV - ADMINISTRADOR -- PLANIFICAR ITINERARIO");
-        setSize(1000, 880); 
-        setMinimumSize(new Dimension(950, 750)); 
+        setSize(1000, 870); 
+        setMinimumSize(new Dimension(980, 750)); 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
         setLocationRelativeTo(null);
@@ -238,12 +238,15 @@ public class Itinerario extends JFrame {
 
         // Posición de los botones laterales derechos
         int xBotonesInicial = 270 + anchoFormInicial + 15;
+
+        int posYBotonInicial= 335+altoFormInicial-42;
+        int posYERboton= posYBotonInicial-42-10;
+
         botonER = new BotonUtil("Seleccionar rutas", azulCuadros, Color.WHITE, 15, fuenteSubT, 180, 40);
-        botonER.setBounds(xBotonesInicial, 335, 180, 42);
+        botonER.setBounds(xBotonesInicial,posYERboton, 180, 42);
 
         botonP = new BotonUtil("Subir itinerario", azulCuadros, Color.WHITE, 15, fuenteSubT, 180, 40);
-        int posYBotonP = 335 + altoFormInicial - 42;
-        botonP.setBounds(xBotonesInicial, posYBotonP, 180, 42);
+        botonP.setBounds(xBotonesInicial, posYBotonInicial, 180, 42);
 
         add(botonER);
         add(botonP);
@@ -275,11 +278,13 @@ public class Itinerario extends JFrame {
 
                     // Adaptar tamaño del panel del formulario central
                     int nuevoAnchoForm = nuevoAnchoUtil - 220;
-                    int nuevoAltoForm = alturaUtil - 355;
+                    int nuevoAltoForm = alturaUtil - 385;
                     panelForm.setBounds(270, 335, nuevoAnchoForm, nuevoAltoForm);
 
                     // Recalcular el centrado vertical dinámicamente al redimensionar
-                    int nuevoYInicio = (nuevoAltoForm - alturaTotalBloque) / 2 + 15;
+                    //int nuevoYInicio = (nuevoAltoForm - alturaTotalBloque) / 2 + 15;
+                    int nuevoYInicio = 42;
+                    int espacioY=45; //para el espacio entre campos del formulario
                     int nuevoAnchoCuadro = nuevoAnchoForm - xCuadro - 35;
 
                     placa.setBounds(xLabel, nuevoYInicio, anchoLabel, 28);
@@ -308,8 +313,9 @@ public class Itinerario extends JFrame {
 
                     // Adaptar posición de los botones laterales derechos
                     int nuevoXBotones = 270 + nuevoAnchoForm + 15;
-                    int nuevoPosYBotonP = 335 + nuevoAltoForm - 42;
-                    botonER.setBounds(nuevoXBotones, 335, 180, 42);
+                    int nuevoPosYBotonP = 335 + nuevoAltoForm-42;
+                    int posYBotonER= nuevoPosYBotonP-42-10;
+                    botonER.setBounds(nuevoXBotones,posYBotonER, 180, 42);
                     botonP.setBounds(nuevoXBotones, nuevoPosYBotonP, 180, 42);
 
                     revalidate();
@@ -375,7 +381,7 @@ public class Itinerario extends JFrame {
     public BotonUtil getEliminarRuta(){ 
         return botonER;
     }
-
+    
     public CampoTextoUtil getCuadritoPlaca(){ 
         return cuadritoPlaca;
     }

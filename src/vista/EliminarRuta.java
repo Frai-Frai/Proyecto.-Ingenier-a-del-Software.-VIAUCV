@@ -12,7 +12,8 @@ import modelo.*;
 
 public class EliminarRuta extends JDialog {
     private BotonUtil botonElim, botonCancelar;
-    private List listaSeleccionadas;
+    private List <JCheckBox> listaSeleccionadas;
+    private List <ItinerarioModelo> listaRutas;
 
     //Tipografia 
     private Font fuenteGlacial(String ruta, float tamano, int estilo){
@@ -36,8 +37,11 @@ public class EliminarRuta extends JDialog {
         }
     }
 
-    public EliminarRuta(JFrame pantallaIT, String[] rutasRegistradas){
-        super(pantallaIT, "Eliminar Rutas", true);
+    public EliminarRuta(JFrame pantallaIT, List <ItinerarioModelo> rutasRegistradas){
+        super(pantallaIT, "Seleccionar rutas", true);
+
+        this.listaRutas= rutasRegistradas;
+        this.listaSeleccionadas= new ArrayList<>();
 
         setSize(600, 550);
         setResizable(false);
@@ -58,7 +62,7 @@ public class EliminarRuta extends JDialog {
         MiniVentanaUtil panelFondo = new MiniVentanaUtil(30, azulPastelC, 400, 420, true, Colorwelcome);
         panelFondo.setBounds(15,20,400,420);
         panelFondo.setLayout(null);
-        add(panelFondo, BorderLayout.CENTER);
+        getContentPane().add(panelFondo, BorderLayout.CENTER);
 
         JLabel titulo = new JLabel("Seleccione rutas a eliminar:");
         titulo.setFont(fuenteT);
@@ -73,14 +77,18 @@ public class EliminarRuta extends JDialog {
         panelSelect.setBackground(Color.WHITE);
         panelSelect.setBorder(new EmptyBorder(10,10,10,10));
 
-        listaSeleccionadas = new ArrayList<>();
-
-        if(rutasRegistradas != null){
-            for(String ruta : rutasRegistradas){
-                JCheckBox select = new JCheckBox(ruta);
+        if(rutasRegistradas != null && !rutasRegistradas.isEmpty()){
+            for(ItinerarioModelo ruta : rutasRegistradas){
+                //lo que se muestra en checkout
+                String infoRuta = String.format("Placa: %s| Ruta: %s. %s | De %s a %s | %s %s | Conductor: %s",
+                ruta.getPlacaAsignada(), ruta.getTipoRuta(), ruta.getDestino(), ruta.getPuntoPartida(), ruta.getPuntoLLegada(), ruta.getDia(), ruta.getHora(), ruta.getConductor()
+                );
+                JCheckBox select = new JCheckBox(infoRuta);
                 select.setBackground(Color.WHITE);
                 select.setFont(fuenteLetras);
                 select.setFocusPainted(false);
+
+                //checkbox
                 listaSeleccionadas.add(select);
                 panelSelect.add(select);
                 panelSelect.add(Box.createRigidArea(new Dimension(0,8)));
@@ -96,8 +104,9 @@ public class EliminarRuta extends JDialog {
         //barrita para desplazar por si hay muchas rutas
 
         JScrollPane scroll = new JScrollPane(panelSelect);
-        scroll.setBounds(50,90,480,320);
+        scroll.setBounds(50,90,480,300);
         scroll.setBorder(BorderFactory.createLineBorder(azulPastelC, 2));
+        scroll.getVerticalScrollBar().setUnitIncrement(16);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
@@ -106,13 +115,26 @@ public class EliminarRuta extends JDialog {
         //botones
 
         botonElim = new BotonUtil("Eliminar", azulCuadros, Color.WHITE, 14, fuenteSubT, 150, 40);
-        botonElim.setBounds(100,440,160,45);
+        botonElim.setBounds(80, 430, 150, 40);
+        panelFondo.add(botonElim);
 
         botonCancelar = new BotonUtil("Cancelar", azulCuadros, Color.WHITE, 14, fuenteSubT, 150, 40);
-        botonCancelar.setBounds(320,440,160,45);
+        botonCancelar.setBounds(320,430,160,45);
+        botonCancelar.addActionListener(e-> dispose()); //cierra 
 
         panelFondo.add(botonElim);
         panelFondo.add(botonCancelar);
+
+    }
+
+    public List<ItinerarioModelo> getRutasSeleccionadas(){
+        List<ItinerarioModelo>  seleccionadas= new ArrayList<>();
+            for(int i=0; i<listaSeleccionadas.size();i++){
+                if(listaSeleccionadas.get(i).isSelected()){
+                    seleccionadas.add(listaRutas.get(i));
+                }
+            }
+        return seleccionadas;
     }
 
     public BotonUtil getbotonElim(){ 
@@ -121,9 +143,5 @@ public class EliminarRuta extends JDialog {
 
     public BotonUtil getbotonCancelar(){ 
         return botonCancelar; 
-    }
-
-    public List getListaCheckboxes(){ 
-        return listaSeleccionadas; 
     }
 }
