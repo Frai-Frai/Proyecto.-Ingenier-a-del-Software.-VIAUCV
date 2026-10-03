@@ -172,7 +172,6 @@ public class Controlador_Itinerario {
     }
 
     
-<<<<<<< HEAD
 
     private void IrAGestion(){
         this.pantalla.dispose();
@@ -181,7 +180,4 @@ public class Controlador_Itinerario {
         pantallaIS.setVisible(true);
     }
 }
-=======
-}
->>>>>>> 8d41619225bf4cab5edc38550c082ea58838bb57
 
