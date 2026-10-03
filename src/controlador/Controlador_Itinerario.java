@@ -9,6 +9,7 @@ import modelo.UnidadesDAO;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -39,7 +40,7 @@ public class Controlador_Itinerario {
                 ValidarItinerario();
         });
 
-        this.pantalla.getEliminarRuta().addMouseListener(new MouseAdapter() { //para que el boton de seleccionar ruta sirva
+        this.pantalla.getEliminarRuta().addMouseListener(new MouseAdapter() { 
             @Override
             public void mousePressed (MouseEvent e) {
                 System.out.println("--> BOTÓN SELECCIONAR RUTAS PRESIONADO");
@@ -49,35 +50,65 @@ public class Controlador_Itinerario {
     }
 
     private void ValidarItinerario() {
-        
-
         ItinerarioDAO itinerarioDao = new ItinerarioDAO();
         UnidadesDAO unidadesDao = new UnidadesDAO();
 
         Validador_Itinerario validador = new Validador_Itinerario(itinerarioDao, unidadesDao);
 
         ItinerarioModelo itinerario = new ItinerarioModelo(
-        pantalla.getCuadritoPlaca().getText().trim(),
-        pantalla.getCuadritoTipoRuta().getText().trim(), 
-        pantalla.getCuadritoDestino().getText().trim(), 
-        pantalla.getCuadritoPtoPartida().getText().trim(), 
-        pantalla.getCuadritoPtoLlegada().getText().trim(), 
-        pantalla.getCuadritoDia().getText().trim(),  
-        pantalla.getCuadritoHora().getText().trim(), 
-        pantalla.getCuadritoConductor().getText().trim()
-    );
+            pantalla.getCuadritoPlaca().getText().trim(),
+            pantalla.getCuadritoTipoRuta().getText().trim(), 
+            pantalla.getCuadritoDestino().getText().trim(), 
+            pantalla.getCuadritoPtoPartida().getText().trim(), 
+            pantalla.getCuadritoPtoLlegada().getText().trim(), 
+            pantalla.getCuadritoDia().getText().trim(),  
+            pantalla.getCuadritoHora().getText().trim(), 
+            pantalla.getCuadritoConductor().getText().trim()
+        );
 
         String resultado = validador.validarItinerario(itinerario);
 
         if (resultado.equals("Ruta válida")) {
             itinerarioDao.RegistrarRutaEnBD(itinerario);
             JOptionPane.showMessageDialog(pantalla, "Ruta registrada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            
+            // 1. Actualizamos el panel superior de destinos automáticamente
+            actualizarDestinosEnPantalla(itinerarioDao);
+
+            // 2. Limpiamos todos los campos del formulario
+            limpiarCamposFormulario();
+
         } else {
             JOptionPane.showMessageDialog(pantalla, resultado, "Error de validación", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    //Presionar el boton de registrar itinerario verifico todo
+    // Método para vaciar los campos de texto del formulario tras un registro exitoso
+    private void limpiarCamposFormulario() {
+        pantalla.getCuadritoPlaca().setText("");
+        pantalla.getCuadritoTipoRuta().setText("");
+        pantalla.getCuadritoDestino().setText("");
+        pantalla.getCuadritoPtoPartida().setText("");
+        pantalla.getCuadritoPtoLlegada().setText("");
+        pantalla.getCuadritoDia().setText("");
+        pantalla.getCuadritoHora().setText("");
+        pantalla.getCuadritoConductor().setText("");
+    }
+
+    // Método auxiliar para consultar los destinos actuales y refrescar la vista de inmediato
+    private void actualizarDestinosEnPantalla(ItinerarioDAO itinerarioDao) {
+        List<ItinerarioModelo> listaRutas = itinerarioDao.obtenerRutas();
+        List<String> destinos = new ArrayList<>();
+
+        if (listaRutas != null) {
+            for (ItinerarioModelo ruta : listaRutas) {
+                if (ruta.getDestino() != null && !destinos.contains(ruta.getDestino())) {
+                    destinos.add(ruta.getDestino());
+                }
+            }
+        }
+        pantalla.actualizarPanelPines(destinos);
+    }
 
     private void abrirEliminarRuta() {
         ItinerarioDAO itinerarioDao = new ItinerarioDAO();
@@ -88,10 +119,8 @@ public class Controlador_Itinerario {
             return;
         }
 
-        // miniventana pasándole el padre y la lista de objetos de la BD
         EliminarRuta miniVentana = new EliminarRuta(pantalla, listaRutasBD);
 
-        //la lógica del botón "Eliminar" que está dentro de la miniventana
         miniVentana.getbotonElim().addActionListener(e -> {
             List<ItinerarioModelo> seleccionadas = miniVentana.getRutasSeleccionadas();
 
@@ -111,27 +140,27 @@ public class Controlador_Itinerario {
                 boolean exito = true;
 
                 for(ItinerarioModelo i: seleccionadas){
-                    boolean sinProblema= itinerarioDao.eliminarRuta(i); //Para saber si no hubo problema con el i usado, elima una a una
-                                                                        //las rutas marcadas 
+                    boolean sinProblema = itinerarioDao.eliminarRuta(i); 
 
                     if(!sinProblema){
-                        exito=false; //no se elimina
+                        exito = false; 
                     }
                 }
                 
                 if (exito) {
                     JOptionPane.showMessageDialog(miniVentana, "Rutas eliminadas exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                    miniVentana.dispose(); // Cierra la miniventana
+                    miniVentana.dispose(); 
+                    
+                    actualizarDestinosEnPantalla(itinerarioDao);
+
                 } else {
                     JOptionPane.showMessageDialog(miniVentana, "Error al eliminar registros.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
 
-        // 3. Muestras la ventana emergente
         miniVentana.setVisible(true);
     }
-
 
     private void irInicio(){
         this.pantalla.dispose();
@@ -139,6 +168,7 @@ public class Controlador_Itinerario {
         new Controlador_Inicio(pantallaIS);
         pantallaIS.setVisible(true);
     }
+<<<<<<< HEAD
 
     private void IrAGestion(){
         this.pantalla.dispose();
@@ -147,3 +177,6 @@ public class Controlador_Itinerario {
         pantallaIS.setVisible(true);
     }
 }
+=======
+}
+>>>>>>> 8d41619225bf4cab5edc38550c082ea58838bb57

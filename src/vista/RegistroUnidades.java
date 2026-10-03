@@ -41,22 +41,21 @@ public class RegistroUnidades extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        Font fuenteRegular = cargarFuente("res/GlacialIndifference-Regular.otf", 18f, Font.PLAIN);
         Font fuenteBold = cargarFuente("res/GlacialIndifference-Bold.otf", 18f, Font.BOLD);
 
-        // AGREGAR OPCIONES
+        // 1. PANEL MENU (Color azulado de la interfaz)
         JPanel panelMenu = InterfazUtil.crearPanelMenu(
             new String[] {
                 "Planificar itinerario", "Registrar personal", "Pasajeros diarios",
                 "Gestión de unidades", "Generar reporte", 
             },
-            new Color(165, 205, 235), // CAMBIAR COLOR
+            new Color(205, 228, 238), 
             opcion -> ejecutarAccionMenu(opcion)
         );
 
-        // 2. PANEL DERECHO 
+        // 2. PANEL DERECHO TOTAL (Fondo general de la página con el tono azul claro)
         JPanel panelDerechoTotal = new JPanel(new BorderLayout());
-        panelDerechoTotal.setBackground(new Color(240, 243, 246));
+        panelDerechoTotal.setBackground(new Color(205, 228, 238));
         panelDerechoTotal.setBorder(new EmptyBorder(12, 12, 12, 12));
 
         // PANEL SUPERIOR
@@ -247,7 +246,7 @@ public class RegistroUnidades extends JFrame {
         JPanel panelContenidoPopup = new JPanel();
         panelContenidoPopup.setLayout(new BoxLayout(panelContenidoPopup, BoxLayout.Y_AXIS));
         panelContenidoPopup.setBorder(new EmptyBorder(12, 12, 12, 12));
-        panelContenidoPopup.setBackground(new Color(205, 228, 238));
+        panelContenidoPopup.setBackground(new Color(165, 205, 235));
 
         JLabel lblInfo = new JLabel("Bus: " + placaBus);
         lblInfo.setFont(fuenteBold.deriveFont(13f));
@@ -315,6 +314,7 @@ public class RegistroUnidades extends JFrame {
         gbcCentral.weighty = 1.0;
         gbcCentral.fill = GridBagConstraints.BOTH;
 
+        // Panel de Registrar nueva unidad con un azul más oscuro
         panelFormularioFlotante = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -322,7 +322,7 @@ public class RegistroUnidades extends JFrame {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 RoundRectangle2D rectRedondeado = new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, 30, 30);
-                g2.setColor(new Color(205, 228, 238));
+                g2.setColor(new Color(165, 205, 235));
                 g2.fill(rectRedondeado);
                 g2.setColor(Color.BLACK);
                 g2.setStroke(new BasicStroke(1.5f));
@@ -535,7 +535,6 @@ public class RegistroUnidades extends JFrame {
         }
     }
 
-    // EJECUTAS OPCIONES
     private void ejecutarAccionMenu(String opcion) {
         switch (opcion) {
             case "Planificar itinerario": break;
