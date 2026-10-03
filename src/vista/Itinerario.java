@@ -359,7 +359,4 @@ public class Itinerario extends JFrame {
         });
     }
 
-}   
-    
-
-
+}  

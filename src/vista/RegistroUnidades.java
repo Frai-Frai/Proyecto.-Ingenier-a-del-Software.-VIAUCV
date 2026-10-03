@@ -41,102 +41,20 @@ public class RegistroUnidades extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        Font fuenteRegular = cargarFuente("res/GlacialIndifference-Regular.otf", 15f, Font.PLAIN);
-        Font fuenteBold = cargarFuente("res/GlacialIndifference-Bold.otf", 15f, Font.BOLD);
+        Font fuenteRegular = cargarFuente("res/GlacialIndifference-Regular.otf", 18f, Font.PLAIN);
+        Font fuenteBold = cargarFuente("res/GlacialIndifference-Bold.otf", 18f, Font.BOLD);
 
-        // PANEL IZQUIERDO
-        JPanel panelMenu = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(new Color(165, 205, 235));
-                int margen = 12;
-                int ancho = getWidth() - (margen * 2);
-                int alto = getHeight() - (margen * 2);
-                RoundRectangle2D rect = new RoundRectangle2D.Float(margen, margen, ancho, alto, 45, 45);
-                g2.fill(rect);
-                g2.dispose();
-            }
-        };
-        panelMenu.setPreferredSize(new Dimension(320, 0));
-        panelMenu.setOpaque(false);
-        panelMenu.setBorder(new EmptyBorder(35, 25, 35, 25));
-        panelMenu.setLayout(new BoxLayout(panelMenu, BoxLayout.Y_AXIS));
-        
-        JLabel lblLogo = new JLabel();
-        lblLogo.setAlignmentX(Component.LEFT_ALIGNMENT);
-        try {
-            ImageIcon iconoOriginal = new ImageIcon("res/LogoViaUCV.png");
-            Image img = iconoOriginal.getImage();
-            int anchoDeseado = 220;
-            int anchoOrig = iconoOriginal.getIconWidth();
-            int altoOrig = iconoOriginal.getIconHeight();
-            int altoDeseado = (anchoOrig > 0) ? (altoOrig * anchoDeseado) / anchoOrig : 50;
-            Image imagenEscalada = img.getScaledInstance(anchoDeseado, altoDeseado, Image.SCALE_SMOOTH);
-            lblLogo.setIcon(new ImageIcon(imagenEscalada));
-        } catch (Exception e) {
-            lblLogo.setText("  LogoViaUCV");
-        }
-        
-        panelMenu.add(lblLogo);
-        panelMenu.add(Box.createRigidArea(new Dimension(0, 35)));
+        // AGREGAR OPCIONES
+        JPanel panelMenu = InterfazUtil.crearPanelMenu(
+            new String[] {
+                "Planificar itinerario", "Registrar personal", "Pasajeros diarios",
+                "Gestión de unidades", "Generar reporte", 
+            },
+            new Color(165, 205, 235), // CAMBIAR COLOR
+            opcion -> ejecutarAccionMenu(opcion)
+        );
 
-        String[] opciones = {
-            "Planificar itinerario", "Registrar personal", "Pasajeros diarios",
-            "Gestión de unidades", "Generar reporte", "Cerrar sesión"
-        };
-
-        for (int i = 0; i < opciones.length; i++) {
-            String textoOpcion = opciones[i];
-
-            if (i == 3) {
-                JLabel lblOpcion = new JLabel(textoOpcion);
-                lblOpcion.setFont(fuenteBold.deriveFont(15f));
-                
-                JPanel panelActivoWrapper = new JPanel(new BorderLayout());
-                panelActivoWrapper.setOpaque(true);
-                panelActivoWrapper.setBackground(new Color(130, 175, 215));
-                panelActivoWrapper.setBorder(new EmptyBorder(10, 15, 10, 15));
-                panelActivoWrapper.setMaximumSize(new Dimension(Integer.MAX_VALUE, 45));
-                panelActivoWrapper.setAlignmentX(Component.LEFT_ALIGNMENT);
-                panelActivoWrapper.add(lblOpcion, BorderLayout.CENTER);
-                panelMenu.add(panelActivoWrapper);
-            } else {
-                JLabel lblOpcion = new JLabel(textoOpcion);
-                lblOpcion.setFont(fuenteRegular.deriveFont(15f));
-                lblOpcion.setBorder(new EmptyBorder(0, 15, 0, 0));
-                lblOpcion.setAlignmentX(Component.LEFT_ALIGNMENT);
-                lblOpcion.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-                lblOpcion.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseEntered(MouseEvent e) {
-                        lblOpcion.setForeground(new Color(30, 85, 145));
-                    }
-
-                    @Override
-                    public void mouseExited(MouseEvent e) {
-                        lblOpcion.setForeground(Color.BLACK);
-                    }
-
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        ejecutarAccionMenu(textoOpcion);
-                    }
-                });
-
-                panelMenu.add(lblOpcion);
-            }
-            
-            if (i < opciones.length - 1) {
-                panelMenu.add(Box.createRigidArea(new Dimension(0, 22)));
-            }
-        }
-        panelMenu.add(Box.createVerticalGlue());
-
-        // PANEL DERECHO 
+        // 2. PANEL DERECHO 
         JPanel panelDerechoTotal = new JPanel(new BorderLayout());
         panelDerechoTotal.setBackground(new Color(240, 243, 246));
         panelDerechoTotal.setBorder(new EmptyBorder(12, 12, 12, 12));
@@ -528,7 +446,6 @@ public class RegistroUnidades extends JFrame {
         panelImagenBus.setOpaque(false);
         panelImagenBus.setLayout(new BorderLayout());
 
-        // Botón inferior "Unidades en Estado Operativo" con su listener vinculado
         BotonUtil btnEstadoOperativo = new BotonUtil("Unidades en Estado Operativo", new Color(40, 100, 160), Color.WHITE, 15, fuenteBold.deriveFont(15f), 0, 48);
         btnEstadoOperativo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 48));
 
@@ -618,6 +535,7 @@ public class RegistroUnidades extends JFrame {
         }
     }
 
+    // EJECUTAS OPCIONES
     private void ejecutarAccionMenu(String opcion) {
         switch (opcion) {
             case "Planificar itinerario": break;

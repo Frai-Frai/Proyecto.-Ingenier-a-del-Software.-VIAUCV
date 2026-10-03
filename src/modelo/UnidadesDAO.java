@@ -90,6 +90,23 @@ public class UnidadesDAO {
     return lista;
 }
 
+    //Saber si esta dentro de la lista de un tal estado puesto
+    public boolean estaActivo(String placa){
+        List<UnidadBus> busesActivos= obtenerBusesPorEstado("Activo");
+
+        if(busesActivos==null || busesActivos.isEmpty()){
+            return false;
+        }
+
+        for(UnidadBus bus: busesActivos){
+            if(bus.getPlaca()!=null && bus.getPlaca().trim().equalsIgnoreCase(placa) ){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     //buscar por placa 
     public UnidadBus buscarPorPlaca (String placaBuscada){
             File f=new File(RUTA_TXT);
