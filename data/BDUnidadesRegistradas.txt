@@ -10,3 +10,4 @@ holahola|d|33|Activo
 676767|sicseven|41|Activo
 mamamama|d|34|Fuera de servicio
 mbh1807|channel|23|En mantenimiento
+odioesto|1234|35|Activo
