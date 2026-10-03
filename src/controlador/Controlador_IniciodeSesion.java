@@ -64,10 +64,9 @@ public class Controlador_IniciodeSesion {
         String User = pantallaIS.getCuadroUser().getText().trim();
         String cont = pantallaIS.getCuadroCont().getText().trim();
         Usuario UserAu = null;
-       Validador_IniciodeSesion valida = new Validador_IniciodeSesion(EncontroUser);
+        Validador_IniciodeSesion valida = new Validador_IniciodeSesion(EncontroUser);
         List <Usuario> AllUsers = EncontroUser.obtenerUsuarios();
-        //boolean DatosEncontrados = false;
-       // Usuario h;
+       
         for( Usuario u : AllUsers){
 
             if(u.getCedula().equals(User) || u.getNombreUsuario().equals(User)){

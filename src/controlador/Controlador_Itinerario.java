@@ -1,8 +1,6 @@
 package controlador;
 
-import vista.Itinerario;
-import vista.InicioSesion;
-
+import vista.*;
 import modelo.Validador_Itinerario;
 import modelo.ItinerarioModelo;
 
@@ -32,6 +30,13 @@ public class Controlador_Itinerario {
         this.pantalla.getBotonP().addActionListener(e -> {
                 ValidarItinerario();
         });
+
+        /*this.pantalla.getEliminarRuta().addMouseListener(new MouseAdapter() { //para que el boton de seleccionar ruta sirva
+            @Override
+            public void mousePressed(MouseEvent e) {
+                abrirEliminarRuta();
+            }
+        });*/ //ESTO Y LO DE ABAJO FUE LO QUE INTENE HACER Y ME ENREDE
     }
 
     private void ValidarItinerario() {
@@ -65,6 +70,19 @@ public class Controlador_Itinerario {
 
     //Presionar el boton de registrar itinerario verifico todo
 
+    /*private void abrirEliminarRuta(){
+
+        ItinerarioDAO itinerarioDao = new ItinerarioDAO();
+        UnidadesDAO unidadesDao = new UnidadesDAO();
+        java.util.List ListaR = itinerarioDao.obtenerRutas();
+        String[] rutasI = new String[ListaR.size()];
+        Validador_Itinerario valida = new Validador_Itinerario(itinerarioDao, unidadesDao);
+        EliminarRuta miniVentana = new EliminarRuta(pantalla, rutasI); //crea la mini ventana
+
+       
+        new Controlador_EliminarRuta(miniVentana); //para que la pantalla al q lo redirija sirva
+        miniVentana.setVisible(true); //se muestra
+    }*/
 
     private void irInicioSesion(){
         System.out.println("Cambiando a pantalla de inicio de sesión...");
@@ -73,5 +91,4 @@ public class Controlador_Itinerario {
         new Controlador_IniciodeSesion(pantallaIS);
         pantallaIS.setVisible(true);
     }
-
 }

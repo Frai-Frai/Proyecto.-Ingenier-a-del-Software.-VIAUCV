@@ -17,7 +17,7 @@ import util.*;
 
 public class Itinerario extends JFrame {
     
-    private BotonUtil botonP, botonFlechaD, botonFlechaI;
+    private BotonUtil botonP, botonFlechaD, botonFlechaI, botonER;
     private JPanel panelPines;
    // private JLabel  CerrarS, placa, tipoRuta, destino, ptollegada, ptosalida, conductor;
     private JLabel  opPlanificar, opRegistrarP, opPDiarios, opGestionU, opGenR, opCerrarS;
@@ -265,6 +265,10 @@ public class Itinerario extends JFrame {
         cuadritoConductor.setBounds(250,335,240,32);
         panelForm.add(cuadritoConductor);
 
+        botonER = new BotonUtil("Seleccionar rutas", azulCuadros, Color.WHITE, 15, fuenteSubT, 180, 40);
+        botonER.setBounds(805, 300, 180, 45);
+        add(botonER);
+
         botonP = new BotonUtil("Subir itinerario", azulCuadros, Color.WHITE, 15, fuenteSubT, 180, 40);
         botonP.setBounds(805, 635, 180, 45);
         add(botonP);
@@ -285,6 +289,10 @@ public class Itinerario extends JFrame {
         return botonP;
     }
     
+    public BotonUtil getEliminarRuta(){ 
+        return botonER;
+    }
+
     public CampoTextoUtil getCuadritoPlaca(){ 
         return cuadritoPlaca;
     }
