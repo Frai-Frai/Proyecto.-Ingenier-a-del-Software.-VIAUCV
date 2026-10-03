@@ -57,4 +57,54 @@ public class ItinerarioDAO {
         
         return false;
     }
+
+    //eliminar ruta de la base de datos
+    public boolean eliminarRuta(ItinerarioModelo itinerario){
+        List<ItinerarioModelo> listActual= obtenerRutas();
+        boolean eliminado= false;
+
+        if(listActual==null || listActual.isEmpty() || itinerario==null){
+            return false;
+        }
+
+        for(ItinerarioModelo i: listActual){
+            
+            //poniendo los resultados en variables seradas para comparacion mas legible
+            boolean placa= i.getPlacaAsignada().trim().equals(itinerario.getPlacaAsignada().trim());
+            boolean tipoRuta= i.getTipoRuta().trim().equalsIgnoreCase(itinerario.getTipoRuta().trim());
+            boolean destino= i.getDestino().trim().equalsIgnoreCase(itinerario.getDestino().trim());
+            boolean puntoPartida= i.getPuntoPartida().trim().equalsIgnoreCase(itinerario.getPuntoPartida().trim());
+            boolean puntoLLegada= i.getPuntoLLegada().trim().equalsIgnoreCase(itinerario.getPuntoLLegada().trim());
+            boolean dia= i.getDia().trim().equalsIgnoreCase(itinerario.getDia().trim());
+            boolean hora= i.getHora().trim().equalsIgnoreCase(itinerario.getHora().trim());
+            boolean conductor= i.getConductor().trim().equalsIgnoreCase(itinerario.getConductor().trim());
+
+            if(placa && tipoRuta && destino && puntoPartida && puntoLLegada && dia && hora && conductor){
+                listActual.remove(i); //se quita de la lista si coincide
+                eliminado=true;
+                break; //como ya se encontro, se sale del bucle
+            }
+        }
+
+        if(eliminado){
+            actualizarDB(listActual);
+        }
+        return eliminado;
+    }
+    
+    //actualizar la BD de itinerario
+    private void actualizarDB(List<ItinerarioModelo> lista){
+            File f= new File(Ruta_BDItinerario);
+
+            try (BufferedWriter bw =new BufferedWriter(new FileWriter(f,false))){
+
+                for (ItinerarioModelo i: lista ) {
+                    bw.write(i.EscribirFormatoTXT()); //escribir en el txt lo de la lista
+                    bw.newLine();
+                }
+                
+            }catch(IOException e){
+                System.out.println("Error al actualizar la base de datos: "+e.getMessage());
+            }
+    }
 }

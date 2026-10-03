@@ -1,4 +1,6 @@
 package modelo;
+import java.awt.List;
+import java.util.ArrayList;
 
 public class Validador_Itinerario {
     private ItinerarioDAO itinerarioDao;
@@ -83,7 +85,12 @@ public class Validador_Itinerario {
             return "- La placa asignada no existe en la base de datos.";
         }
 
-        UsuarioDAO usuarioDao = new UsuarioDAO();;
+        //si la unidad no esta activa
+        if(!unidadesDao.estaActivo(itinerario.getPlacaAsignada())){
+            return "- La unidad ingresada no se encuentra activa.";
+        }
+
+        UsuarioDAO usuarioDao = new UsuarioDAO();
 
         //el conductor no existe en la base de datos de la pagina
         if(usuarioDao.buscarPorCedula(itinerario.getConductor()) == null){
