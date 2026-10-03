@@ -8,6 +8,6 @@ adios|d|33|En mantenimiento
 holahola|d|33|Activo
 444567|habibi|50|Fuera de servicio
 676767|sicseven|41|Activo
-mamamama|d|34|Fuera de servicio
 mbh1807|channel|23|En mantenimiento
 odioesto|1234|35|Activo
+Pruebaa|mod123|36|Fuera de servicio

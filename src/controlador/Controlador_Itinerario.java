@@ -163,4 +163,6 @@ public class Controlador_Itinerario {
         new Controlador_Inicio(pantallaIS);
         pantallaIS.setVisible(true);
     }
+
+    
 }
