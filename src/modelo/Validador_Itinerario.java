@@ -13,7 +13,7 @@ public class Validador_Itinerario {
 
     public String validarItinerario(ItinerarioModelo itinerario) {
         //Todos los campos vacios
-        if(itinerario.getPlacaAsignada()==" " && itinerario.getTipoRuta()==" " && itinerario.getDestino()==" " && itinerario.getPuntoPartida()==" " && itinerario.getPuntoLLegada()==" " && itinerario.getDia()==" " && itinerario.getHora()==" " && itinerario.getConductor()==" ") {
+        if(itinerario.getPlacaAsignada().isEmpty() && itinerario.getTipoRuta().isEmpty() && itinerario.getDestino().isEmpty() && itinerario.getPuntoPartida().isEmpty() && itinerario.getPuntoLLegada().isEmpty() && itinerario.getDia().isEmpty() && itinerario.getHora().isEmpty() && itinerario.getConductor().isEmpty()) {
             return "Por favor, complete todos lo campos del formulario.";
         }  
 
