@@ -24,8 +24,14 @@ public class Controlador_Itinerario {
         this.pantalla.getOpCerrarS().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("Cerrando sesión...");
                 irInicio();
+            }
+        });
+        
+        this.pantalla.getOpGestionU().addMouseListener(new MouseAdapter() {
+            @Override 
+            public void mouseClicked(MouseEvent e){
+                IrAGestion();
             }
         });
 
@@ -39,7 +45,7 @@ public class Controlador_Itinerario {
                 System.out.println("--> BOTÓN SELECCIONAR RUTAS PRESIONADO");
                 abrirEliminarRuta();
             }
-        }); //ESTO Y LO DE ABAJO FUE LO QUE INTENE HACER Y ME ENREDE
+        }); 
     }
 
     private void ValidarItinerario() {
@@ -128,10 +134,16 @@ public class Controlador_Itinerario {
 
 
     private void irInicio(){
-        System.out.println("Cambiando a pantalla de inicio de sesión...");
         this.pantalla.dispose();
         Inicio pantallaIS = new Inicio();
         new Controlador_Inicio(pantallaIS);
+        pantallaIS.setVisible(true);
+    }
+
+    private void IrAGestion(){
+        this.pantalla.dispose();
+        RegistroUnidades pantallaIS = new RegistroUnidades();
+        new Controlador_RegistroUnidades(pantallaIS);
         pantallaIS.setVisible(true);
     }
 }

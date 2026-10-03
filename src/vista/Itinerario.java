@@ -335,32 +335,32 @@ public class Itinerario extends JFrame {
         // Opciones del menú
         opPlanificar = new JLabel("Planificar Itinerario");
         opPlanificar.setBounds(30, 150, 180, 30);
-        new TextosInteractivosUtil(opPlanificar, "Planificar Itinerario", Color.DARK_GRAY, azulCuadros, fuenteLink);
+        new TextosInteractivosUtil(opPlanificar, "Planificar Itinerario", Color.BLACK, azulCuadros, fuenteLink);
         menuIzq.add(opPlanificar);
         
         opRegistrarP = new JLabel("Registrar Personal");
         opRegistrarP.setBounds(30, 200, 180, 30);
-        new TextosInteractivosUtil(opRegistrarP, "Registrar Personal", Color.DARK_GRAY, azulCuadros, fuenteLink);
+        new TextosInteractivosUtil(opRegistrarP, "Registrar Personal", Color.BLACK, azulCuadros, fuenteLink);
         menuIzq.add(opRegistrarP);
         
         opPDiarios = new JLabel("Pasajeros Diarios");
         opPDiarios.setBounds(30, 250, 180, 30);
-        new TextosInteractivosUtil(opPDiarios, "Pasajeros Diarios", Color.DARK_GRAY, azulCuadros, fuenteLink);
+        new TextosInteractivosUtil(opPDiarios, "Pasajeros Diarios", Color.BLACK, azulCuadros, fuenteLink);
         menuIzq.add(opPDiarios);
 
         opGestionU = new JLabel("Gestión de Unidades");
         opGestionU.setBounds(30, 300, 180, 30);
-        new TextosInteractivosUtil(opGestionU, "Gestión de Unidades", Color.DARK_GRAY, azulCuadros, fuenteLink);
+        new TextosInteractivosUtil(opGestionU, "Gestión de Unidades", Color.BLACK, azulCuadros, fuenteLink);
         menuIzq.add(opGestionU);
 
         opGenR = new JLabel("Generar Reporte");
         opGenR.setBounds(30, 350, 180, 30);
-        new TextosInteractivosUtil(opGenR, "Generar Reporte", Color.DARK_GRAY, azulCuadros, fuenteLink);
+        new TextosInteractivosUtil(opGenR, "Generar Reporte", Color.BLACK, azulCuadros, fuenteLink);
         menuIzq.add(opGenR);
 
         opCerrarS = new JLabel("Cerrar Sesión");
         opCerrarS.setBounds(30, 450, 180, 30);
-        new TextosInteractivosUtil(opCerrarS, "Cerrar Sesión", Color.DARK_GRAY, azulCuadros, fuenteLink);
+        new TextosInteractivosUtil(opCerrarS, "Cerrar Sesión", Color.BLACK, azulCuadros, fuenteLink);
         menuIzq.add(opCerrarS);
 
         getRootPane().setDefaultButton(botonP);

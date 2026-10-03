@@ -61,7 +61,7 @@ public class InterfazUtil {
         panelMenu.add(lblLogo);
         panelMenu.add(Box.createRigidArea(new Dimension(0, 30)));
 
-        // Opciones del menú dinámicas
+         // Opciones del menú dinámicas
         if (opcionesMenu != null) {
             for (int i = 0; i < opcionesMenu.length; i++) {
                 String textoOpcion = opcionesMenu[i];
