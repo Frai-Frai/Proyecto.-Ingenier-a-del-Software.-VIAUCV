@@ -168,6 +168,8 @@ public class Controlador_Itinerario {
         new Controlador_Inicio(pantallaIS);
         pantallaIS.setVisible(true);
     }
+
+    
 <<<<<<< HEAD
 
     private void IrAGestion(){
@@ -180,3 +182,4 @@ public class Controlador_Itinerario {
 =======
 }
 >>>>>>> 8d41619225bf4cab5edc38550c082ea58838bb57
+
