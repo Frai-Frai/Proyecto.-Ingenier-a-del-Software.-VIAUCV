@@ -50,6 +50,7 @@ public class Validador_GestionUnidades {
 
         if(errores.length()>0){
             errores.toString();
+            return errores.toString();
         }
 
         //Despues de que todo es correcto en el formulario

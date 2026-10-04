@@ -1,0 +1,90 @@
+ENTRADAS:
+- Placa: Valores por parámetro de tipo String (JTextField)
+- Modelo: Valores por parámetro de tipo String (JTextField)
+- Capacidad: Valores por parámetro de tipo numérico/String (JTextField)
+- Estado operativo : Valores por parámetro de tipo numérico/String (JTextField)
+
+PRECONDICIONES (Casos de prueba / Clases de equivalencia):
+
+1. Todos los campos vacíos.
+2. Placa vacía, los demás campos llenos.
+3. Placa ingresada inválida.
+4. Placa ingresada inválida por longitud.
+5. Modelo vacío, los demás campos llenos.
+6. Capacidad vacía, los demás campos llenos.
+7. Capacidad ingresada inválida.
+8. Capacidad ingresada inválida por cantidad.
+9. Placa ya registrada.
+10. Todos los campos completos con formato válido, capacidad numérica positiva y placa única no registrada previamente en el sistema (Caso de éxito).
+
+
+ESPECIFICACIONES:
+RegistrarUnidad(): Devuelve un String con el resultado de la validación. Retorna "Registro exitoso" en caso de que todos los campos sean correctos, estén completos, la capacidad sea un número entero positivo y la placa ingresada no esté previamente registrada en el sistema.
+
+Devuelve un mensaje de error en String si hay algún campo en blanco, la placa contiene caracteres especiales no permitidos o ya existe en el registro, o el campo de capacidad contiene letras, símbolos o valores inválidos.
+
+SALIDAS:
+
+1-"Por favor, complete todos lo campos del formulario." 
+2-"- El campo de placa no puede estar vacío." 
+3-"- Error: Placa con caracteres no permitidos." 
+4-"- Error: Longitud de placa inválida." 
+5-"- El campo de modelo no puede estar vacío." 
+6-"- El campo de capacidad no puede estar vacío."
+7-"La capacidad no debe contener caracteres no numéricos o especiales."
+8-"- Ingrese un número de capacidad entre el rango (20-36)."
+9-"La placa ingresada ya se encuentra registrada en la base de datos."
+10-"Registro exitoso"
+
+------------------------------------------------------------
+FACTOR 1: Todos los campos vacíos
+- CLASES DE EQUIVALENCIA: unidad.IsEmpty() == true;
+- ENTRADAS: (" ")
+- SALIDA: "Por favor, complete todos lo campos del formulario."
+------------------------------------------------------------
+FACTOR 2: Placa vacía
+- CLASES DE EQUIVALENCIA: (" ")
+- ENTRADAS: " "
+- SALIDA: "- El campo de placa no puede estar vacío."
+------------------------------------------------------------
+FACTOR 3: Placa inválida.
+- CLASES DE EQUIVALENCIA: ! (con letras || con números)
+- ENTRADAS: "A___87Q"
+- SALIDA: "- Error: Placa con caracteres no permitidos."
+------------------------------------------------------------
+FACTOR 4: Placa inválida por longitud.
+- CLASES DE EQUIVALENCIA: placa > 7 || placa < 3
+- ENTRADAS: "ABC123A78954A"
+- SALIDA: "- Error: Longitud de placa inválida."
+------------------------------------------------------------
+FACTOR 5: Modelo vacío
+- CLASES DE EQUIVALENCIA: modelo.IsEmpty() == true;
+- ENTRADAS: " "
+- SALIDA: "- El campo de modelo no puede estar vacío."
+------------------------------------------------------------
+FACTOR 6: Capacidad vacía
+- CLASES DE EQUIVALENCIA: capacidad.IsEmpty() == true;
+- ENTRADAS: " "
+- SALIDA: "- El campo de capacidad no puede estar vacío."
+------------------------------------------------------------
+FACTOR 7: Capacidad Invalida
+- CLASES DE EQUIVALENCIA: !(numeros del 0 al 9)
+- ENTRADAS: "A85"
+- SALIDA: "La capacidad no debe contener caracteres no numéricos o especiales."
+------------------------------------------------------------
+FACTOR 8: Capacidad inválida por cantidad.
+- CLASES DE EQUIVALENCIA: (capacidad > 36 || capacidad < 20)
+- ENTRADAS: "85"
+- SALIDA: "- Ingrese un número de capacidad entre el rango (20-36)."
+------------------------------------------------------------
+FACTOR 9: Placa ya Registrada
+- CLASES DE EQUIVALENCIA: unidadesDao.getPlaca() == unidad.getPlaca();
+- ENTRADAS: "B79525"
+- SALIDA: "La placa ingresada ya se encuentra registrada en la base de datos."
+------------------------------------------------------------
+FACTOR 10: Registro exitoso
+- CLASES DE EQUIVALENCIA: todos los campos validos.
+- ENTRADAS: ("ABC123A", "Modelo", "36", "Activo")
+- SALIDA: "Registro exitoso"
+------------------------------------------------------------
+
