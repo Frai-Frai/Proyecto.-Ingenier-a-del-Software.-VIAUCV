@@ -24,9 +24,9 @@ public class Controlador_GestionUnidades {
             cargarBusesEnVista();
         }
 
-        if (this.vista.getOpRegistrarP() != null) {
+        /*if (this.vista.getOpRegistrarP() != null) {
                 this.vista.getOpRegistrarP().addActionListener(e -> manejarRegistroUnidad());
-        }
+        }*/
 
         this.vista.getOpPlanificar().addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
@@ -42,7 +42,7 @@ public class Controlador_GestionUnidades {
     }
 
     //validar
-    private void ValidarRegistroUnidad() {
+    public void ValidarRegistroUnidad() {
         UnidadBus unidad;
 
         Validador_GestionUnidades validador = new Validador_GestionUnidades(unidadDao);

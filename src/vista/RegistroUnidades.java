@@ -2,8 +2,8 @@ package vista;
 
 import util.*;
 import modelo.*;
-import controlador.Controlador_GestionUnidades;
-import controlador.Controlador_GestionUnidades;
+import controlador.*;
+
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -416,7 +416,7 @@ public class RegistroUnidades extends JFrame {
         btnRegistrar.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         // Vincular acción del botón al controlador
-        btnRegistrar.addActionListener(e -> controlador.manejarRegistroUnidad());
+        btnRegistrar.addActionListener(e -> controlador.ValidarRegistroUnidad());
 
         int interlineado1_5cm = 55;
 
