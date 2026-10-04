@@ -167,13 +167,23 @@ public class Controlador_Itinerario {
         pantallaI.setVisible(true);
     }
 
-    private void IrAGestion(){
+    /*private void IrAGestion(){
         this.pantalla.setVisible(false);
         this.pantalla.dispose();
         Usuario admin = pantalla.getAdminActual();
         
         RegistroUnidades pantallaUnidades = new RegistroUnidades(admin);
         new Controlador_RegistroUnidades(pantallaUnidades);
+        pantallaUnidades.setVisible(true);
+    }*/
+
+    private void IrAGestion(){
+        this.pantalla.setVisible(false);
+        this.pantalla.dispose();
+        Usuario admin = pantalla.getAdminActual();
+        
+        RegistroUnidades pantallaUnidades = new RegistroUnidades(admin);
+        new Controlador_GestionUnidades(pantallaUnidades);
         pantallaUnidades.setVisible(true);
     }
 }

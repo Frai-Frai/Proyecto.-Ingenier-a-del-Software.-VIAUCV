@@ -140,7 +140,7 @@ public class Controlador_GestionUnidades {
     }
     
     public void IrAItinerario(){
-         // 1. Rescatas al usuario de la ventana de unidades
+         // se toma al usuario de la ventana de unidades
         this.vista.setVisible(false);
         this.vista.dispose(); //se cierra la vista de g de unidades
         
