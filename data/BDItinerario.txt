@@ -2,4 +2,4 @@
 B33697|Extraurbana|Los Teques|Pasillo de las banderas-UCV|La Panamericana|Martes|1:00pm|16578923
 B38801|Urbana|Palo Verde|Plaza Venezuela|Metro Palo Verde|Lunes|3:00pm|16578923
 odioesto|Extraurbana|La Guaira|Pasillo Banderas|Guaira|Lunes|1:00 pm|16578923
-odioesto|Urbana|Sabana Grande|X Facultad|SG|Martes|2:00 pm|16578923
+
