@@ -11,3 +11,5 @@ holahola|d|33|Activo
 mbh1807|channel|23|En mantenimiento
 odioesto|1234|35|Activo
 Pruebaa|mod123|36|Fuera de servicio
+123ABC|Modelo|35|Activo
+B87806|Modelo|45|Activo
