@@ -173,7 +173,7 @@ public class Controlador_Itinerario {
         Usuario admin = pantalla.getAdminActual();
         
         RegistroUnidades pantallaUnidades = new RegistroUnidades(admin);
-        new Controlador_RegistroUnidades(pantallaUnidades);
+        new Controlador_GestionUnidades(pantallaUnidades);
         pantallaUnidades.setVisible(true);
     }
 }

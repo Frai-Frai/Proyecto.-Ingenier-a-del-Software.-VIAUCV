@@ -2,7 +2,8 @@ package vista;
 
 import util.*;
 import modelo.*;
-import controlador.Controlador_RegistroUnidades;
+import controlador.Controlador_GestionUnidades;
+import controlador.Controlador_GestionUnidades;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -22,7 +23,7 @@ public class RegistroUnidades extends JFrame {
     private JPanel panelFormularioFlotante;
     private JPanel panelDerechaCentro;
     private JPanel panelBuses; 
-    private Controlador_RegistroUnidades controlador;
+    private Controlador_GestionUnidades controlador;
 
     private int paginaActual = 0;
     private final int ELEMENTOS_POR_PAGINA = 7;
@@ -218,7 +219,7 @@ public class RegistroUnidades extends JFrame {
         add(panelDerechoTotal, BorderLayout.CENTER);
     }
 
-    public void setControlador(Controlador_RegistroUnidades controlador){
+    public void setControlador(Controlador_GestionUnidades controlador){
         this.controlador = controlador;
     }
     public void actualizarPanelBuses(List<UnidadBus> listaUnidades) {
@@ -580,7 +581,7 @@ public class RegistroUnidades extends JFrame {
    /*public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             RegistroUnidades vista = new RegistroUnidades();
-            new Controlador_RegistroUnidades(vista);
+            new Controlador_GestionUnidades(vista);
             vista.setVisible(true);
         });
     }*/

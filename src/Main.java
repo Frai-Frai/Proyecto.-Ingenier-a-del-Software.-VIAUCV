@@ -1,5 +1,5 @@
-import controlador.Controlador_Inicio;
-import vista.Inicio;
+import controlador.*;
+import vista.*;
 public class Main {
     public static void main(String[] args) {
         

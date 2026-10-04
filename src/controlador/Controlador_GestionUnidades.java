@@ -13,13 +13,19 @@ import vista.*;
 
 public class Controlador_GestionUnidades {
     private RegistroUnidades vista;
-    UnidadesDAO unidadDao;
+    UnidadesDAO unidadDao= new UnidadesDAO();
 
     public Controlador_GestionUnidades(RegistroUnidades vista){
         this.vista = vista;
+        this.vista.setControlador(this);
+
         
         if (this.vista != null) {
             cargarBusesEnVista();
+        }
+
+        if (this.vista.getOpRegistrarP() != null) {
+                this.vista.getOpRegistrarP().addActionListener(e -> manejarRegistroUnidad());
         }
 
         this.vista.getOpPlanificar().addMouseListener(new MouseAdapter() {
@@ -36,7 +42,7 @@ public class Controlador_GestionUnidades {
     }
 
     //validar
-    public void ValidarRegistroUnidad() {
+    private void ValidarRegistroUnidad() {
         UnidadBus unidad;
 
         Validador_GestionUnidades validador = new Validador_GestionUnidades(unidadDao);

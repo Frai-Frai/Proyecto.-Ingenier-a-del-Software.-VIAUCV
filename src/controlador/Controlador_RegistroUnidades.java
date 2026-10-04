@@ -17,7 +17,6 @@ public class Controlador_RegistroUnidades {
 
     public Controlador_RegistroUnidades(RegistroUnidades vista) {
         this.vista = vista;
-        this.vista.setControlador(this);
         this.dao = new UnidadesDAO();
         
         if (this.vista != null) {
@@ -113,6 +112,7 @@ public class Controlador_RegistroUnidades {
         
         return "Registro exitoso";
     }
+
 
     public void cambiarEstadoBus(String placa, String nuevoEstado) {
         dao.actualizarEstado(placa, nuevoEstado);
