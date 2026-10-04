@@ -1,16 +1,12 @@
 package modelo;
-import java.awt.List;
-import java.util.ArrayList;
 
 public class Validador_Itinerario {
     private ItinerarioDAO itinerarioDao;
     private UnidadesDAO unidadesDao;
-    private UsuarioDAO usuarioDao;
 
     public Validador_Itinerario(ItinerarioDAO itinerarioDao, UnidadesDAO unidadesDao, UsuarioDAO usuarioDao) {
         this.itinerarioDao = itinerarioDao;
         this.unidadesDao = unidadesDao;
-        this.usuarioDao = usuarioDao;
     }
 
     public String validarItinerario(ItinerarioModelo itinerario) {
