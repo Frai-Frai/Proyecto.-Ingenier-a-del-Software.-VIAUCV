@@ -44,6 +44,10 @@ public class Validador_GestionUnidades {
 
         }
 
+        if(unidad.getModelo().trim().isEmpty()){
+            errores.append("- El campo de modelo no puede estar vacío.\n");
+        }
+
         if(errores.length()>0){
             errores.toString();
         }
