@@ -6,3 +6,4 @@
 16578923|Antonio Espinoza|Antonioespinoza27@hotmail.com|Conductor|busdriver4|0.0
 32114875|Mar Josefa|marJ@gmail.com|Público General|marjosefa|0.0
 31254789|Valeria Rojas|valeria@gmail.com|Público General|valeria|0.0
+28546971|Carlos Rodriguez|carlos@gmail.com|Público General|123456|0.0
