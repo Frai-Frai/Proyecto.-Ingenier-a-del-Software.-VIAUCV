@@ -31,26 +31,20 @@ Validar_Itinerario(); Devuelve un string con un mensaje dependiendo de la falla 
 SALIDAS:
 1-"El campo de placa no puede estar vacío."
 2-"Error: Placa con caracteres no permitidos."
-3-"El campo de tipo de ruta no puede estar vacío."
-4-"El campo de tipo de ruta debe ser 'Urbana' o 'Extraurbana'."
-5-"El campo de destino no puede estar vacío."
-6-"El destino no permite caracteres especiales (Excepto guiones y espacios)."
-7-"El campo de punto de partida no puede estar vacío."
-8-"El punto de partida no permite caracteres especiales (Excepto guiones y espacios)."
-9."El campo de punto de llegada no puede estar vacío."
-10."El punto de llegada no permite caracteres especiales (Excepto guiones y espacios)."
-11."El campo de día no puede estar vacío."
-12."El campo de día debe ser un día de la semana válido (Lunes, Martes, Miércoles, Jueves, Viernes)."
-13."El campo de hora no puede estar vacío." 
-14."El campo de hora debe tener un formato válido (HH:mm)(am/pm)."
-15."El campo de conductor no puede estar vacío."
-16."La cédula del conductor solo debe contener números."
-17."La placa asignada no existe en la base de datos."
-18."La unidad ingresada no se encuentra activa."
-19."La cédula del conductor no existe en la base de datos."
-20."El itinerario se solapa con otro itinerario existente."
-21."Por favor, complete todos lo campos del formulario."
-22. "Ruta válida"
+3-"El campo de destino no puede estar vacío."
+4-"El destino no permite caracteres especiales (Excepto guiones y espacios)."
+5-"El campo de punto de partida no puede estar vacío."
+6-"El punto de partida no permite caracteres especiales (Excepto guiones y espacios)."
+7."El campo de punto de llegada no puede estar vacío."
+8."El punto de llegada no permite caracteres especiales (Excepto guiones y espacios)."
+9."El campo de conductor no puede estar vacío."
+10."La cédula del conductor solo debe contener números."
+11."La placa asignada no existe en la base de datos."
+12."La unidad ingresada no se encuentra activa."
+13."La cédula del conductor no existe en la base de datos."
+14."El itinerario se solapa con otro itinerario existente."
+15."Por favor, complete todos lo campos del formulario."
+16. "Ruta válida"
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 FACTOR 1: Placa vacía.
@@ -63,102 +57,72 @@ FACTOR 2: Placa con caracteres inválidos.
 - ENTRADAS: "AF1__58"
 - SALIDA: "Error: Placa con caracteres no permitidos."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 3: Tipo de Ruta vacía.
-- CLASES DE EQUIVALENCIA: (" ")
-- ENTRADAS: " "
-- SALIDA: "El campo de tipo de ruta no puede estar vacío."
---------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 4: Tipo de ruta inválida.
-- CLASES DE EQUIVALENCIA: !(Urbana || Extraurbana)
-- ENTRADAS: "urbanaaa"
-- SALIDA: "El campo de tipo de ruta debe ser 'Urbana' o 'Extraurbana'."
---------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 5: Destino vacío.
+FACTOR 3: Destino vacío.
 - CLASES DE EQUIVALENCIA: (" ")
 - ENTRADAS: " "
 - SALIDA: "El campo de destino no puede estar vacío."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 6: Destino inválido.
+FACTOR 4: Destino inválido.
 - CLASES DE EQUIVALENCIA: con letras || guiones || espacios
 - ENTRADAS: "Palo_Verde"
 - SALIDA: "El destino no permite caracteres especiales (Excepto guiones y espacios)."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 7: Punto de Partida vacío.
+FACTOR 5: Punto de Partida vacío.
 - CLASES DE EQUIVALENCIA: (" ")
 - ENTRADAS: " "
 - SALIDA: "El campo de punto de partida no puede estar vacío."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 8: Punto de Partida inválido.
+FACTOR 6: Punto de Partida inválido.
 - CLASES DE EQUIVALENCIA: con letras || guiones || espacios
 - ENTRADAS: "Ciudad_Universitaria"
 - SALIDA: "El punto de partida no permite caracteres especiales (Excepto guiones y espacios)."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 9: Punto de Llegada vacío.
+FACTOR 7: Punto de Llegada vacío.
 - CLASES DE EQUIVALENCIA: (Placa válida, tipo de ruta válida, destino válido, punto de partida válida, " ", horario válido, conductor válido)
 - ENTRADAS: " "
 - SALIDA: "El campo de punto de llegada no puede estar vacío."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 10: Punto de Llegada inválido.
+FACTOR 8: Punto de Llegada inválido.
 - CLASES DE EQUIVALENCIA: con letras || guiones || espacios
 - ENTRADAS: "Metro14 de Palo Verde"
 - SALIDA: "El punto de llegada no permite caracteres especiales (Excepto guiones y espacios)."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 11: Dia de la semana vacío.
-- CLASES DE EQUIVALENCIA: (" ")
-- ENTRADAS: " "
-- SALIDA: "El campo de día no puede estar vacío."
---------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 12: Dia de la semana inválido.
-- CLASES DE EQUIVALENCIA: Lunes || Martes ||Miércoles || Jueves || Viernes
-- ENTRADAS: "Domingo"
-- SALIDA: "El campo de día debe ser un día de la semana válido (Lunes, Martes, Miércoles, Jueves, Viernes)."
---------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 13: Hora vacía.
-- CLASES DE EQUIVALENCIA: (" ")
-- ENTRADAS: " "
-- SALIDA: "El campo de hora no puede estar vacío."
---------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 14: Hora inválida.
-- CLASES DE EQUIVALENCIA: !(HH:mm)(am/pm)
-- ENTRADAS: "3 pm"
-- SALIDA: "El campo de hora debe tener un formato válido (HH:mm)(am/pm)."
---------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 15: Conductor asignado vacío.
+FACTOR 9: Conductor asignado vacío.
 - CLASES DE EQUIVALENCIA: (" ")
 - ENTRADAS: " "
 - SALIDA: "El campo de conductor no puede estar vacío."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 16: Cédula de conductor inválida.
+FACTOR 10: Cédula de conductor inválida.
 - CLASES DE EQUIVALENCIA: !(números)
 - ENTRADAS: "V-31485799"
 - SALIDA: "La cédula del conductor solo debe contener números."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 17: Placa No Registrada.
+FACTOR 11: Placa No Registrada.
 - CLASES DE EQUIVALENCIA: La placa no fue registrada
 - ENTRADAS: "616167"
 - SALIDA: "La placa asignada no existe en la base de datos."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 18: Unidad inactiva.
+FACTOR 12: Unidad inactiva.
 - CLASES DE EQUIVALENCIA: Placa de una unidad inactiva.
 - ENTRADAS: "444567"
 - SALIDA: "La unidad ingresada no se encuentra activa."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 19: Conductor no registrado.
+FACTOR 13: Conductor no registrado.
 - CLASES DE EQUIVALENCIA: user.buscarEnBD() == null
 - ENTRADAS: "16785444"
 - SALIDA: "La cédula del conductor no existe en la base de datos."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 20: Solapamiento entre itinerarios.
+FACTOR 14: Solapamiento entre itinerarios.
 - CLASES DE EQUIVALENCIA: nuevoItinerario == valida.buscarRutas();
 - ENTRADAS: "676767|Urbana|La Candelaria|Plaza Venezuela|Sambil de la Candelaria|Lunes|3:00pm|16578923"
 - SALIDA: "El itinerario se solapa con otro itinerario existente."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 21: Todos los campos vacíos.
+FACTOR 15: Todos los campos vacíos.
 - CLASES DE EQUIVALENCIA: itinerario.IsEmpty() == true;
 - ENTRADAS: " | | | | | | | "
 - SALIDA: "Por favor, complete todos lo campos del formulario."
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
-FACTOR 22: Regsitro de itinerario exitoso.
+FACTOR 16: Regsitro de itinerario exitoso.
 - CLASES DE EQUIVALENCIA: todos los campos válidos.
 - ENTRADAS: "B38921|Urbana|Catia|Tierra de nadie UCV|Centro de Catia|Lunes|12:00pm|16578923"
 - SALIDA: "Ruta válida"

@@ -69,21 +69,7 @@ public class PlanificarItinerarioTest {
         String resultado = valida.validarItinerario(itinerarioM);
         assertEquals("- Error: Placa con caracteres no permitidos.\n", resultado);
     }
-
-    @Test 
-    void RutaVacia(){
-        ItinerarioModelo itinerarioM = new ItinerarioModelo("676767", " ", "Palo Verde", "Ciudad Universitaria", "Metro de Palo Verde", "Martes", "3:00pm", "16578923");
-        String resultado = valida.validarItinerario(itinerarioM);
-        assertEquals("- El campo de tipo de ruta no puede estar vacío.\n", resultado);
-    }
-
-    @Test 
-    void RutaInvalida(){
-        ItinerarioModelo itinerarioM = new ItinerarioModelo("676767", "urbanaa", "Palo Verde", "Ciudad Universitaria", "Metro de Palo Verde", "Martes", "3:00pm", "16578923");
-        String resultado = valida.validarItinerario(itinerarioM);
-        assertEquals("- El campo de tipo de ruta debe ser 'Urbana' o 'Extraurbana'.\n", resultado);
-    }
-
+    
     @Test 
     void DestinoVacio(){
         ItinerarioModelo itinerarioM = new ItinerarioModelo("676767", "Urbana", " ", "Ciudad Universitaria", "Metro de Palo Verde", "Martes", "3:00pm", "16578923");
@@ -124,34 +110,6 @@ public class PlanificarItinerarioTest {
         ItinerarioModelo itinerarioM = new ItinerarioModelo("676767", "Urbana", "Palo Verde", "Ciudad Universitaria", "Metro14 de Palo Verde", "Martes", "3:00pm", "16578923");
         String resultado = valida.validarItinerario(itinerarioM);
         assertEquals("- El punto de llegada no permite caracteres especiales (Excepto guiones y espacios).\n", resultado);
-    }
-
-    @Test 
-    void DiaVacio(){
-        ItinerarioModelo itinerarioM = new ItinerarioModelo("676767", "Urbana", "Palo Verde", "Ciudad Universitaria", "Metro de Palo Verde", " ", "3:00pm", "16578923");
-        String resultado = valida.validarItinerario(itinerarioM);
-        assertEquals("- El campo de día no puede estar vacío.\n", resultado);
-    }
-
-    @Test
-    void DiaInvalido(){
-        ItinerarioModelo itinerarioM = new ItinerarioModelo("676767", "Urbana", "Palo Verde", "Ciudad Universitaria", "Metro de Palo Verde", "Domingo", "3:00pm", "16578923");
-        String resultado = valida.validarItinerario(itinerarioM);
-        assertEquals("- El campo de día debe ser un día de la semana válido (Lunes, Martes, Miércoles, Jueves, Viernes).\n", resultado);
-    }
-
-    @Test 
-    void HoraVacia(){
-        ItinerarioModelo itinerarioM = new ItinerarioModelo("676767", "Urbana", "Palo Verde", "Ciudad Universitaria", "Metro de Palo Verde", "Lunes", " ", "16578923");
-        String resultado = valida.validarItinerario(itinerarioM);
-        assertEquals("- El campo de hora no puede estar vacío.\n", resultado);
-    }
-
-    @Test 
-    void HoraInvalida(){
-        ItinerarioModelo itinerarioM = new ItinerarioModelo("676767", "Urbana", "Palo Verde", "Ciudad Universitaria", "Metro de Palo Verde", "Lunes", "3 pm", "16578923");
-        String resultado = valida.validarItinerario(itinerarioM);
-        assertEquals("- El campo de hora debe tener un formato válido (HH:mm)(am/pm).\n", resultado);
     }
 
     @Test 

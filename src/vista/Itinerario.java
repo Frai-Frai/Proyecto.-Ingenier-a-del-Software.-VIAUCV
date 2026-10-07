@@ -193,7 +193,9 @@ public class Itinerario extends JFrame {
         Tpruta.setFont(fuenteLetras);
         panelForm.add(Tpruta);
 
-        cuadritoTipoRuta = new CampoTextoUtil(10, azulCuadros, anchoCuadro, 32, Color.WHITE, Color.BLACK, fuenteNormal);
+        String[] opcionesTipo = { "Urbana", "Extraurbana" };
+
+        MenuUtil cuadritoTipoRuta = new MenuUtil(opcionesTipo, 10, Color.WHITE, Color.BLACK, azulCuadros, fuenteNormal);
         cuadritoTipoRuta.setBounds(xCuadro, nuevoYInicio + espacioY, anchoCuadro, 32);
         panelForm.add(cuadritoTipoRuta);
 
@@ -223,13 +225,14 @@ public class Itinerario extends JFrame {
         cuadritoPtoLlegada = new CampoTextoUtil(10, azulCuadros, anchoCuadro, 32, Color.WHITE, Color.BLACK, fuenteNormal);
         cuadritoPtoLlegada.setBounds(xCuadro, nuevoYInicio + (espacioY * 4), anchoCuadro, 32);
         panelForm.add(cuadritoPtoLlegada);
-
+        
         JLabel dia = new JLabel("Día de la Semana: ");
         dia.setBounds(xLabel, nuevoYInicio + (espacioY * 5), anchoLabel, 28);
         dia.setFont(fuenteLetras);
         panelForm.add(dia);
 
-        cuadritoDia = new CampoTextoUtil(10, azulCuadros, anchoCuadro, 32, Color.WHITE, Color.BLACK, fuenteNormal);
+        String[] opcionesDia = { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes"};
+        MenuUtil cuadritoDia = new MenuUtil(opcionesDia, 10, Color.WHITE, Color.BLACK, azulCuadros, fuenteNormal);
         cuadritoDia.setBounds(xCuadro, nuevoYInicio + (espacioY * 5), anchoCuadro, 32);
         panelForm.add(cuadritoDia);
 
@@ -238,7 +241,8 @@ public class Itinerario extends JFrame {
         hora.setFont(fuenteLetras);
         panelForm.add(hora);
 
-        cuadritoHora = new CampoTextoUtil(10, azulCuadros, anchoCuadro, 32, Color.WHITE, Color.BLACK, fuenteNormal);
+        String[] opcionesHora = {"5:30 am","6:00 am","6:30 am","7:00 am","7:30 am","8:00 am","8:30 am","9:00 am","9:30 am","10:00 am","10:30 am","11:00 am", "11:30 am", "12:00 pm", "12:30 pm", "1:00 pm","1:30 pm", "2:00 pm", "2:30 pm","3:00 pm", "3:30 pm", "4:00 pm", "4:30 pm", "5:30 pm"};
+        MenuUtil cuadritoHora = new MenuUtil(opcionesHora, 10, Color.WHITE, Color.BLACK, azulCuadros, fuenteNormal);        
         cuadritoHora.setBounds(xCuadro, nuevoYInicio + (espacioY * 6), anchoCuadro, 32);
         panelForm.add(cuadritoHora);
         

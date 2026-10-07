@@ -11,7 +11,7 @@ public class Validador_Itinerario {
 
     public String validarItinerario(ItinerarioModelo itinerario) {
         //Todos los campos vacios
-        if(itinerario.getPlacaAsignada().trim().isEmpty() && itinerario.getTipoRuta().trim().isEmpty() && itinerario.getDestino().trim().isEmpty() && itinerario.getPuntoPartida().trim().isEmpty() && itinerario.getPuntoLLegada().trim().isEmpty() && itinerario.getDia().trim().isEmpty() && itinerario.getHora().trim().isEmpty() && itinerario.getConductor().trim().isEmpty()) {
+        if(itinerario.getPlacaAsignada().trim().isEmpty() && itinerario.getDestino().trim().isEmpty() && itinerario.getPuntoPartida().trim().isEmpty() && itinerario.getPuntoLLegada().trim().isEmpty() && itinerario.getConductor().trim().isEmpty()) {
             return "Por favor, complete todos lo campos del formulario.";
         }  
 
@@ -22,13 +22,6 @@ public class Validador_Itinerario {
             errores.append("- El campo de placa no puede estar vacío.\n");
         }else if (!itinerario.getPlacaAsignada().trim().matches("^[a-zA-Z0-9]+$")) {
             errores.append("- Error: Placa con caracteres no permitidos.\n");
-        }
-
-        //tipo de rura vacio, formato invalido (no es ninguna de las dos)
-        if(itinerario.getTipoRuta().trim().isEmpty()){
-            errores.append("- El campo de tipo de ruta no puede estar vacío.\n");
-        }else if(!itinerario.getTipoRuta().equalsIgnoreCase("Urbana") && !itinerario.getTipoRuta().equalsIgnoreCase("Extraurbana")){
-            errores.append("- El campo de tipo de ruta debe ser 'Urbana' o 'Extraurbana'.\n");
         }
 
         //destino vacio, formato invalido
@@ -50,20 +43,6 @@ public class Validador_Itinerario {
             errores.append("- El campo de punto de llegada no puede estar vacío.\n");
         }else if(!itinerario.getPuntoLLegada().trim().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s-]+$")){
             errores.append( "- El punto de llegada no permite caracteres especiales (Excepto guiones y espacios).\n");
-        }
-
-        //dia vacio, dia de semana invalido
-        if(itinerario.getDia().trim().isEmpty()){
-            errores.append("- El campo de día no puede estar vacío.\n");
-        }else if(!itinerario.getDia().equalsIgnoreCase("Lunes") && !itinerario.getDia().equalsIgnoreCase("Martes") && !itinerario.getDia().equalsIgnoreCase("Miércoles") && !itinerario.getDia().equalsIgnoreCase("Jueves") && !itinerario.getDia().equalsIgnoreCase("Viernes")){
-            errores.append("- El campo de día debe ser un día de la semana válido (Lunes, Martes, Miércoles, Jueves, Viernes).\n");
-        }
-
-        //hora vacia, formato invalido, mayor a 6
-        if(itinerario.getHora().trim().isEmpty()){
-            errores.append("- El campo de hora no puede estar vacío.\n");
-        }else if(!itinerario.getHora().matches("^([01]?\\d|2[0-3]):[0-5]\\d\\s?(am|pm|AM|PM)?$")){
-            errores.append("- El campo de hora debe tener un formato válido (HH:mm)(am/pm).\n");
         }
 
         //conductor vacio (cedula), formato invalido (solo numeros)
