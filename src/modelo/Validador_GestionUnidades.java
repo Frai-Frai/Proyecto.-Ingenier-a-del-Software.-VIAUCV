@@ -18,7 +18,7 @@ public class Validador_GestionUnidades {
         //placa vacia, caracteres que no corresponde, longitud invalida
         if(unidad.getPlaca().trim().isEmpty()){
             errores.append("- El campo de placa no puede estar vacío.\n");
-        }else if (!unidad.getPlaca().trim().matches("^[a-zA-Z0-9]+$")) {
+        }else if (!unidad.getPlaca().trim().matches("^([a-zA-Z]+\\d+[a-zA-Z\\d]*|\\d+[a-zA-Z]+[a-zA-Z\\d]*)$")) {
             errores.append("- Error: Placa con caracteres no permitidos.\n");
         }else if(unidad.getPlaca().length() < 3 || unidad.getPlaca().length() > 8) {
             errores.append ("- Error: Longitud de placa inválida.\n");
