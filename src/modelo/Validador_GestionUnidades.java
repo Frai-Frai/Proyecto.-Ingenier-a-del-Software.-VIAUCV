@@ -38,8 +38,8 @@ public class Validador_GestionUnidades {
             }
 
             //capacidad fuera de rango
-            if(capacidad<20 || capacidad>36){
-                errores.append("- Ingrese un número de capacidad entre el rango (20-36).\n");
+            if(capacidad<20 || capacidad>50){
+                errores.append("- Ingrese un número de capacidad entre el rango (20-50).\n");
             }
 
         }

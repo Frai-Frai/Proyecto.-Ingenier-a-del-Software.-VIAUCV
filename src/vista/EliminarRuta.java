@@ -1,6 +1,7 @@
 package vista;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
 import java.io.File;
@@ -11,10 +12,11 @@ import modelo.*;
 
 public class EliminarRuta extends JDialog {
     private BotonUtil botonElim, botonCancelar;
-    private List <JCheckBox> listaSeleccionadas;
-    private List <ItinerarioModelo> listaRutas;
+    private JTable tablaRutas;
+    private DefaultTableModel modeloTabla;
+    private List<ItinerarioModelo> listaRutas;
 
-    //Tipografia 
+    // Tipografía 
     private Font fuenteGlacial(String ruta, float tamano, int estilo){
         try {
             Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
@@ -26,7 +28,6 @@ public class EliminarRuta extends JDialog {
     }
 
     private Font League(String ruta, float tamano, int estilo){
-        
         try {
             Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
             return fuente.deriveFont(estilo, tamano);
@@ -37,101 +38,107 @@ public class EliminarRuta extends JDialog {
     }
 
     public EliminarRuta(JFrame pantallaIT, List <ItinerarioModelo> rutasRegistradas){
-        super(pantallaIT, "Seleccionar rutas", true);
+        super(pantallaIT, "Seleccionar rutas - Vista de Tabla", true);
 
-        this.listaRutas= rutasRegistradas;
-        this.listaSeleccionadas= new ArrayList<>();
+        this.listaRutas = rutasRegistradas;
 
-        setSize(600, 550);
-        setResizable(false);
-        setLocationRelativeTo(pantallaIT); // centra la ventanita encima del itinerario
+        setSize(920, 560);
+        setResizable(true);
+        setLocationRelativeTo(pantallaIT); 
         setLayout(new BorderLayout());
 
-        Font    fuenteT =  League("res/LeagueSpartan-Bold.otf", 20, Font.BOLD); // fuentes y asi
-        Font    fuenteSubT = new Font("res/GlacialIndifference-Bold.otf", Font.BOLD, 16); // tipografias
-        Font    fuenteLetras = fuenteGlacial("res/GlacialIndifference-Regular.otf", 16, Font.PLAIN);
+        Font fuenteT = League("res/LeagueSpartan-Bold.otf", 20, Font.BOLD); 
+        Font fuenteSubT = fuenteGlacial("res/GlacialIndifference-Bold.otf", 14, Font.BOLD); 
+        Font fuenteLetras = fuenteGlacial("res/GlacialIndifference-Regular.otf", 13, Font.PLAIN);
+        Font fuenteHeaders = fuenteGlacial("res/GlacialIndifference-Bold.otf", 13, Font.BOLD);
         
-        Color   azulCuadros = new Color(0x0D47A1); // para el cuadro de crear cuenta
-        Color   azulPastelC = new Color(0xBBDEFB); // para el cuadro del form 
-        Color   Colorwelcome = new Color (154, 195, 220);
+        Color azulCuadros = new Color(0x0D47A1); 
+        Color azulPastelC = new Color(0xE1F5FE); 
         
         getContentPane().setBackground(azulPastelC);
 
-        MiniVentanaUtil panelFondo = new MiniVentanaUtil(30, azulPastelC, 400, 420, true, Colorwelcome);
-        panelFondo.setBounds(15,20,400,420);
+        JPanel panelFondo = new JPanel();
         panelFondo.setLayout(null);
-        getContentPane().add(panelFondo, BorderLayout.CENTER);
+        panelFondo.setOpaque(false);
+        add(panelFondo, BorderLayout.CENTER);
 
         JLabel titulo = new JLabel("Seleccione rutas a eliminar:");
         titulo.setFont(fuenteT);
         titulo.setForeground(azulCuadros);
-        titulo.setBounds(50,30,480,40);
+        titulo.setBounds(35, 15, 500, 40);
         panelFondo.add(titulo);
 
-        //cuadraditos en donde se selecciona
-
-        JPanel panelSelect = new JPanel();
-        panelSelect.setLayout(new BoxLayout(panelSelect, BoxLayout.Y_AXIS));
-        panelSelect.setBackground(Color.WHITE);
-        panelSelect.setBorder(new EmptyBorder(10,10,10,10));
-
-        if(rutasRegistradas != null && !rutasRegistradas.isEmpty()){
-            for(ItinerarioModelo ruta : rutasRegistradas){
-                //lo que se muestra en checkout
-                String infoRuta = String.format("Placa: %s| Ruta: %s. %s | De %s a %s | %s %s | Conductor: %s",
-                ruta.getPlacaAsignada(), ruta.getTipoRuta(), ruta.getDestino(), ruta.getPuntoPartida(), ruta.getPuntoLLegada(), ruta.getDia(), ruta.getHora(), ruta.getConductor()
-                );
-                JCheckBox select = new JCheckBox(infoRuta);
-                select.setBackground(Color.WHITE);
-                select.setFont(fuenteLetras);
-                select.setFocusPainted(false);
-
-                //checkbox
-                listaSeleccionadas.add(select);
-                panelSelect.add(select);
-                panelSelect.add(Box.createRigidArea(new Dimension(0,8)));
-
+        // Definición de columnas al estilo Excel
+        String[] columnas = {"", "Placa", "Tipo de Ruta", "Destino", "Partida", "Llegada", "Día", "Hora", "Conductor"};
+        
+        modeloTabla = new DefaultTableModel(columnas, 0) {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 0) return Boolean.class; // Casilla de verificación interactiva
+                return String.class;
             }
-        }else{
-            JLabel nada = new JLabel("No hay rutas registradas.");
-            nada.setFont(fuenteSubT);
-            panelSelect.add(nada);
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 0; // Solo la columna del checkbox se marca directamente
+            }
+        };
+
+        if(rutasRegistradas != null) {
+            for(ItinerarioModelo r : rutasRegistradas) {
+                Object[] fila = {
+                    false,
+                    r.getPlacaAsignada(),
+                    r.getTipoRuta(),
+                    r.getDestino(),
+                    r.getPuntoPartida(),
+                    r.getPuntoLLegada(),
+                    r.getDia(),
+                    r.getHora(),
+                    r.getConductor()
+                };
+                modeloTabla.addRow(fila);
+            }
         }
 
+        tablaRutas = new JTable(modeloTabla);
+        tablaRutas.setFont(fuenteLetras);
+        tablaRutas.getTableHeader().setFont(fuenteHeaders);
+        tablaRutas.getTableHeader().setBackground(new Color(214, 233, 245));
+        tablaRutas.getTableHeader().setForeground(azulCuadros);
+        tablaRutas.setRowHeight(30);
+        tablaRutas.setShowGrid(true);
+        tablaRutas.setGridColor(new Color(180, 210, 235));
+        
+        // Ajustar ancho de la columna de selección
+        tablaRutas.getColumnModel().getColumn(0).setMaxWidth(40);
+        tablaRutas.getColumnModel().getColumn(0).setPreferredWidth(30);
 
-        //barrita para desplazar por si hay muchas rutas
-
-        JScrollPane scroll = new JScrollPane(panelSelect);
-        scroll.setBounds(50,90,480,300);
-        scroll.setBorder(BorderFactory.createLineBorder(azulPastelC, 2));
+        JScrollPane scroll = new JScrollPane(tablaRutas);
+        scroll.setBounds(35, 65, 835, 360);
+        scroll.setBorder(BorderFactory.createLineBorder(new Color(150, 180, 210), 1));
         scroll.getVerticalScrollBar().setUnitIncrement(16);
-        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
         panelFondo.add(scroll);
 
-        //botones
-
+        // Botones de acción inferiores
         botonElim = new BotonUtil("Eliminar", azulCuadros, Color.WHITE, 14, fuenteSubT, 150, 40);
-        botonElim.setBounds(80, 430, 150, 40);
-        panelFondo.add(botonElim);
+        botonElim.setBounds(275, 445, 150, 40);
 
         botonCancelar = new BotonUtil("Cancelar", azulCuadros, Color.WHITE, 14, fuenteSubT, 150, 40);
-        botonCancelar.setBounds(320,430,160,45);
-        botonCancelar.addActionListener(e-> dispose()); //cierra 
+        botonCancelar.setBounds(495, 445, 150, 40);
+        botonCancelar.addActionListener(e -> dispose()); 
 
         panelFondo.add(botonElim);
         panelFondo.add(botonCancelar);
-
     }
 
     public List<ItinerarioModelo> getRutasSeleccionadas(){
-        List<ItinerarioModelo>  seleccionadas= new ArrayList<>();
-            for(int i=0; i<listaSeleccionadas.size();i++){
-                if(listaSeleccionadas.get(i).isSelected()){
-                    seleccionadas.add(listaRutas.get(i));
-                }
+        List<ItinerarioModelo> seleccionadas = new ArrayList<>();
+        for(int i = 0; i < modeloTabla.getRowCount(); i++){
+            Boolean seleccionado = (Boolean) modeloTabla.getValueAt(i, 0);
+            if(seleccionado != null && seleccionado){
+                seleccionadas.add(listaRutas.get(i));
             }
+        }
         return seleccionadas;
     }
 
