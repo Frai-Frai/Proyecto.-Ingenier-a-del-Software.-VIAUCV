@@ -4,7 +4,6 @@ import util.*;
 import modelo.*;
 import controlador.*;
 
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -37,7 +36,7 @@ public class RegistroUnidades extends JFrame {
     private CampoTextoUtil txtCapacidad;
     private BotonUtil btnRegistrar;
 
-    private JLabel opPlanificar, opRegistrarP, opPDiarios, opGestionU, opGenR, opCerrarS;
+    private JLabel opPlanificar, opPDiarios, opGestionU, opGenR, opCerrarS;
     
     public RegistroUnidades(Usuario admin) {
 
@@ -51,14 +50,20 @@ public class RegistroUnidades extends JFrame {
         Font fuenteBold = cargarFuente("res/GlacialIndifference-Bold.otf", 18f, Font.BOLD);
         Font fuenteLink = cargarFuente("res/GlacialIndifference-Bold.otf", 16f, Font.BOLD);
         Color azulCuadros = new Color(0x0D47A1); 
+        
+        // Color del menú lateral
         Color Colormenu = new Color(214, 233, 245);
         
+        // Color de fondo exacto solicitado (0xE1F5FE)
+        Color colorFondoExacto = new Color(0xE1F5FE);
+
         JPanel panelMenu = new JPanel(new BorderLayout());
-        panelMenu.setOpaque(false);
-        panelMenu.setBorder(new EmptyBorder(12, 12, 12, 0)); // Margen exterior
+        panelMenu.setOpaque(true);
+        panelMenu.setBackground(colorFondoExacto);
+        panelMenu.setBorder(new EmptyBorder(12, 12, 12, 0));
 
         MiniVentanaUtil menuIzq = new MiniVentanaUtil(30, Colormenu, 240, 700, false, Colormenu);
-        menuIzq.setPreferredSize(new Dimension(240, 0)); // Fija el ancho en el BorderLayout
+        menuIzq.setPreferredSize(new Dimension(240, 0));
         menuIzq.setLayout(null);
 
         // Logo
@@ -68,43 +73,38 @@ public class RegistroUnidades extends JFrame {
         logo.setBounds(30, 20, 160, 100);    
         menuIzq.add(logo);
         
-        // Opciones del menú
+        // Opciones del menú 
         opPlanificar = new JLabel("Planificar Itinerario");
         opPlanificar.setBounds(30, 150, 180, 30);
         new TextosInteractivosUtil(opPlanificar, "Planificar Itinerario", Color.BLACK, azulCuadros, fuenteLink);
         menuIzq.add(opPlanificar);
         
-        opRegistrarP = new JLabel("Registrar Personal");
-        opRegistrarP.setBounds(30, 200, 180, 30);
-        new TextosInteractivosUtil(opRegistrarP, "Registrar Personal", Color.BLACK, azulCuadros, fuenteLink);
-        menuIzq.add(opRegistrarP);
-        
         opPDiarios = new JLabel("Pasajeros Diarios");
-        opPDiarios.setBounds(30, 250, 180, 30);
+        opPDiarios.setBounds(30, 210, 180, 30);
         new TextosInteractivosUtil(opPDiarios, "Pasajeros Diarios", Color.BLACK, azulCuadros, fuenteLink);
         menuIzq.add(opPDiarios);
 
         opGestionU = new JLabel("Gestión de Unidades");
-        opGestionU.setBounds(30, 300, 180, 30);
+        opGestionU.setBounds(30, 270, 180, 30);
         new TextosInteractivosUtil(opGestionU, "Gestión de Unidades", Color.BLACK, azulCuadros, fuenteLink);
         menuIzq.add(opGestionU);
 
         opGenR = new JLabel("Generar Reporte");
-        opGenR.setBounds(30, 350, 180, 30);
+        opGenR.setBounds(30, 330, 180, 30);
         new TextosInteractivosUtil(opGenR, "Generar Reporte", Color.BLACK, azulCuadros, fuenteLink);
         menuIzq.add(opGenR);
 
         opCerrarS = new JLabel("Cerrar Sesión");
-        opCerrarS.setBounds(30, 450, 180, 30);
+        opCerrarS.setBounds(30, 430, 180, 30);
         new TextosInteractivosUtil(opCerrarS, "Cerrar Sesión", Color.BLACK, azulCuadros, fuenteLink);
         menuIzq.add(opCerrarS);
 
         panelMenu.add(menuIzq, BorderLayout.CENTER);
         add(panelMenu, BorderLayout.WEST);
         
-        // Panel derecho
+        // Panel derecho con el color exacto 0xE1F5FE
         JPanel panelDerechoTotal = new JPanel(new BorderLayout());
-        panelDerechoTotal.setBackground(new Color(205, 228, 238));
+        panelDerechoTotal.setBackground(colorFondoExacto);
         panelDerechoTotal.setBorder(new EmptyBorder(12, 12, 12, 12));
 
         // Panel superior
@@ -222,6 +222,7 @@ public class RegistroUnidades extends JFrame {
     public void setControlador(Controlador_GestionUnidades controlador){
         this.controlador = controlador;
     }
+    
     public void actualizarPanelBuses(List<UnidadBus> listaUnidades) {
         this.listaCompletaBuses = listaUnidades;
         this.paginaActual = 0; 
@@ -268,7 +269,8 @@ public class RegistroUnidades extends JFrame {
             panelItemBus.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    mostrarMenuFlotanteEstado(panelItemBus, unidad.getPlaca());
+                    // Se pasa el estado actual de la unidad obtenido del modelo
+                    mostrarMenuFlotanteEstado(panelItemBus, unidad.getPlaca(), unidad.getEstado());
                 }
             });
             
@@ -284,7 +286,7 @@ public class RegistroUnidades extends JFrame {
         panelBuses.repaint();
     }
 
-    private void mostrarMenuFlotanteEstado(Component invoker, String placaBus) {
+    private void mostrarMenuFlotanteEstado(Component invoker, String placaBus, String estadoActual) {
         Font fuenteRegular = cargarFuente("res/GlacialIndifference-Regular.otf", 15f, Font.PLAIN);
         Font fuenteBold = cargarFuente("res/GlacialIndifference-Bold.otf", 15f, Font.BOLD);
 
@@ -318,6 +320,11 @@ public class RegistroUnidades extends JFrame {
             fuenteRegular.deriveFont(14f)
         );
         
+        // Pre-selecciona el estado actual de la base de datos si existe
+        if (estadoActual != null && !estadoActual.isEmpty()) {
+            menuEstado.setSelectedItem(estadoActual);
+        }
+
         Dimension tamanoCombo = new Dimension(260, 42);
         menuEstado.setPreferredSize(tamanoCombo);
         menuEstado.setMaximumSize(tamanoCombo);
@@ -391,16 +398,31 @@ public class RegistroUnidades extends JFrame {
         panelCentroCamposBtn.setLayout(new BoxLayout(panelCentroCamposBtn, BoxLayout.Y_AXIS));
         panelCentroCamposBtn.setOpaque(false);
 
+        Color colorSubtitulo = new Color(30, 80, 135);
+        Font fuenteSubtitulo = fuenteBold.deriveFont(14f);
+
+        JLabel lblSubPlaca = new JLabel("Placa");
+        lblSubPlaca.setFont(fuenteSubtitulo);
+        lblSubPlaca.setForeground(colorSubtitulo);
+        lblSubPlaca.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JLabel lblSubModelo = new JLabel("Modelo");
+        lblSubModelo.setFont(fuenteSubtitulo);
+        lblSubModelo.setForeground(colorSubtitulo);
+        lblSubModelo.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JLabel lblSubCapacidad = new JLabel("Capacidad de pasajeros (Max: 50)");
+        lblSubCapacidad.setFont(fuenteSubtitulo);
+        lblSubCapacidad.setForeground(colorSubtitulo);
+        lblSubCapacidad.setAlignmentX(Component.LEFT_ALIGNMENT);
+
         txtPlaca = new CampoTextoUtil(15, new Color(150, 150, 150), 0, 48, Color.WHITE, Color.GRAY, fuenteRegular.deriveFont(15f));
-        txtPlaca.setText("Placa");
         configurarPlaceholder(txtPlaca, "Placa");
 
         txtModelo = new CampoTextoUtil(15, new Color(150, 150, 150), 0, 48, Color.WHITE, Color.GRAY, fuenteRegular.deriveFont(15f));
-        txtModelo.setText("Modelo");
         configurarPlaceholder(txtModelo, "Modelo");
 
         txtCapacidad = new CampoTextoUtil(15, new Color(150, 150, 150), 0, 48, Color.WHITE, Color.GRAY, fuenteRegular.deriveFont(15f));
-        txtCapacidad.setText("Capacidad de pasajeros");
         configurarPlaceholder(txtCapacidad, "Capacidad de pasajeros");
 
         Dimension campoSize = new Dimension(Integer.MAX_VALUE, 48);
@@ -415,19 +437,32 @@ public class RegistroUnidades extends JFrame {
         btnRegistrar.setMaximumSize(campoSize);
         btnRegistrar.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        // Vincular acción del botón al controlador
         btnRegistrar.addActionListener(e -> controlador.ValidarRegistroUnidad());
 
         int interlineado1_5cm = 55;
 
         panelCentroCamposBtn.add(Box.createVerticalGlue());
+        
+        // Espacio entre el título y el primer campo
+        panelCentroCamposBtn.add(Box.createRigidArea(new Dimension(0, 15)));
+        
+        panelCentroCamposBtn.add(lblSubPlaca);
+        panelCentroCamposBtn.add(Box.createRigidArea(new Dimension(0, 4)));
         panelCentroCamposBtn.add(txtPlaca);
+        
         panelCentroCamposBtn.add(Box.createRigidArea(new Dimension(0, interlineado1_5cm)));
+        panelCentroCamposBtn.add(lblSubModelo);
+        panelCentroCamposBtn.add(Box.createRigidArea(new Dimension(0, 4)));
         panelCentroCamposBtn.add(txtModelo);
+        
         panelCentroCamposBtn.add(Box.createRigidArea(new Dimension(0, interlineado1_5cm)));
+        panelCentroCamposBtn.add(lblSubCapacidad);
+        panelCentroCamposBtn.add(Box.createRigidArea(new Dimension(0, 4)));
         panelCentroCamposBtn.add(txtCapacidad);
+        
         panelCentroCamposBtn.add(Box.createRigidArea(new Dimension(0, interlineado1_5cm)));
         panelCentroCamposBtn.add(btnRegistrar);
+        
         panelCentroCamposBtn.add(Box.createVerticalGlue());
 
         panelFormularioFlotante.add(panelCentroCamposBtn, BorderLayout.CENTER);
@@ -537,7 +572,6 @@ public class RegistroUnidades extends JFrame {
         });
     }
 
-    // Getters para acceder a los campos 
     public CampoTextoUtil getTxtPlaca(){ 
         return txtPlaca; 
     }
@@ -558,10 +592,6 @@ public class RegistroUnidades extends JFrame {
         return opPlanificar; 
     }
 
-    public JLabel getOpRegistrarP(){ 
-        return opRegistrarP; 
-    }
-
     public JLabel getOpPDiarios(){ 
         return opPDiarios; 
     }
@@ -578,9 +608,9 @@ public class RegistroUnidades extends JFrame {
         return opCerrarS; 
     }
 
-   /*public static void main(String[] args) {
+    /*public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            RegistroUnidades vista = new RegistroUnidades();
+            RegistroUnidades vista = new RegistroUnidades(null);
             new Controlador_GestionUnidades(vista);
             vista.setVisible(true);
         });
