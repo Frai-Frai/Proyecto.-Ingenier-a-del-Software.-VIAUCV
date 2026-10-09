@@ -1,4 +1,5 @@
 package modelo;
+import util.*;
 
 public class ItinerarioModelo {
     String placaAsignada;

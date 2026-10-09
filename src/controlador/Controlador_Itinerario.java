@@ -54,12 +54,12 @@ public class Controlador_Itinerario {
 
         ItinerarioModelo itinerario = new ItinerarioModelo(
             pantalla.getCuadritoPlaca().getText().trim(),
-            pantalla.getCuadritoTipoRuta().getText().trim(), 
+            pantalla.getCuadritoTipoRuta().getSelectedItem().toString().trim(), 
             pantalla.getCuadritoDestino().getText().trim(), 
             pantalla.getCuadritoPtoPartida().getText().trim(), 
             pantalla.getCuadritoPtoLlegada().getText().trim(), 
-            pantalla.getCuadritoDia().getText().trim(),  
-            pantalla.getCuadritoHora().getText().trim(), 
+            pantalla.getCuadritoDia().getSelectedItem().toString().trim(),  
+            pantalla.getCuadritoHora().getSelectedItem().toString().trim(), 
             pantalla.getCuadritoConductor().getText().trim()
         );
 
@@ -83,12 +83,12 @@ public class Controlador_Itinerario {
     // Método para vaciar los campos de texto del formulario tras un registro exitoso
     private void limpiarCamposFormulario() {
         pantalla.getCuadritoPlaca().setText("");
-        pantalla.getCuadritoTipoRuta().setText("");
+        pantalla.getCuadritoTipoRuta().setSelectedIndex(0);
         pantalla.getCuadritoDestino().setText("");
         pantalla.getCuadritoPtoPartida().setText("");
         pantalla.getCuadritoPtoLlegada().setText("");
-        pantalla.getCuadritoDia().setText("");
-        pantalla.getCuadritoHora().setText("");
+        pantalla.getCuadritoDia().setSelectedIndex(0);
+        pantalla.getCuadritoHora().setSelectedIndex(0);
         pantalla.getCuadritoConductor().setText("");
     }
 

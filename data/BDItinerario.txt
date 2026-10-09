@@ -1,3 +1,4 @@
 123ABC|Urbana|La Bandera|Pasillo de las banderas-UCV|Metro La Bandera|Lunes|12:00pm|16578923
 B33697|Extraurbana|Los Teques|Pasillo de las banderas-UCV|La Panamericana|Martes|1:00pm|16578923
 B38801|Urbana|Palo Verde|Plaza Venezuela|Metro Palo Verde|Lunes|3:00pm|16578923
+B38801|Urbana|Charallave|Ucv|Charallave|Lunes|5:30 am|16578923

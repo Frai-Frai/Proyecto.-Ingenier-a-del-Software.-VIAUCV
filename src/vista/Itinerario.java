@@ -25,8 +25,8 @@ public class Itinerario extends JFrame {
     private JPanel panelPines;
     private MiniVentanaUtil menuIzq, Bienvenida, panelRutas, panelForm;
     private JLabel  opPlanificar, opRegistrarP, opPDiarios, opGestionU, opGenR, opCerrarS;
-    private CampoTextoUtil cuadritoPlaca, cuadritoTipoRuta, cuadritoDestino, cuadritoPtoLlegada, cuadritoPtoPartida, cuadritoHora, cuadritoDia, cuadritoConductor;
-
+    private CampoTextoUtil cuadritoPlaca, cuadritoDestino, cuadritoPtoLlegada, cuadritoPtoPartida, cuadritoConductor;
+    private MenuUtil cuadritoTipoRuta, cuadritoHora, cuadritoDia;
     // Configurado a un máximo de 7 elementos por página
     private int paginaActualPines = 0;
     private final int ELEMENTOS_POR_PAGINA_PINES = 7;
@@ -195,7 +195,7 @@ public class Itinerario extends JFrame {
 
         String[] opcionesTipo = { "Urbana", "Extraurbana" };
 
-        MenuUtil cuadritoTipoRuta = new MenuUtil(opcionesTipo, 10, Color.WHITE, Color.BLACK, azulCuadros, fuenteNormal);
+        cuadritoTipoRuta = new MenuUtil(opcionesTipo, 10, Color.WHITE, Color.BLACK, azulCuadros, fuenteNormal);
         cuadritoTipoRuta.setBounds(xCuadro, nuevoYInicio + espacioY, anchoCuadro, 32);
         panelForm.add(cuadritoTipoRuta);
 
@@ -232,7 +232,7 @@ public class Itinerario extends JFrame {
         panelForm.add(dia);
 
         String[] opcionesDia = { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes"};
-        MenuUtil cuadritoDia = new MenuUtil(opcionesDia, 10, Color.WHITE, Color.BLACK, azulCuadros, fuenteNormal);
+        cuadritoDia = new MenuUtil(opcionesDia, 10, Color.WHITE, Color.BLACK, azulCuadros, fuenteNormal);
         cuadritoDia.setBounds(xCuadro, nuevoYInicio + (espacioY * 5), anchoCuadro, 32);
         panelForm.add(cuadritoDia);
 
@@ -242,7 +242,7 @@ public class Itinerario extends JFrame {
         panelForm.add(hora);
 
         String[] opcionesHora = {"5:30 am","6:00 am","6:30 am","7:00 am","7:30 am","8:00 am","8:30 am","9:00 am","9:30 am","10:00 am","10:30 am","11:00 am", "11:30 am", "12:00 pm", "12:30 pm", "1:00 pm","1:30 pm", "2:00 pm", "2:30 pm","3:00 pm", "3:30 pm", "4:00 pm", "4:30 pm", "5:30 pm"};
-        MenuUtil cuadritoHora = new MenuUtil(opcionesHora, 10, Color.WHITE, Color.BLACK, azulCuadros, fuenteNormal);        
+        cuadritoHora = new MenuUtil(opcionesHora, 10, Color.WHITE, Color.BLACK, azulCuadros, fuenteNormal);        
         cuadritoHora.setBounds(xCuadro, nuevoYInicio + (espacioY * 6), anchoCuadro, 32);
         panelForm.add(cuadritoHora);
         
@@ -510,7 +510,7 @@ public class Itinerario extends JFrame {
         return cuadritoPlaca;
     }
     
-    public CampoTextoUtil getCuadritoTipoRuta(){ 
+    public MenuUtil getCuadritoTipoRuta(){ 
         return cuadritoTipoRuta;
     }
 
@@ -526,11 +526,11 @@ public class Itinerario extends JFrame {
         return cuadritoPtoLlegada; 
     }
 
-    public CampoTextoUtil getCuadritoDia(){
+    public MenuUtil getCuadritoDia(){
         return cuadritoDia; 
     }
 
-    public CampoTextoUtil getCuadritoHora(){
+    public MenuUtil getCuadritoHora(){
         return cuadritoHora; 
     }
 

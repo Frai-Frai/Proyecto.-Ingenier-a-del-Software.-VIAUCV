@@ -1,8 +1,7 @@
 package modelo;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ItinerarioDAO {
     private String Ruta_BDItinerario;
