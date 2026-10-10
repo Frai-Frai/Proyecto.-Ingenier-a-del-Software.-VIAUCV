@@ -417,13 +417,13 @@ public class RegistroUnidades extends JFrame {
 
         // Campos de texto más altos (altura de 55)
         txtPlaca = new CampoTextoUtil(15, new Color(150, 150, 150), 0, 55, Color.WHITE, Color.GRAY, fuenteRegular.deriveFont(16f));
-        configurarPlaceholder(txtPlaca, "Placa");
+    
 
         txtModelo = new CampoTextoUtil(15, new Color(150, 150, 150), 0, 55, Color.WHITE, Color.GRAY, fuenteRegular.deriveFont(16f));
-        configurarPlaceholder(txtModelo, "Modelo");
+       
 
         txtCapacidad = new CampoTextoUtil(15, new Color(150, 150, 150), 0, 55, Color.WHITE, Color.GRAY, fuenteRegular.deriveFont(16f));
-        configurarPlaceholder(txtCapacidad, "Capacidad de pasajeros");
+        
 
         Dimension campoSize = new Dimension(Integer.MAX_VALUE, 55);
         txtPlaca.setMaximumSize(campoSize);
@@ -607,11 +607,11 @@ public class RegistroUnidades extends JFrame {
         return opCerrarS; 
     }
 
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             RegistroUnidades vista = new RegistroUnidades(null);
             new Controlador_GestionUnidades(vista);
             vista.setVisible(true);
         });
-    }
+    }*/
 }                                                                
