@@ -269,7 +269,6 @@ public class RegistroUnidades extends JFrame {
             panelItemBus.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    // Se pasa el estado actual de la unidad obtenido del modelo
                     mostrarMenuFlotanteEstado(panelItemBus, unidad.getPlaca(), unidad.getEstado());
                 }
             });
@@ -320,7 +319,6 @@ public class RegistroUnidades extends JFrame {
             fuenteRegular.deriveFont(14f)
         );
         
-        // Pre-selecciona el estado actual de la base de datos si existe
         if (estadoActual != null && !estadoActual.isEmpty()) {
             menuEstado.setSelectedItem(estadoActual);
         }
@@ -399,7 +397,8 @@ public class RegistroUnidades extends JFrame {
         panelCentroCamposBtn.setOpaque(false);
 
         Color colorSubtitulo = new Color(30, 80, 135);
-        Font fuenteSubtitulo = fuenteBold.deriveFont(14f);
+        // Subtítulos más grandes (16f en negrita)
+        Font fuenteSubtitulo = fuenteBold.deriveFont(16f);
 
         JLabel lblSubPlaca = new JLabel("Placa");
         lblSubPlaca.setFont(fuenteSubtitulo);
@@ -416,16 +415,17 @@ public class RegistroUnidades extends JFrame {
         lblSubCapacidad.setForeground(colorSubtitulo);
         lblSubCapacidad.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        txtPlaca = new CampoTextoUtil(15, new Color(150, 150, 150), 0, 48, Color.WHITE, Color.GRAY, fuenteRegular.deriveFont(15f));
+        // Campos de texto más altos (altura de 55)
+        txtPlaca = new CampoTextoUtil(15, new Color(150, 150, 150), 0, 55, Color.WHITE, Color.GRAY, fuenteRegular.deriveFont(16f));
         configurarPlaceholder(txtPlaca, "Placa");
 
-        txtModelo = new CampoTextoUtil(15, new Color(150, 150, 150), 0, 48, Color.WHITE, Color.GRAY, fuenteRegular.deriveFont(15f));
+        txtModelo = new CampoTextoUtil(15, new Color(150, 150, 150), 0, 55, Color.WHITE, Color.GRAY, fuenteRegular.deriveFont(16f));
         configurarPlaceholder(txtModelo, "Modelo");
 
-        txtCapacidad = new CampoTextoUtil(15, new Color(150, 150, 150), 0, 48, Color.WHITE, Color.GRAY, fuenteRegular.deriveFont(15f));
+        txtCapacidad = new CampoTextoUtil(15, new Color(150, 150, 150), 0, 55, Color.WHITE, Color.GRAY, fuenteRegular.deriveFont(16f));
         configurarPlaceholder(txtCapacidad, "Capacidad de pasajeros");
 
-        Dimension campoSize = new Dimension(Integer.MAX_VALUE, 48);
+        Dimension campoSize = new Dimension(Integer.MAX_VALUE, 55);
         txtPlaca.setMaximumSize(campoSize);
         txtModelo.setMaximumSize(campoSize);
         txtCapacidad.setMaximumSize(campoSize);
@@ -433,18 +433,17 @@ public class RegistroUnidades extends JFrame {
         txtModelo.setAlignmentX(Component.LEFT_ALIGNMENT);
         txtCapacidad.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        btnRegistrar = new BotonUtil("Registrar unidad", new Color(40, 100, 160), Color.WHITE, 15, fuenteBold.deriveFont(15f), 0, 48);
+        btnRegistrar = new BotonUtil("Registrar unidad", new Color(40, 100, 160), Color.WHITE, 15, fuenteBold.deriveFont(16f), 0, 55);
         btnRegistrar.setMaximumSize(campoSize);
         btnRegistrar.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         btnRegistrar.addActionListener(e -> controlador.ValidarRegistroUnidad());
 
-        int interlineado1_5cm = 55;
+        int interlineado1_5cm = 35; // Ajustado ligeramente para mantener armonía con la mayor altura
 
         panelCentroCamposBtn.add(Box.createVerticalGlue());
         
-        // Espacio entre el título y el primer campo
-        panelCentroCamposBtn.add(Box.createRigidArea(new Dimension(0, 15)));
+        panelCentroCamposBtn.add(Box.createRigidArea(new Dimension(0, 10)));
         
         panelCentroCamposBtn.add(lblSubPlaca);
         panelCentroCamposBtn.add(Box.createRigidArea(new Dimension(0, 4)));
@@ -520,8 +519,8 @@ public class RegistroUnidades extends JFrame {
         panelImagenBus.setOpaque(false);
         panelImagenBus.setLayout(new BorderLayout());
 
-        BotonUtil btnEstadoOperativo = new BotonUtil("Unidades en Estado Operativo", new Color(40, 100, 160), Color.WHITE, 15, fuenteBold.deriveFont(15f), 0, 48);
-        btnEstadoOperativo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 48));
+        BotonUtil btnEstadoOperativo = new BotonUtil("Unidades en Estado Operativo", new Color(40, 100, 160), Color.WHITE, 15, fuenteBold.deriveFont(16f), 0, 55);
+        btnEstadoOperativo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 55));
 
         btnEstadoOperativo.addActionListener(e -> controlador.mostrarVentanaBusesActivos());
 
@@ -608,11 +607,11 @@ public class RegistroUnidades extends JFrame {
         return opCerrarS; 
     }
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             RegistroUnidades vista = new RegistroUnidades(null);
             new Controlador_GestionUnidades(vista);
             vista.setVisible(true);
         });
-    }*/
-}
+    }
+}                                                                
