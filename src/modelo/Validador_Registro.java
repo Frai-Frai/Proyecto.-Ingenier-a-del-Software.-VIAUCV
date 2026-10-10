@@ -38,12 +38,14 @@ public class Validador_Registro {
             errores.append("- El campo de cédula no puede estar vacío.\n");
         }else if(!campoCedula.trim().matches("\\d+")){
             errores.append("- La cédula solo debe contener números.\n");
+        }else{
+            int cedulaNumerica= Integer.parseInt(campoCedula.trim());
+            if(cedulaNumerica < 1000000 || cedulaNumerica> 99999999){
+            errores.append("- La cédula debe estar dentro del rango [1.000.000 -99.999.999]\n");
+            }
         }
         
-        int cedulaNumerica= Integer.parseInt(campoCedula.trim());
-        if(cedulaNumerica < 1000000 || cedulaNumerica> 99999999){
-            errores.append("- La cédula debe estar dentro del rango [1.000.000 -99.999.999]\n");
-        }
+
 
         //contrasena vacia,por lo menos 6 de length y menor a 20
         if(campoClave.trim().isEmpty()){

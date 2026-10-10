@@ -27,21 +27,16 @@ public class Validador_GestionUnidades {
         //capacidad vacia
         if(unidad.getCapacidad().trim().isEmpty()){
             errores.append("- El campo de capacidad no puede estar vacío.\n");
-        }else { //si no esta vacia, entonces 
-
-            //Capacida numerica para las comparaciones
+        }else if(!unidad.getCapacidad().trim().matches("\\d+")){ //si no esta vacia, entonces 
+            errores.append("La capacidad no debe contener caracteres no numéricos o especiales.");
+        }else{   //Capacida numerica para las comparaciones
             int capacidad;
-            try {
-                capacidad= Integer.parseInt(unidad.getCapacidad());
-            } catch (NumberFormatException e) {
-                return "La capacidad no debe contener caracteres no numéricos o especiales.";
-            }
+            capacidad= Integer.parseInt(unidad.getCapacidad().trim());
 
             //capacidad fuera de rango
             if(capacidad<20 || capacidad>50){
                 errores.append("- Ingrese un número de capacidad entre el rango (20-50).\n");
             }
-
         }
 
         if(unidad.getModelo().trim().isEmpty()){
