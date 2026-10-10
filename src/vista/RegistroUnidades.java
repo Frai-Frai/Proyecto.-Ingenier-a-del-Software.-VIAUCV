@@ -102,7 +102,7 @@ public class RegistroUnidades extends JFrame {
         panelMenu.add(menuIzq, BorderLayout.CENTER);
         add(panelMenu, BorderLayout.WEST);
         
-        // Panel derecho con el color exacto 0xE1F5FE
+        // Panel derecho
         JPanel panelDerechoTotal = new JPanel(new BorderLayout());
         panelDerechoTotal.setBackground(colorFondoExacto);
         panelDerechoTotal.setBorder(new EmptyBorder(12, 12, 12, 12));

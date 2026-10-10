@@ -408,7 +408,6 @@ public class Itinerario extends JFrame {
         ImageIcon iconoPin = null;
         try {
             ImageIcon originalIcon = new ImageIcon("res/IconoLocation.jpeg");
-            // Icono más grande (80x80 píxeles) para que los perfiles se vean más prominentes
             Image scaledImg = originalIcon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
             iconoPin = new ImageIcon(scaledImg);
         } catch (Exception e) {
@@ -423,7 +422,6 @@ public class Itinerario extends JFrame {
             pinesPagina = listaCompletaPines.subList(inicio, fin);
         }
 
-        // Tipografía ligeramente mayor para acompañar al icono grande
         Font fuentePin = fuenteGlacial("res/GlacialIndifference-Bold.otf", 14f, Font.BOLD);
 
         for (String nombrePin : pinesPagina) {
