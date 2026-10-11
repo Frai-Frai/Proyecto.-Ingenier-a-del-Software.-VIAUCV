@@ -170,8 +170,8 @@ public class Itinerario extends JFrame {
         Semana.setForeground(Color.BLACK);
         panelForm.add(Semana);
 
-        int espacioY = 45; 
-        int nuevoYInicio = 42;
+        int espacioY = 38; 
+        int nuevoYInicio = 45;
         
         int xLabel = 35;
         int anchoLabel = 250; 
@@ -308,6 +308,9 @@ public class Itinerario extends JFrame {
 
                     int nuevoAnchoCuadro = nuevoAnchoForm - xCuadro - 35;
 
+                    int espacioY = 38;
+                    int nuevoYInicio = 45;
+                    
                     placa.setBounds(xLabel, nuevoYInicio, anchoLabel, 28);
                     cuadritoPlaca.setBounds(xCuadro, nuevoYInicio, nuevoAnchoCuadro, 32);
 
