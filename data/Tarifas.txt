@@ -1,4 +1,2 @@
-Estudiante|0.15
-Empleado|0.40
-Profesor|0.40
-PublicoGeneral|1.0
+Estudiante=10
+Empleado=30

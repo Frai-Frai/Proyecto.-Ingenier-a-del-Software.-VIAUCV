@@ -54,7 +54,20 @@ public class Validador_Itinerario {
         }
 
         //validar el campo de tarifa, vacio, menor a 800, mayor a 1000. Confirmar que es ruta extraurbana, sino mensaje de error
-        
+        if(itinerario.getTipoRuta().trim().equalsIgnoreCase("Extraurbana") && itinerario.getTarifa().trim().isEmpty()){
+            errores.append("- El campo de tarifa no puede estar vacío para este tipo de ruta.\n");
+        }else if(!itinerario.getTarifa().trim().isEmpty() && !itinerario.getTarifa().trim().matches("\\d+")){
+            errores.append("- La tarifa solo debe contener valores numéricos.\n");
+        }else if (!itinerario.getTarifa().isEmpty()){
+            int tarifa= Integer.parseInt(itinerario.getTarifa().trim());
+
+            //capacidad fuera de rango para ruta extraurbanas, para las urbanas se acepta el campo vacio o 0
+            if(itinerario.getTipoRuta().trim().equalsIgnoreCase("Extraurbana") && (tarifa<800 || tarifa>1000) ){
+                errores.append("- Ingrese una tarifa entre el rango (800-1000).\n");
+            }else if(itinerario.getTipoRuta().trim().equalsIgnoreCase("Urbana") &&  tarifa>0){
+                errores.append("- El campo de tarifa no necesita ser rellenado para este tipo de ruta (o debe ser 0).\n");
+            }
+        }
 
 
         if(errores.length()>0){
