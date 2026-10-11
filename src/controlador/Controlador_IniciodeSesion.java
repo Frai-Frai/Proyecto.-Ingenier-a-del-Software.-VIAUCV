@@ -3,11 +3,9 @@ package controlador;
 import vista.*;
 import modelo.*;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JOptionPane;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.*;
+import java.awt.event.*;
+import java.awt.*;
 import java.util.List;
 
 public class Controlador_IniciodeSesion {
@@ -90,14 +88,19 @@ public class Controlador_IniciodeSesion {
                 RUnidades.setVisible(true);*/
 
             }else if(rol.equalsIgnoreCase("Conductor")){
-                //abre las interfaces del conductor
+                //abre el fondito del conductor NO HACE NADA, ES UNA IMAGEN Y YA 
+                Conductor pantallaC = new Conductor("res/InterfazConductor.png");
+                pantallaC.setVisible(true);
+                pantallaIS.dispose(); // Cerramos Inicio de Sesión
 
-            }else if(rol.equalsIgnoreCase("Estudiante")){
-                //abre las interfaces del estudiante
-            }else if(rol.equalsIgnoreCase("Docente")){
-                //abre las interfaces del profe
-            }else if(rol.equalsIgnoreCase("Público General")){
-                //abre las interfaces del publico general
+            }else if(rol.equalsIgnoreCase("Estudiante") || rol.equalsIgnoreCase("Docente") 
+                    || rol.equalsIgnoreCase("Público General") || rol.equalsIgnoreCase("Empleado")) {
+                    //abre las interfaces de los usuarios
+
+                InterfazUsuario pantallaUser = new InterfazUsuario(UserAu);
+                new Controlador_InterfazUsuario(pantallaUser); // para que funcione
+                pantallaUser.setVisible(true);
+                pantallaIS.dispose(); // Cerramos Inicio de Sesión
             }
 
         }else{

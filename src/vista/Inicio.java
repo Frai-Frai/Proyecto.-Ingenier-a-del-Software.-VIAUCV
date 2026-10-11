@@ -100,9 +100,5 @@ public class Inicio extends JFrame {
     public EncabezadoUtil getEncabezado() {
         return encabezado;
     }
-    public static void main(String[] args){
-        Inicio interfazI = new Inicio();
-        interfazI.setVisible(true);
-    }
 
 }

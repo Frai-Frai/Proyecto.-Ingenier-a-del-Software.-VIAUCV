@@ -8,9 +8,13 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.List;
+import java.util.function.Consumer;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent; 
 
 
-public class RutasUrbanas extends JFrame {
+public class InterfazUsuario extends JFrame {
 
     private Usuario pasajeroActual;
     private JPanel panelDerechaCentro, panelRutasGrid;
@@ -20,8 +24,35 @@ public class RutasUrbanas extends JFrame {
     private BotonUtil btnSiguiente;
     
     private JLabel opRutasDisponibles, opRutasUrbanas, opRutasExtraurbanas, opVisualizarRecorridos, opMonedero, opCerrarS;
+    
+    private Consumer<String> ClickR;
 
-    public RutasUrbanas(Usuario pasajero) {
+    public void setClickRuta(Consumer<String> accion) {
+        this.ClickR = accion;
+    }
+
+    //tipografias
+    private Font fuenteGlacial(String ruta, float tamano, int estilo){
+        try {
+            Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
+            return fuente.deriveFont(estilo, tamano);
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar la fuente: " + e.getMessage());
+            return new Font("SansSerif", estilo, (int) tamano);
+        }
+    }
+
+    private Font League(String ruta, float tamano, int estilo){
+        try {
+            Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
+            return fuente.deriveFont(estilo, tamano);
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar la fuente: " + e.getMessage());
+            return new Font("SansSerif", estilo, (int) tamano);
+        }
+    }
+
+    public InterfazUsuario(Usuario pasajero) {
 
         this.pasajeroActual = pasajero;
         setTitle("VIAUCV - RUTAS URBANAS");
@@ -30,20 +61,20 @@ public class RutasUrbanas extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // Tipografías 
+        // fuentes 
         Font fuenteT = League("res/LeagueSpartan-Bold.otf", 22f, Font.BOLD); 
-        Font fuenteSubT = fuenteGlacial("res/GlacialIndifference-Bold.otf", 16f, Font.BOLD); 
+        Font fuenteSubT = fuenteGlacial("res/GlacialIndifference-Bold.otf", 16, Font.BOLD); 
         Font fuenteLink = fuenteGlacial("res/GlacialIndifference-Bold.otf", 16f, Font.BOLD);
         Font fuenteSubLink = fuenteGlacial("res/GlacialIndifference-Bold.otf", 14f, Font.BOLD);
         Font fuenteRegularBtn = fuenteGlacial("res/GlacialIndifference-Regular.otf", 12f, Font.PLAIN);
         
-        // Paleta de colores
+        // colores de todo
         Color azulCuadros = new Color(0x0D47A1); 
         Color colormenu = Color.WHITE; 
         Color colorFondo = new Color(0xD6EBF7); 
         Color colorWelcome = new Color(134, 185, 222); 
 
-        // Contenedor principal izquierdo
+        // menu de la izquierda
         JPanel panelMenu = new JPanel(new BorderLayout());
         panelMenu.setOpaque(true);
         panelMenu.setBackground(colorFondo);
@@ -67,31 +98,31 @@ public class RutasUrbanas extends JFrame {
         opRutasDisponibles.setForeground(Color.BLACK);
         menuIzq.add(opRutasDisponibles);
         
-        // Subopción: Rutas urbanas 
+        // Sub opción: Rutas urbanas 
         opRutasUrbanas = new JLabel("• Rutas urbanas");
         opRutasUrbanas.setBounds(45, 175, 165, 25);
         new TextosInteractivosUtil(opRutasUrbanas, "• Rutas urbanas", Color.BLACK, azulCuadros, fuenteSubLink);
         menuIzq.add(opRutasUrbanas);
 
-        // Subopción: Rutas extraurbanas
+        // Sub opción: Rutas extraurbanas
         opRutasExtraurbanas = new JLabel("• Rutas extraurbanas");
         opRutasExtraurbanas.setBounds(45, 210, 165, 25);
         new TextosInteractivosUtil(opRutasExtraurbanas, "• Rutas extraurbanas", Color.BLACK, azulCuadros, fuenteSubLink);
         menuIzq.add(opRutasExtraurbanas);
 
-        // "Visualizar recorridos" 
+        // link de visualizar recorrido (no hace nada)
         opVisualizarRecorridos = new JLabel("Visualizar recorridos");
         opVisualizarRecorridos.setBounds(30, 255, 180, 30);
         new TextosInteractivosUtil(opVisualizarRecorridos, "Visualizar recorridos", Color.BLACK, azulCuadros, fuenteLink);
         menuIzq.add(opVisualizarRecorridos);
 
-        // "Monedero" 
+        // para poder ver el monedero personal
         opMonedero = new JLabel("Monedero");
         opMonedero.setBounds(30, 305, 180, 30);
         new TextosInteractivosUtil(opMonedero, "Monedero", Color.BLACK, azulCuadros, fuenteLink);
         menuIzq.add(opMonedero);
 
-        // "Cerrar sesión" 
+        // para poder cerrar sesion
         opCerrarS = new JLabel("Cerrar sesión");
         opCerrarS.setBounds(30, 450, 180, 30);
         new TextosInteractivosUtil(opCerrarS, "Cerrar sesión", Color.BLACK, azulCuadros, fuenteLink);
@@ -105,12 +136,12 @@ public class RutasUrbanas extends JFrame {
         panelDerechoTotal.setBackground(colorFondo);
         panelDerechoTotal.setBorder(new EmptyBorder(12, 12, 12, 12));
 
-        // Panel superior de bienvenida 
+        // Panel de bienvenida 
         Bienvenida = new MiniVentanaUtil(30, colorWelcome, 0, 130, false, colorWelcome);
         Bienvenida.setPreferredSize(new Dimension(0, 130));
         Bienvenida.setLayout(null);
 
-        // Obtener nombre del pasajero desde el modelo Usuario
+        // Obtener nombre del pasajero
         String nombreUsuario = (pasajero != null) ? pasajero.getNombreUsuario() : "Usuario";
 
         JPanel panelBloqueTextos = new JPanel();
@@ -118,7 +149,7 @@ public class RutasUrbanas extends JFrame {
         panelBloqueTextos.setOpaque(false);
         panelBloqueTextos.setBounds(35, 30, 640, 80);
 
-        // 1. Línea Superior
+        // linea de arriba
         JPanel panelSaludo = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         panelSaludo.setOpaque(false);
 
@@ -135,7 +166,7 @@ public class RutasUrbanas extends JFrame {
         panelBloqueTextos.add(panelSaludo);
         panelBloqueTextos.add(Box.createRigidArea(new Dimension(0, 8)));
 
-        // 2. Línea Inferior
+        //linea de abajo 
         JPanel panelSubtitulo = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         panelSubtitulo.setOpaque(false);
 
@@ -188,6 +219,7 @@ public class RutasUrbanas extends JFrame {
                 g2.dispose();
             }
         };
+
         panelContenedorBotones.setOpaque(false);
         panelContenedorBotones.setBorder(new EmptyBorder(3, 10, 3, 10));
 
@@ -227,7 +259,7 @@ public class RutasUrbanas extends JFrame {
     }
 
     
-    public JPanel crearTarjetaRuta(String nombreDestino) {
+    public JPanel crearTarjetaRuta(String nombreDestino){
         JPanel tarjeta = new JPanel();
         tarjeta.setPreferredSize(new Dimension(165, 210)); 
         tarjeta.setLayout(new BoxLayout(tarjeta, BoxLayout.Y_AXIS));
@@ -242,12 +274,12 @@ public class RutasUrbanas extends JFrame {
             if (iconOriginal.getIconWidth() <= 0) {
                 iconOriginal = new ImageIcon("res/Lugar.jpeg");
             }
-            ImageIcon iconoCircular = crearImagenCircular(iconOriginal.getImage(), 250);
+            ImageIcon iconoCircular = crearImagenCircular(iconOriginal.getImage(), 120);
             lblImagen.setIcon(iconoCircular);
         } catch (Exception e) {
             try {
                 ImageIcon defaultIcon = new ImageIcon("res/Lugar.jpeg");
-                ImageIcon iconoCircular = crearImagenCircular(defaultIcon.getImage(), 250);
+                ImageIcon iconoCircular = crearImagenCircular(defaultIcon.getImage(), 120);
                 lblImagen.setIcon(iconoCircular);
             } catch (Exception ex) {
                 lblImagen.setText("[ Imagen ]");
@@ -281,6 +313,16 @@ public class RutasUrbanas extends JFrame {
         lblTitulo.setForeground(Color.BLACK);
         panelNombre.add(lblTitulo);
 
+        panelNombre.addMouseListener(new MouseAdapter() {
+            @Override 
+
+            public void mousePressed(MouseEvent e){
+                if(ClickR != null){
+                    ClickR.accept(nombreDestino);
+                }
+            }
+        });
+        
         tarjeta.add(lblImagen);
         tarjeta.add(espacioRigido);
         tarjeta.add(panelNombre);
@@ -304,43 +346,62 @@ public class RutasUrbanas extends JFrame {
         return new ImageIcon(imagenBuffer);
     }
 
-    private Font fuenteGlacial(String ruta, float tamano, int estilo){
-        try {
-            Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
-            return fuente.deriveFont(estilo, tamano);
-        } catch (Exception e) {
-            System.out.println("No se pudo cargar la fuente: " + e.getMessage());
-            return new Font("SansSerif", estilo, (int) tamano);
+    public void actualizarRutasVista(List <String> destinosPagina, int elemMax){
+        panelRutasGrid.removeAll(); //borra las tarjetas de las rutas q estaban antes
+
+        for(String destino : destinosPagina){
+            JPanel tarjetaRuta = crearTarjetaRuta(destino);
+            panelRutasGrid.add(tarjetaRuta);
         }
-    }
 
-    private Font League(String ruta, float tamano, int estilo){
-        try {
-            Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
-            return fuente.deriveFont(estilo, tamano);
-        } catch (Exception e) {
-            System.out.println("No se pudo cargar la fuente: " + e.getMessage());
-            return new Font("SansSerif", estilo, (int) tamano);
+        int orden = destinosPagina.size(); //mantener todo en orden bonito
+        for(int i = orden; i < elemMax; i++){
+            panelRutasGrid.add(new JLabel());
         }
+
+        panelRutasGrid.revalidate();
+        panelRutasGrid.repaint();
+    }
+    
+    //getters 
+    public JPanel getPanelRutasGrid(){
+         return panelRutasGrid; 
     }
 
-    public JPanel getPanelRutasGrid() { return panelRutasGrid; }
-    public BotonUtil getBtnAnterior() { return btnAnterior; }
-    public BotonUtil getBtnSiguiente() { return btnSiguiente; }
-    public Usuario getPasajeroActual() { return pasajeroActual; }
-
-    public JLabel getOpRutasDisponibles() { return opRutasDisponibles; }
-    public JLabel getOpRutasUrbanas() { return opRutasUrbanas; }
-    public JLabel getOpRutasExtraurbanas() { return opRutasExtraurbanas; }
-    public JLabel getOpVisualizarRecorridos() { return opVisualizarRecorridos; }
-    public JLabel getOpMonedero() { return opMonedero; }
-    public JLabel getOpCerrarS() { return opCerrarS; }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            RutasUrbanas vista = new RutasUrbanas(null);
-            new controlador.ControladorRutasUrbanas(vista);
-            vista.setVisible(true);
-        });
+    public BotonUtil getBtnAnterior(){
+         return btnAnterior; 
     }
+
+    public BotonUtil getBtnSiguiente(){ 
+        return btnSiguiente; 
+    }
+
+    public Usuario getPasajeroActual(){ 
+        return pasajeroActual; 
+    }
+
+    public JLabel getOpRutasDisponibles(){ 
+        return opRutasDisponibles; 
+    }
+
+    public JLabel getOpRutasUrbanas(){ 
+        return opRutasUrbanas; 
+    }
+
+    public JLabel getOpRutasExtraurbanas(){ 
+        return opRutasExtraurbanas; 
+    }
+
+    public JLabel getOpVisualizarRecorridos(){ 
+        return opVisualizarRecorridos; 
+    }
+
+    public JLabel getOpMonedero(){ 
+        return opMonedero;
+    }
+
+    public JLabel getOpCerrarS(){ 
+        return opCerrarS;
+    }
+    
 }

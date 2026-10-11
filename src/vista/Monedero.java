@@ -7,7 +7,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.File;
 
-public class Horarios extends JFrame {
+public class Monedero extends JFrame {
 
     private Usuario pasajeroActual;
     private JPanel panelDerechoTotal, panelDerechaCentro, panelImagenSuperior, panelBlancoDias, panelBlancoHorarios;
@@ -18,7 +18,7 @@ public class Horarios extends JFrame {
     
     private JLabel opRutasDisponibles, opRutasUrbanas, opRutasExtraurbanas, opVisualizarRecorridos, opMonedero, opCerrarS;
 
-    public Horarios(Usuario pasajero) {
+    public Monedero(Usuario pasajero) {
 
         this.pasajeroActual = pasajero;
         setTitle("VIAUCV - HORARIOS");
@@ -318,7 +318,7 @@ public class Horarios extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            Horarios vista = new Horarios(null);
+            Monedero vista = new Monedero(null);
             vista.getLblTituloDestino().setText(" ");
             vista.setVisible(true);
         });
