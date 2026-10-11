@@ -21,11 +21,11 @@ import util.*;
 
 public class Itinerario extends JFrame {
     
-    private BotonUtil botonP, botonFlechaD, botonFlechaI, botonER;
+    private BotonUtil botonP, botonFlechaD, botonFlechaI, botonER, botonPorcentaje;
     private JPanel panelPines;
     private MiniVentanaUtil menuIzq, Bienvenida, panelRutas, panelForm;
     private JLabel  opPlanificar, opRegistrarP, opPDiarios, opGestionU, opGenR, opCerrarS;
-    private CampoTextoUtil cuadritoPlaca, cuadritoDestino, cuadritoPtoLlegada, cuadritoPtoPartida, cuadritoConductor;
+    private CampoTextoUtil cuadritoPlaca, cuadritoDestino, cuadritoPtoLlegada, cuadritoPtoPartida, cuadritoConductor, cuadritoTarifa;
     private MenuUtil cuadritoTipoRuta, cuadritoHora, cuadritoDia;
     // Configurado a un máximo de 7 elementos por página
     private int paginaActualPines = 0;
@@ -255,9 +255,19 @@ public class Itinerario extends JFrame {
         cuadritoConductor.setBounds(xCuadro, nuevoYInicio + (espacioY * 7), anchoCuadro, 32);
         panelForm.add(cuadritoConductor);
 
+        JLabel tarifa = new JLabel("Tarifa Base-Rutas Extraurbanas:");
+        tarifa.setBounds(xLabel, nuevoYInicio + (espacioY * 8), anchoLabel, 28);
+        tarifa.setFont(fuenteLetras);
+        panelForm.add(tarifa);
+
+        cuadritoTarifa = new CampoTextoUtil(10, azulCuadros, anchoCuadro, 32, Color.WHITE, Color.BLACK, fuenteNormal);
+        cuadritoTarifa.setBounds(xCuadro, nuevoYInicio + (espacioY * 8), anchoCuadro, 32);
+        panelForm.add(cuadritoTarifa);
+
         int xBotonesInicial = 270 + anchoFormInicial + 15;
         int posYBotonInicial= 335 + altoFormInicial - 42;
         int posYERboton= posYBotonInicial - 42 - 10;
+        int posYPorcboton= posYERboton - 42 -10;
 
         botonER = new BotonUtil("Seleccionar rutas", azulCuadros, Color.WHITE, 15, fuenteSubT, 180, 40);
         botonER.setBounds(xBotonesInicial, posYERboton, 180, 42);
@@ -265,8 +275,12 @@ public class Itinerario extends JFrame {
         botonP = new BotonUtil("Subir itinerario", azulCuadros, Color.WHITE, 15, fuenteSubT, 180, 40);
         botonP.setBounds(xBotonesInicial, posYBotonInicial, 180, 42);
 
+        botonPorcentaje = new BotonUtil("Config Descuentos", azulCuadros, Color.WHITE, 15, fuenteSubT, 180, 40);
+        botonPorcentaje.setBounds(xBotonesInicial, posYPorcboton, 180, 42);
+
         add(botonER);
         add(botonP);
+        add(botonPorcentaje);
 
         // Listener de redimensionamiento
         addComponentListener(new ComponentAdapter() {
@@ -319,11 +333,17 @@ public class Itinerario extends JFrame {
                     conductor.setBounds(xLabel, nuevoYInicio + (espacioY * 7), anchoLabel, 28);
                     cuadritoConductor.setBounds(xCuadro, nuevoYInicio + (espacioY * 7), nuevoAnchoCuadro, 32);
 
+                    tarifa.setBounds(xLabel, nuevoYInicio + (espacioY * 8), anchoLabel, 28);
+                    cuadritoTarifa.setBounds(xCuadro, nuevoYInicio + (espacioY * 8), nuevoAnchoCuadro, 32);
+
                     int nuevoXBotones = 270 + nuevoAnchoForm + 15;
                     int nuevoPosYBotonP = 335 + nuevoAltoForm - 42;
                     int posYBotonER = nuevoPosYBotonP - 42 - 10;
+                    int posYPorcboton = posYBotonER - 42 - 10;
+
                     botonER.setBounds(nuevoXBotones, posYBotonER, 180, 42);
                     botonP.setBounds(nuevoXBotones, nuevoPosYBotonP, 180, 42);
+                    botonPorcentaje.setBounds(nuevoXBotones, posYPorcboton, 180, 42);
 
                     revalidate();
                     repaint();
@@ -497,6 +517,10 @@ public class Itinerario extends JFrame {
     public BotonUtil getEliminarRuta(){ 
         return botonER;
     }
+
+    public BotonUtil getDescuentos(){ 
+        return botonPorcentaje;
+    }
     
     public CampoTextoUtil getCuadritoPlaca(){ 
         return cuadritoPlaca;
@@ -528,6 +552,10 @@ public class Itinerario extends JFrame {
 
     public CampoTextoUtil getCuadritoConductor(){ 
         return cuadritoConductor; 
+    }
+
+    public CampoTextoUtil getCuadritoTarifa(){ 
+        return cuadritoTarifa; 
     }
 
     public JLabel getOpPlanificar(){ 

@@ -139,7 +139,7 @@ public class Registro extends JFrame{
         panelForm.add(rolUser);
 
         //cuadro en donde salen las opciones
-        String[] opciones= {"Administrador", "Conductor","Estudiante", "Docente", "Público General"};
+        String[] opciones= {"Administrador", "Conductor","Estudiante", "Docente", "Empleado", "Público General"};
         menu = new MenuUtil(opciones, 15, Colormenu, Color.BLACK, Colormenu, fuenteNormal);
         menu.setFont(fuenteNormal);
         menu.setBackground(Colormenu);

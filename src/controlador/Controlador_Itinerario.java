@@ -43,6 +43,13 @@ public class Controlador_Itinerario {
                 abrirEliminarRuta();
             }
         }); 
+
+        this.pantalla.getDescuentos().addMouseListener(new MouseAdapter() { //para que el boton de descuento sirva
+            @Override
+            public void mousePressed(MouseEvent e) {
+                abrirAplicarPorcentaje();
+            }
+        });
     }
 
     private void ValidarItinerario() {
@@ -185,6 +192,12 @@ public class Controlador_Itinerario {
         RegistroUnidades pantallaUnidades = new RegistroUnidades(admin);
         new Controlador_GestionUnidades(pantallaUnidades);
         pantallaUnidades.setVisible(true);
+    }
+
+    private void abrirAplicarPorcentaje() {
+        Porcentajes miniVentana = new Porcentajes(pantalla); //crea la mini ventana
+        new Controlador_Porcentajes(miniVentana); //para que la pantalla al q lo redirija sirva
+        miniVentana.setVisible(true); //se muestra
     }
 }
 
