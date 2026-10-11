@@ -11,8 +11,9 @@ public class Validador_Itinerario {
 
     public String validarItinerario(ItinerarioModelo itinerario) {
         //Todos los campos vacios
-        if(itinerario.getPlacaAsignada().trim().isEmpty() && itinerario.getDestino().trim().isEmpty() && itinerario.getPuntoPartida().trim().isEmpty() && itinerario.getPuntoLLegada().trim().isEmpty() && itinerario.getConductor().trim().isEmpty()) {
-            return "Por favor, complete todos lo campos del formulario.";
+        if(itinerario.getPlacaAsignada().trim().isEmpty() && itinerario.getDestino().trim().isEmpty() && itinerario.getPuntoPartida().trim().isEmpty() 
+            && itinerario.getPuntoLLegada().trim().isEmpty() && itinerario.getConductor().trim().isEmpty() && itinerario.getTarifa().trim().isEmpty()) {
+            return "Por favor, complete todos los campos del formulario.";
         }  
 
         StringBuilder errores= new StringBuilder();
@@ -51,6 +52,9 @@ public class Validador_Itinerario {
         }else if(!itinerario.getConductor().trim().matches("\\d+")){
             errores.append("- La cédula del conductor solo debe contener números.\n");
         }
+
+        //validar el campo de tarifa, vacio, menor a 800, mayor a 1000. Confirmar que es ruta extraurbana, sino mensaje de error
+        
 
 
         if(errores.length()>0){

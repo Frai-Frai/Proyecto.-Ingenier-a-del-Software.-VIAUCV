@@ -19,9 +19,9 @@ public class Validador_GestionUnidades {
         if(unidad.getPlaca().trim().isEmpty()){
             errores.append("- El campo de placa no puede estar vacío.\n");
         }else if (!unidad.getPlaca().trim().matches("^([a-zA-Z]+\\d+[a-zA-Z\\d]*|\\d+[a-zA-Z]+[a-zA-Z\\d]*)$")) {
-            errores.append("- Error: Placa con caracteres no permitidos.\n");
-        }else if(unidad.getPlaca().length() < 3 || unidad.getPlaca().length() > 8) {
-            errores.append ("- Error: Longitud de placa inválida.\n");
+            errores.append("- Error: Placa con caracteres no permitidos (Ingrese números y letras).\n");
+        }if(!unidad.getPlaca().trim().isEmpty() && unidad.getPlaca().length() < 3 || unidad.getPlaca().length() > 8) {
+            errores.append ("- Error: Longitud de placa inválida [3-8].\n");
         }
 
         //capacidad vacia
@@ -39,7 +39,7 @@ public class Validador_GestionUnidades {
             }
         }
 
-        if(unidad.getModelo().trim().isEmpty()){
+        if(unidad.getModelo().trim().isEmpty() || unidad.getModelo().trim().isBlank()){
             errores.append("- El campo de modelo no puede estar vacío.\n");
         }
 

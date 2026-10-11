@@ -1,12 +1,10 @@
 package vista;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
 import java.io.File;
 import util.*;
-import modelo.*;
 
 
 public class Porcentajes extends JDialog{

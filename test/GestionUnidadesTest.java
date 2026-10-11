@@ -33,14 +33,14 @@ public class GestionUnidadesTest {
     public void testFactor3_PlacaInvalida() {
         UnidadBus unidad = new UnidadBus("A___87Q", "Modelo", "36", "Activo");
         String resultado = Validador.validar_RegistroUnidad(unidad);
-        assertEquals("- Error: Placa con caracteres no permitidos.\n", resultado);
+        assertEquals("- Error: Placa con caracteres no permitidos (Ingrese números y letras).\n", resultado);
     }
 
     @Test
     public void testFactor4_PlacaInvalidaLong() {
         UnidadBus unidad = new UnidadBus("ABC123A78954A", "Modelo", "36", "Activo");
         String resultado = Validador.validar_RegistroUnidad(unidad);
-        assertEquals("- Error: Longitud de placa inválida.\n", resultado);
+        assertEquals("- Error: Longitud de placa inválida [3-8].\n", resultado);
     }
 
     @Test

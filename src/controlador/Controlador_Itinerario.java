@@ -67,7 +67,8 @@ public class Controlador_Itinerario {
             pantalla.getCuadritoPtoLlegada().getText().trim(), 
             pantalla.getCuadritoDia().getSelectedItem().toString().trim(),  
             pantalla.getCuadritoHora().getSelectedItem().toString().trim(), 
-            pantalla.getCuadritoConductor().getText().trim()
+            pantalla.getCuadritoConductor().getText().trim(),
+            pantalla.getCuadritoTarifa().getText().trim()
         );
 
         String resultado = validador.validarItinerario(itinerario);
@@ -97,6 +98,7 @@ public class Controlador_Itinerario {
         pantalla.getCuadritoDia().setSelectedIndex(0);
         pantalla.getCuadritoHora().setSelectedIndex(0);
         pantalla.getCuadritoConductor().setText("");
+        pantalla.getCuadritoTarifa().setText("");
     }
 
     // Método auxiliar para consultar los destinos actuales y refrescar la vista de inmediato

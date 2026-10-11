@@ -38,8 +38,8 @@ public class ItinerarioDAO {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split("\\|");
-                if (partes.length >= 8) {
-                    lista.add(new ItinerarioModelo(partes[0], partes[1], partes[2], partes[3], partes[4], partes[5], partes[6], partes[7]));
+                if (partes.length >= 9) {
+                    lista.add(new ItinerarioModelo(partes[0], partes[1], partes[2], partes[3], partes[4], partes[5], partes[6], partes[7],partes[8]));
                 }
             }
         } catch (IOException e) {
