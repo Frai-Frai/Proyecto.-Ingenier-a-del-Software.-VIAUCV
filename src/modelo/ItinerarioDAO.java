@@ -56,9 +56,16 @@ public class ItinerarioDAO {
         }
 
         for(ItinerarioModelo i: lista){
-            if(i.getPlacaAsignada().equalsIgnoreCase(itinerario.getPlacaAsignada()) && i.getDia().equalsIgnoreCase(itinerario.getDia()) &&
-            i.getHora().equalsIgnoreCase(itinerario.getHora())){ //si ambos tienen la misma placa, mismo dia y hora entonces se solapan
-                return true;
+            //para mejor entendimiento del codigo
+            boolean mismoDiaYHora= i.getDia().equalsIgnoreCase(itinerario.getDia()) && i.getHora().equalsIgnoreCase(itinerario.getHora());
+
+            if(mismoDiaYHora){ 
+                boolean mismoConductor=i.getConductor().equalsIgnoreCase(itinerario.getConductor());
+                boolean mismaPlaca=i.getPlacaAsignada().equalsIgnoreCase(itinerario.getPlacaAsignada());
+
+                if(mismaPlaca || mismoConductor){ //si se cumple que un mismo dia y hora se comparte placa o se comparte conductor se solapa
+                    return true;
+                }
             }
         }
         
