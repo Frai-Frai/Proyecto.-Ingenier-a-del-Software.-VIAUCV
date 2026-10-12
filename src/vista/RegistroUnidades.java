@@ -607,11 +607,11 @@ public class RegistroUnidades extends JFrame {
         return opCerrarS; 
     }
 
-   /* public static void main(String[] args) {
+    public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             RegistroUnidades vista = new RegistroUnidades(null);
             new Controlador_GestionUnidades(vista);
             vista.setVisible(true);
         });
-    }*/
+    }
 }                                                                

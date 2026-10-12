@@ -55,7 +55,7 @@ public class InterfazUsuario extends JFrame {
     public InterfazUsuario(Usuario pasajero) {
 
         this.pasajeroActual = pasajero;
-        setTitle("VIAUCV - RUTAS URBANAS");
+        setTitle("VIAUCV - Interfaz Usuario");
         setSize(1200, 750);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -110,7 +110,7 @@ public class InterfazUsuario extends JFrame {
         new TextosInteractivosUtil(opRutasExtraurbanas, "• Rutas extraurbanas", Color.BLACK, azulCuadros, fuenteSubLink);
         menuIzq.add(opRutasExtraurbanas);
 
-        // link de visualizar recorrido (no hace nada)
+        // link de visualizar recorrido 
         opVisualizarRecorridos = new JLabel("Visualizar recorridos");
         opVisualizarRecorridos.setBounds(30, 255, 180, 30);
         new TextosInteractivosUtil(opVisualizarRecorridos, "Visualizar recorridos", Color.BLACK, azulCuadros, fuenteLink);
@@ -404,4 +404,11 @@ public class InterfazUsuario extends JFrame {
         return opCerrarS;
     }
     
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            InterfazUsuario ventana = new InterfazUsuario(null);
+            ventana.setVisible(true);
+        });
+    }
+
 }
