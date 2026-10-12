@@ -2,6 +2,8 @@ package vista;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import modelo.ItinerarioModelo;
+
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
@@ -35,7 +37,7 @@ public class SeleccionarHorario extends JDialog {
         }
     }
 
-    public SeleccionarHorario(JFrame pantallaPadre, List<String[]> filasDatos){
+    public SeleccionarHorario(JFrame pantallaPadre, List<String []> filasDatos){
         super(pantallaPadre, "Seleccionar opción - Vista de Tabla", true);
 
         this.listaDatos = filasDatos;

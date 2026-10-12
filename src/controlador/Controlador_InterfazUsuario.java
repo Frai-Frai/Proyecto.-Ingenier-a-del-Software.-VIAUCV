@@ -82,9 +82,32 @@ public class Controlador_InterfazUsuario {
             vista.setVisible(false);
             vista.dispose();
 
-            //Horarios abririH = new Horarios(pasajero);
+            ItinerarioDAO itinerarioDao = new ItinerarioDAO();
+            List<ItinerarioModelo> listaRutasBD = itinerarioDao.obtenerRutas();
+            List<String[]> listaEnSt = new ArrayList<>();
+            UnidadesDAO buscarUnidad = new UnidadesDAO();
+            
+            if(listaRutasBD != null){
+                for(ItinerarioModelo ruta : listaRutasBD){
+                    if(ruta.getDestino() != null && ruta.getDestino().equals(destinoClick)){
+                        String[] fila = new String[8];
+                        fila[0] = ruta.getPlacaAsignada(); // Placa
+                       // fila[1] = String.valueOf(ruta.get); // Cupos
+                        fila[2] = ruta.getTipoRuta(); // Tipo ruta
+                        fila[3] = ruta.getDestino(); // Destino
+                        fila[4] = ruta.getPuntoPartida(); // Partida
+                        fila[5] = ruta.getPuntoLLegada(); // Llegada
+                        fila[6] = ruta.getDia(); // Día
+                        fila[7] = ruta.getHora(); // Horario
+
+                        listaEnSt.add(fila);
+                    }
+                }
+            }
+
+            SeleccionarHorario abririH = new SeleccionarHorario(vista, listaEnSt);
             //new Controlador_Horarios(abririH);
-            //abririH.setVisible(true);
+            abririH.setVisible(true);
         });
     }
 
@@ -115,7 +138,7 @@ public class Controlador_InterfazUsuario {
             redibujarPaginaRutas();
 
         } catch (Exception e) {
-            System.out.println("Error al cargar las rutas urbanas desde la base de datos: " + e.getMessage());
+            System.out.println("Error al cargar las rutas urbanas desde la base de fila: " + e.getMessage());
         }
     }
 
