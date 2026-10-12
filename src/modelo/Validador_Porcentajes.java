@@ -36,7 +36,7 @@ public class Validador_Porcentajes {
         }else if(!pEmpleado.isEmpty()){
             double porcentaje= Double.parseDouble(pEmpleado.trim());
 
-            if(porcentaje<30.0 || porcentaje>60){
+            if(porcentaje<30.0 || porcentaje>60.0){
                 errores.append("- Ingrese un porcentaje entre el rango (30-60).\n");
             }
         }
