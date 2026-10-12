@@ -1,2 +1,2 @@
-Estudiante=10
-Empleado=30
+Estudiante=10.0
+Empleado=30.0

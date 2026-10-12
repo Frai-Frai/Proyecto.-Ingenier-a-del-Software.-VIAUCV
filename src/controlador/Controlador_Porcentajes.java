@@ -42,7 +42,7 @@ public class Controlador_Porcentajes {
 
         //toma lo que ingresó el admim
         String PEstudiante = miniVentana.getcuadroUser().getText().trim();
-        String PEyD = miniVentana.getcuadroUser().getText().trim();
+        String PEyD = miniVentana.getCuadroEmpyDocente().getText().trim();
         
         String result = valida.validarPorcentaje(PEstudiante, PEyD);
 
