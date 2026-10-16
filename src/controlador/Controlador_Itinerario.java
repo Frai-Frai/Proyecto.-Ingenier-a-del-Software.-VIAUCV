@@ -56,6 +56,8 @@ public class Controlador_Itinerario {
         ItinerarioDAO itinerarioDao = new ItinerarioDAO();
         UnidadesDAO unidadesDao = new UnidadesDAO();
         UsuarioDAO usuarioDao = new UsuarioDAO();
+        UnidadBus bus= unidadesDao.buscarPorPlaca(pantalla.getCuadritoPlaca().getText().trim());
+        String capacidadInicial=bus.getCapacidad();
 
         Validador_Itinerario validador = new Validador_Itinerario(itinerarioDao, unidadesDao, usuarioDao);
 
@@ -68,7 +70,8 @@ public class Controlador_Itinerario {
             pantalla.getCuadritoDia().getSelectedItem().toString().trim(),  
             pantalla.getCuadritoHora().getSelectedItem().toString().trim(), 
             pantalla.getCuadritoConductor().getText().trim(),
-            pantalla.getCuadritoTarifa().getText().trim()
+            pantalla.getCuadritoTarifa().getText().trim(),
+            capacidadInicial
         );
 
         String resultado = validador.validarItinerario(itinerario);

@@ -38,8 +38,8 @@ public class ItinerarioDAO {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split("\\|");
-                if (partes.length >= 9) {
-                    lista.add(new ItinerarioModelo(partes[0], partes[1], partes[2], partes[3], partes[4], partes[5], partes[6], partes[7],partes[8]));
+                if (partes.length >= 10) {
+                    lista.add(new ItinerarioModelo(partes[0], partes[1], partes[2], partes[3], partes[4], partes[5], partes[6], partes[7],partes[8],partes[9]));
                 }
             }
         } catch (IOException e) {
@@ -122,5 +122,51 @@ public class ItinerarioDAO {
                 System.out.println("Error al actualizar la base de datos: "+e.getMessage());
                 return false;
         }
+    }
+
+    //Descontar los cupos disponibles al reservar
+    public boolean restarCupos(ItinerarioModelo itinerario){
+        List<ItinerarioModelo> listActual= obtenerRutas();
+        boolean modificado= false;
+
+        if(listActual==null || listActual.isEmpty() || itinerario==null){
+            return false;
+        }
+
+        for(ItinerarioModelo i: listActual){
+
+            boolean placa= i.getPlacaAsignada().trim().equals(itinerario.getPlacaAsignada().trim());
+            boolean tipoRuta= i.getTipoRuta().trim().equalsIgnoreCase(itinerario.getTipoRuta().trim());
+            boolean destino= i.getDestino().trim().equalsIgnoreCase(itinerario.getDestino().trim());
+            boolean puntoPartida= i.getPuntoPartida().trim().equalsIgnoreCase(itinerario.getPuntoPartida().trim());
+            boolean puntoLLegada= i.getPuntoLLegada().trim().equalsIgnoreCase(itinerario.getPuntoLLegada().trim());
+            boolean dia= i.getDia().trim().equalsIgnoreCase(itinerario.getDia().trim());
+            boolean hora= i.getHora().trim().equalsIgnoreCase(itinerario.getHora().trim());
+            boolean conductor= i.getConductor().trim().equalsIgnoreCase(itinerario.getConductor().trim());
+
+            if(placa && tipoRuta && destino && puntoPartida && puntoLLegada && dia && hora && conductor){
+                try{
+                    int cuposActuales = Integer.parseInt(i.getCupos().trim());
+                    if(cuposActuales>0){
+                        cuposActuales--;
+                        i.setCupos(String.valueOf(cuposActuales)); // Lo volvemos a guardar como String
+                        modificado = true;
+                    }else{
+                        return false;
+                    }
+
+
+                }catch (NumberFormatException e){
+                    System.err.println("Error al parsear el cupo: " + e.getMessage());
+                    return false;
+                }
+                break; //como ya se encontro, se sale del bucle
+            }
+        }
+
+        if(modificado){
+            actualizarDB(listActual);
+        }
+        return modificado;
     }
 }
