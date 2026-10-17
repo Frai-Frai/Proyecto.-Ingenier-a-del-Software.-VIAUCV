@@ -32,6 +32,8 @@ public class Validador_PagoMovil {
 
         if(monto.trim().isEmpty()){
             errores.append("- El campo de monto no puede estar vacío.\n");
+        }else if(!cedula.trim().matches("^\\d+([.,]\\d{1,2})?$")){
+            errores.append("- El monto solo debe contener números (enteros o decimales).\n");
         }else{
             Double montoNum = Double.parseDouble(monto);
             if(montoNum < 0 || montoNum > 10000){
