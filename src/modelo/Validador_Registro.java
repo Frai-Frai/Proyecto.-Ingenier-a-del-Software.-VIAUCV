@@ -28,7 +28,7 @@ public class Validador_Registro {
         //correo vacio, correo formato incorrecto
         if(correo.trim().isEmpty()){
             errores.append("- El campo de correo no puede estar vacío.\n");
-        }else if(!correo.trim().matches("^[a-zA-Z\\d]+@(gmail|hotmail|ciencias|ucv|cienciasucv)\\.com$")){
+        }else if(!correo.trim().matches("^[a-zA-Z\\d._-]+@(gmail.com|hotmail.com|ciencias.com|ucv.com|cienciasucv.com|ciencias.ucv.ve)$")){
             errores.append("- El correo ingresado no tiene un formato válido.\n");
         }
         
