@@ -68,7 +68,7 @@ public class PorcentajeTarifasDAO {
         double tarifa= Double.parseDouble(tarifaBase);
         double porcentaje= obtenerPorcentajePorRol(rol)/100.0;  //se usa para ponerlo como 0.40
 
-        return tarifa*porcentaje; //retorna lo que se paga
+        return tarifa-(tarifa*porcentaje); //retorna lo que se paga
     }
 
 }
