@@ -226,11 +226,11 @@ public class PasarelaPago extends JDialog {
     }
 
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             PasarelaPago ventana = new PasarelaPago(null);
             ventana.setVisible(true);
         });
-    }*/
+    }
    
 }

@@ -167,10 +167,10 @@ public class CodigoVerificacion extends JDialog {
     public JTextField getCuadroCodigo() {
         return cuadroCodigo;
     }
-   /*  public static void main(String[] args) {
+     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             CodigoVerificacion ventana = new CodigoVerificacion(null);
             ventana.setVisible(true);
         });
-    }*/
+    }
 }

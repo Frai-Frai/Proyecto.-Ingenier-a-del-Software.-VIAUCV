@@ -142,7 +142,7 @@ public class SeleccionarHorario extends JDialog {
     }
 
     // Método main para probar la interfaz
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             List<String[]> prueba = new ArrayList<>();
             prueba.add(new String[]{" ", " ", " ", " ", " ", " ", " ", " "});
@@ -151,5 +151,5 @@ public class SeleccionarHorario extends JDialog {
             SeleccionarHorario ventana = new SeleccionarHorario(null, prueba);
             ventana.setVisible(true);
         });
-    }*/
+    }
 }

@@ -173,7 +173,7 @@ public class ConfirmarReserva extends JFrame {
         }
     }
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             ConfirmarReserva ventanaPrueba = new ConfirmarReserva();
             ventanaPrueba.setPlaca("");
@@ -185,5 +185,5 @@ public class ConfirmarReserva extends JFrame {
             ventanaPrueba.setHorario("");
             ventanaPrueba.setVisible(true);
         });
-    }*/
+    }
 }
