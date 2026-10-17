@@ -169,4 +169,39 @@ public class ItinerarioDAO {
         }
         return modificado;
     }
+
+    //verifica si hay cupos dispinibles
+    public boolean hayCupos(ItinerarioModelo itinerario) {
+        if (itinerario == null) return false;
+
+        List<ItinerarioModelo> lista = obtenerRutas();
+
+        if(lista==null || lista.isEmpty() || itinerario==null){
+            return false;
+        }
+
+        for (ItinerarioModelo i : lista) {
+
+            boolean placa= i.getPlacaAsignada().trim().equals(itinerario.getPlacaAsignada().trim());
+            boolean tipoRuta= i.getTipoRuta().trim().equalsIgnoreCase(itinerario.getTipoRuta().trim());
+            boolean destino= i.getDestino().trim().equalsIgnoreCase(itinerario.getDestino().trim());
+            boolean puntoPartida= i.getPuntoPartida().trim().equalsIgnoreCase(itinerario.getPuntoPartida().trim());
+            boolean puntoLLegada= i.getPuntoLLegada().trim().equalsIgnoreCase(itinerario.getPuntoLLegada().trim());
+            boolean dia= i.getDia().trim().equalsIgnoreCase(itinerario.getDia().trim());
+            boolean hora= i.getHora().trim().equalsIgnoreCase(itinerario.getHora().trim());
+            boolean conductor= i.getConductor().trim().equalsIgnoreCase(itinerario.getConductor().trim());
+
+
+            if (placa && tipoRuta && destino && puntoPartida && puntoLLegada && dia && hora && conductor) {
+                try {
+                    int cupos = Integer.parseInt(i.getCupos().trim());
+                    return cupos > 0; // Retorna true si hay quedan cupos
+                } catch (NumberFormatException e) {
+                    System.err.println("Error al buscar el cupo: " + e.getMessage());
+                    return false;
+                }
+        }
+    }
+    return false; // No se encontró la ruta o no tiene cupos
+}
 }
