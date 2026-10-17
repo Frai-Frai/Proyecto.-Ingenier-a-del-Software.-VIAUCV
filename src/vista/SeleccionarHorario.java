@@ -137,6 +137,9 @@ public class SeleccionarHorario extends JDialog {
         panelFondo.add(botonAceptar);
     }
 
+    public JTable getTablaSeleccionada(){
+        return tablaHorarios;
+    }
     public BotonUtil getBotonAceptar(){ 
         return botonAceptar; 
     }

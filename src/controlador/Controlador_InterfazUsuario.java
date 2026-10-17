@@ -62,7 +62,8 @@ public class Controlador_InterfazUsuario {
 
         // Listeners para los botones de paginación
         vista.getBtnSiguiente().addActionListener(e -> {
-            int totalPaginas = (int) Math.ceil((double) listaCompletaDestinosUrbanos.size() / ELEMENTOS_POR_PAGINA);
+            List<String> listaActiva = obtenerLista();
+            int totalPaginas = (int) Math.ceil((double) listaActiva.size() / ELEMENTOS_POR_PAGINA);
             if (totalPaginas == 0) totalPaginas = 1;
             
             if (paginaActual < totalPaginas - 1) {
@@ -79,20 +80,18 @@ public class Controlador_InterfazUsuario {
         });
 
         vista.setClickRuta(destinoClick -> {
-            vista.setVisible(false);
-            vista.dispose();
-
+            
             ItinerarioDAO itinerarioDao = new ItinerarioDAO();
             List<ItinerarioModelo> listaRutasBD = itinerarioDao.obtenerRutas();
             List<String[]> listaEnSt = new ArrayList<>();
-            UnidadesDAO buscarUnidad = new UnidadesDAO();
+            //UnidadesDAO buscarUnidad = new UnidadesDAO();
             
             if(listaRutasBD != null){
                 for(ItinerarioModelo ruta : listaRutasBD){
                     if(ruta.getDestino() != null && ruta.getDestino().equals(destinoClick)){
                         String[] fila = new String[8];
                         fila[0] = ruta.getPlacaAsignada(); // Placa
-                       // fila[1] = String.valueOf(ruta.get); // Cupos
+                        fila[1] = String.valueOf(ruta.getCupos()); // Cupos
                         fila[2] = ruta.getTipoRuta(); // Tipo ruta
                         fila[3] = ruta.getDestino(); // Destino
                         fila[4] = ruta.getPuntoPartida(); // Partida
@@ -106,7 +105,7 @@ public class Controlador_InterfazUsuario {
             }
 
             SeleccionarHorario abririH = new SeleccionarHorario(vista, listaEnSt);
-            //new Controlador_Horarios(abririH);
+            new Controlador_Horario(abririH, pasajero);
             abririH.setVisible(true);
         });
     }
@@ -168,9 +167,15 @@ public class Controlador_InterfazUsuario {
     public void abrirMonedero(){
         this.vista.setVisible(false);
         this.vista.dispose();
-        Monedero pantallaM = new Monedero(pasajero);
-        //new Controlador_Inicio(pantallaI);
+        MonederoReal pantallaM = new MonederoReal(pasajero);
+        new Controlador_MonederoReal(pantallaM);
         pantallaM.setVisible(true);
+    }
+
+    public void AbrirRutaM(String tipo){ // abra el tipo de ruta a la q el user de click
+        this.tipoRutaActual = tipo;
+        this.paginaActual = 0;
+        redibujarPaginaRutas();
     }
 
     private void irInicio(){

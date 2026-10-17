@@ -300,27 +300,60 @@ public class Monedero extends JFrame {
         }
     }
 
-    public Usuario getPasajeroActual() { return pasajeroActual; }
-    public JPanel getPanelBlancoDias() { return panelBlancoDias; }
-    public JPanel getPanelBlancoHorarios() { return panelBlancoHorarios; }
-    public JLabel getLblTituloDestino() { return lblTituloDestino; }
-    public BotonUtil getBtnAnterior() { return btnAnterior; }
-    public BotonUtil getBtnSiguiente() { return btnSiguiente; }
-    public BotonUtil getBtnHorarioAnterior() { return btnHorarioAnterior; }
-    public BotonUtil getBtnHorarioSiguiente() { return btnHorarioSiguiente; }
-
-    public JLabel getOpRutasDisponibles() { return opRutasDisponibles; }
-    public JLabel getOpRutasUrbanas() { return opRutasUrbanas; }
-    public JLabel getOpRutasExtraurbanas() { return opRutasExtraurbanas; }
-    public JLabel getOpVisualizarRecorridos() { return opVisualizarRecorridos; }
-    public JLabel getOpMonedero() { return opMonedero; }
-    public JLabel getOpCerrarS() { return opCerrarS; }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            Monedero vista = new Monedero(null);
-            vista.getLblTituloDestino().setText(" ");
-            vista.setVisible(true);
-        });
+    public Usuario getPasajeroActual(){
+         return pasajeroActual; 
     }
+
+    public JPanel getPanelBlancoDias(){ 
+        return panelBlancoDias;
+    }
+
+    public JPanel getPanelBlancoHorarios(){ 
+        return panelBlancoHorarios; 
+    }
+
+    public JLabel getLblTituloDestino(){ 
+        return lblTituloDestino; 
+    }
+
+    public BotonUtil getBtnAnterior(){ 
+        return btnAnterior; 
+    }
+
+    public BotonUtil getBtnSiguiente(){ 
+        return btnSiguiente; 
+    }
+
+    public BotonUtil getBtnHorarioAnterior(){ 
+        return btnHorarioAnterior; 
+    }
+
+    public BotonUtil getBtnHorarioSiguiente(){ 
+        return btnHorarioSiguiente; 
+    }
+
+    public JLabel getOpRutasDisponibles(){ 
+        return opRutasDisponibles; 
+    }
+
+    public JLabel getOpRutasUrbanas(){ 
+        return opRutasUrbanas; 
+    }
+
+    public JLabel getOpRutasExtraurbanas(){ 
+        return opRutasExtraurbanas; 
+    }
+
+    public JLabel getOpVisualizarRecorridos(){ 
+        return opVisualizarRecorridos; 
+    }
+
+    public JLabel getOpMonedero(){ 
+        return opMonedero; 
+    }
+
+    public JLabel getOpCerrarS(){ 
+        return opCerrarS; 
+    }
+
 }

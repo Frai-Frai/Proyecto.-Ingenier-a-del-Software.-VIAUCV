@@ -80,10 +80,10 @@ public class Controlador_Itinerario {
             itinerarioDao.RegistrarRutaEnBD(itinerario);
             JOptionPane.showMessageDialog(pantalla, "Ruta registrada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             
-            // 1. Actualizamos el panel superior de destinos automáticamente
+            // se actualiza el panel superior de destinos automáticamente
             actualizarDestinosEnPantalla(itinerarioDao);
 
-            // 2. Limpiamos todos los campos del formulario
+            // limpia todos los campos del form
             limpiarCamposFormulario();
 
         } else {
@@ -91,7 +91,7 @@ public class Controlador_Itinerario {
         }
     }
 
-    // Método para vaciar los campos de texto del formulario tras un registro exitoso
+    // vacía los campos de texto del formulario despues de un registro exitoso
     private void limpiarCamposFormulario() {
         pantalla.getCuadritoPlaca().setText("");
         pantalla.getCuadritoTipoRuta().setSelectedIndex(0);
@@ -104,7 +104,7 @@ public class Controlador_Itinerario {
         pantalla.getCuadritoTarifa().setText("");
     }
 
-    // Método auxiliar para consultar los destinos actuales y refrescar la vista de inmediato
+    // consulta los destinos actuales y refresca la vista 
     private void actualizarDestinosEnPantalla(ItinerarioDAO itinerarioDao) {
         List<ItinerarioModelo> listaRutas = itinerarioDao.obtenerRutas();
         List<String> destinos = new ArrayList<>();

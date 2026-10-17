@@ -106,13 +106,13 @@ public class MonederoReal extends JFrame {
         panelDerechoTotal.setBackground(colorFondo);
         panelDerechoTotal.setBorder(new EmptyBorder(12, 12, 12, 12));
 
-        // Contenedor norte para la imagen 
+        // para la imagen 
         JPanel panelNorteTotal = new JPanel();
         panelNorteTotal.setLayout(new BoxLayout(panelNorteTotal, BoxLayout.Y_AXIS));
         panelNorteTotal.setOpaque(false);
         panelNorteTotal.setBorder(new EmptyBorder(0, 10, 12, 0)); 
 
-        // Panel superior para la imagen 
+        // Panel sup para la imagen 
         panelImagenSuperior = new JPanel(new BorderLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -134,6 +134,7 @@ public class MonederoReal extends JFrame {
                 g2.dispose();
             }
         };
+
         panelImagenSuperior.setPreferredSize(new Dimension(0, 260));
         panelImagenSuperior.setOpaque(false);
         panelNorteTotal.add(panelImagenSuperior);
@@ -146,11 +147,11 @@ public class MonederoReal extends JFrame {
 
         panelDerechoTotal.add(panelNorteTotal, BorderLayout.NORTH);
 
-        // Panel central con GridBagLayout
+        // Panel del centro
         panelDerechaCentro = new JPanel(new GridBagLayout());
         panelDerechaCentro.setOpaque(false);
 
-        // --- 1. PANEL BLANCO IZQUIERDO ---
+        //panel blanco de la izq donde se recarga el monedero
         panelBlancoIzquierda = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -168,6 +169,7 @@ public class MonederoReal extends JFrame {
                 g2.dispose();
             }
         };
+
         panelBlancoIzquierda.setOpaque(false);
         panelBlancoIzquierda.setLayout(new GridBagLayout());
         
@@ -186,7 +188,7 @@ public class MonederoReal extends JFrame {
         lblRecargarMonedero.setForeground(azulCuadros);
         panelBlancoIzquierda.add(lblRecargarMonedero, gbcForm);
 
-        // Espaciador superior
+        // espaciador sup
         gbcForm.gridy = 1;
         gbcForm.weighty = 1.0;
         JPanel panelEspaciadorArriba = new JPanel();
@@ -295,14 +297,14 @@ public class MonederoReal extends JFrame {
         txtMonto = new CampoTextoUtil(15, bordeColor, 380, 42, Color.WHITE, azulCuadros, fuenteLetras);
         panelBlancoIzquierda.add(txtMonto, gbcForm);
 
-        // Espaciador medio-bajo
+        // Espaciador de más abajo
         gbcForm.gridy = 10;
         gbcForm.weighty = 0.5;
         JPanel panelEspaciadorMedioBajo = new JPanel();
         panelEspaciadorMedioBajo.setOpaque(false);
         panelBlancoIzquierda.add(panelEspaciadorMedioBajo, gbcForm);
 
-        // Botón Recargar
+        // botón para recargar
         gbcForm.gridy = 11;
         gbcForm.weighty = 0.0;
         gbcForm.insets = new Insets(0, 30, 22, 30);
@@ -313,7 +315,7 @@ public class MonederoReal extends JFrame {
         panelContenedorBoton.add(botonPagar);
         panelBlancoIzquierda.add(panelContenedorBoton, gbcForm);
 
-        // Espaciador inferior izquierdo
+        // espaciador inf
         gbcForm.gridy = 12;
         gbcForm.weighty = 1.0;
         JPanel panelEspaciadorAbajo = new JPanel();
@@ -329,7 +331,7 @@ public class MonederoReal extends JFrame {
         gbcIzq.insets = new Insets(15, 15, 15, 10); 
         panelDerechaCentro.add(panelBlancoIzquierda, gbcIzq);
 
-        // --- 2. PANEL BLANCO DERECHO ---
+        // panel donde sale el monto del monedero como tal
         panelBlancoDerecha = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -356,7 +358,7 @@ public class MonederoReal extends JFrame {
         gbcDer.fill = GridBagConstraints.HORIZONTAL;
         gbcDer.weightx = 1.0;
 
-        // Texto superior del panel derecho
+        // Texto superior del panel 
         gbcDer.gridy = 0;
         gbcDer.insets = new Insets(30, 20, 5, 20);
         JLabel lblUstedCuenta = new JLabel("Usted cuenta con", SwingConstants.CENTER);
@@ -364,7 +366,7 @@ public class MonederoReal extends JFrame {
         lblUstedCuenta.setForeground(azulCuadros);
         panelBlancoDerecha.add(lblUstedCuenta, gbcDer);
 
-        // Espaciador central en el panel derecho
+        // espaciador central en el panel 
         gbcDer.gridy = 1;
         gbcDer.weighty = 1.0;
         JPanel panelEspaciadorDer = new JPanel();
@@ -429,30 +431,72 @@ public class MonederoReal extends JFrame {
         }
     }
 
-    public Usuario getPasajeroActual() { return pasajeroActual; }
-    public JLabel getLblTituloDestino() { return lblTituloDestino; }
-    public JPanel getPanelBlancoIzquierda() { return panelBlancoIzquierda; }
-    public JPanel getPanelBlancoDerecha() { return panelBlancoDerecha; }
-
-    public String getOperadora() { return (String) comboOperadora.getSelectedItem(); }
-    public String getTelefono() { return txtTelefono.getText().trim(); }
-    public String getTipoCedula() { return (String) comboTipoCedula.getSelectedItem(); }
-    public String getCedula() { return txtCedula.getText().trim(); }
-    public String getBanco() { return (String) comboBanco.getSelectedItem(); }
-    public String getMonto() { return txtMonto.getText().trim(); }
-    public BotonUtil getBotonPagar() { return botonPagar; }
-
-    public JLabel getOpRutasDisponibles() { return opRutasDisponibles; }
-    public JLabel getOpRutasUrbanas() { return opRutasUrbanas; }
-    public JLabel getOpRutasExtraurbanas() { return opRutasExtraurbanas; }
-    public JLabel getOpVisualizarRecorridos() { return opVisualizarRecorridos; }
-    public JLabel getOpMonedero() { return opMonedero; }
-    public JLabel getOpCerrarS() { return opCerrarS; }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            MonederoReal vista = new MonederoReal(null);
-            vista.setVisible(true);
-        });
+    public Usuario getPasajeroActual(){ 
+        return pasajeroActual; 
     }
+
+    public JLabel getLblTituloDestino(){ 
+        return lblTituloDestino;
+    }
+
+    public JPanel getPanelBlancoIzquierda(){ 
+        return panelBlancoIzquierda; 
+    }
+
+    public JPanel getPanelBlancoDerecha(){ 
+        return panelBlancoDerecha; 
+    }
+
+    public String getOperadora(){ 
+        return (String) comboOperadora.getSelectedItem(); 
+    }
+
+    public String getTelefono(){ 
+        return txtTelefono.getText().trim(); 
+    }
+
+    public String getTipoCedula(){ 
+        return (String) comboTipoCedula.getSelectedItem(); 
+    }
+
+    public String getCedula(){ 
+        return txtCedula.getText().trim(); 
+    }
+
+    public String getBanco(){ 
+        return (String) comboBanco.getSelectedItem(); 
+    }
+
+    public String getMonto(){ 
+        return txtMonto.getText().trim(); 
+    }
+
+    public BotonUtil getBotonPagar(){ 
+        return botonPagar; 
+    }
+
+    public JLabel getOpRutasDisponibles(){ 
+        return opRutasDisponibles; 
+    }
+
+    public JLabel getOpRutasUrbanas(){ 
+        return opRutasUrbanas; 
+    }
+
+    public JLabel getOpRutasExtraurbanas(){ 
+        return opRutasExtraurbanas; 
+    }
+
+    public JLabel getOpVisualizarRecorridos(){ 
+        return opVisualizarRecorridos; 
+    }
+
+    public JLabel getOpMonedero(){ 
+        return opMonedero; 
+    }
+
+    public JLabel getOpCerrarS(){ 
+        return opCerrarS; 
+    }
+
 }

@@ -1,8 +1,12 @@
 package vista;
 
+import vista.*;
 import util.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import modelo.Usuario;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -13,8 +17,10 @@ public class ConfirmarReserva extends JFrame {
     private JLabel lblPlaca, lblCuposDisponibles, lblTipoRuta, lblDestino, lblPuntoPartida, lblPuntoLlegada, lblHorario;
     private BotonUtil btnReservar;
     private Point pointClick = new Point();
+    private Usuario pasajero;
 
-    public ConfirmarReserva() {
+    public ConfirmarReserva(Usuario pasajero) {
+        this.pasajero = pasajero;
         setTitle("Confirmar reserva");
         setSize(480, 370);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

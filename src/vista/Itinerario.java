@@ -148,7 +148,7 @@ public class Itinerario extends JFrame {
         botonSiguienteAccion();
         botonAnteriorAccion();
 
-        // Cargar destinos desde BDItinerario
+        //Cargar destinos desde BDItinerario
         cargarDestinosDesdeBD();
 
         // Ancho del panel del formulario central
@@ -387,6 +387,7 @@ public class Itinerario extends JFrame {
         new TextosInteractivosUtil(opCerrarS, "Cerrar Sesión", Color.BLACK, azulCuadros, fuenteLink);
         menuIzq.add(opCerrarS);
         getRootPane().setDefaultButton(botonP);
+
     }
 
     // Consulta BDItinerario a través de ItinerarioDAO
@@ -397,21 +398,13 @@ public class Itinerario extends JFrame {
             List<String> destinos = new ArrayList<>();
 
             if (listaRutas != null) {
-                for (ItinerarioModelo ruta : listaRutas) {
-                    if (ruta.getDestino() != null && !destinos.contains(ruta.getDestino())) {
-                        destinos.add(ruta.getDestino());
+                for (ItinerarioModelo ruta : listaRutas){
+                    String destino = ruta.getDestino() != null ? ruta.getDestino().trim() : " ";
+                    if (!destino.isEmpty() && !destinos.contains(destino)) {
+                        destinos.add(destino);
                     }
                 }
             }
-
-            if (destinos.isEmpty()) {
-                destinos.add("Capitolio");
-                destinos.add("Zona rental");
-                destinos.add("La Guaira");
-                destinos.add("Los Teques");
-                destinos.add("Guatire");
-            }
-
             actualizarPanelPines(destinos);
         } catch (Exception e) {
             System.out.println("Error al cargar destinos de BDItinerario: " + e.getMessage());
@@ -422,6 +415,8 @@ public class Itinerario extends JFrame {
         this.listaCompletaPines = nuevaListaPines;
         this.paginaActualPines = 0;
         redibujarPaginaPines();
+        panelPines.revalidate();
+        panelPines.repaint();
     }
 
     private void redibujarPaginaPines() {
@@ -587,5 +582,4 @@ public class Itinerario extends JFrame {
     public Usuario getAdminActual(){
         return adminActual;
     }
-
 }
