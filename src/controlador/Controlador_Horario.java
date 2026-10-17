@@ -67,7 +67,7 @@ public class Controlador_Horario {
         pantallaCR.setPuntoLlegada(ptoLlegada);
         pantallaCR.setHorario(horarioCompleto);
 
-       // new Controlador_ConfirmarR(pantallaCR);
+        new Controlador_ConfR(pantallaCR, pasajero);
         pantallaCR.setVisible(true);
     }
 

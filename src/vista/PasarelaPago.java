@@ -3,18 +3,44 @@ package vista;
 import util.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import modelo.Usuario;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 
 public class PasarelaPago extends JDialog {
+
+    //tipografias
+    private Font fuenteGlacial(String ruta, float tamano, int estilo){
+        try {
+            Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
+            return fuente.deriveFont(estilo, tamano);
+        } catch (Exception e) {
+            return new Font("SansSerif", estilo, (int) tamano);
+        }
+    }
+
+    private Font League(String ruta, float tamano, int estilo){
+        try {
+            Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
+            return fuente.deriveFont(estilo, tamano);
+        } catch (Exception e) {
+            return new Font("SansSerif", estilo, (int) tamano);
+        }
+    }
+
+    private Usuario pasajero;
     private MenuUtil comboOperadora, comboTipoCedula, comboBanco;
     private CampoTextoUtil txtTelefono, txtCedula, txtMonto;
     private BotonUtil botonPagar;
     private Point pointClick = new Point();
 
-    public PasarelaPago(JFrame pantallaPadre) {
+    public PasarelaPago(JFrame pantallaPadre, Usuario pasajero) {
+        this.pasajero = pasajero;
+
         super(pantallaPadre, "Pasarela de Pago - Pago Móvil", true);
         setSize(480, 520);
         setLocationRelativeTo(pantallaPadre);
@@ -22,7 +48,7 @@ public class PasarelaPago extends JDialog {
         setUndecorated(true);
         setBackground(new Color(0, 0, 0, 0));
 
-        // Tipografías
+        // fuentes
         Font fuenteTitulo = League("res/LeagueSpartan-Bold.otf", 22f, Font.PLAIN);
         Font fuenteSubT = fuenteGlacial("res/GlacialIndifference-Bold.otf", 14f, Font.BOLD);
         Font fuenteLetras = fuenteGlacial("res/GlacialIndifference-Regular.otf", 13f, Font.PLAIN);
@@ -55,7 +81,7 @@ public class PasarelaPago extends JDialog {
         panelPrincipal.setOpaque(false);
         panelPrincipal.setBorder(new EmptyBorder(18, 22, 18, 22));
 
-        // Listener para permitir arrastrar la ventana
+        // para que se pueda arrastrar la ventana
         panelPrincipal.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 pointClick.setLocation(e.getX(), e.getY());
@@ -67,7 +93,7 @@ public class PasarelaPago extends JDialog {
             }
         });
 
-        // Panel superior para el título y el botón de cierre X
+        // panel sup para el título y el botón para cerrar la mini ventana
         JPanel panelSuperior = new JPanel(new BorderLayout());
         panelSuperior.setOpaque(false);
         panelSuperior.setBorder(new EmptyBorder(0, 0, 10, 0));
@@ -77,7 +103,7 @@ public class PasarelaPago extends JDialog {
         lblTituloVentana.setForeground(azulOscuro);
         panelSuperior.add(lblTituloVentana, BorderLayout.CENTER);
 
-        // Botón de cierre X
+        // Botón para cerrar
         JLabel btnCerrar = new JLabel("X");
         btnCerrar.setFont(new Font("SansSerif", Font.BOLD, 16));
         btnCerrar.setForeground(azulOscuro);
@@ -95,11 +121,11 @@ public class PasarelaPago extends JDialog {
 
         panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
 
-        // Panel central con los campos
+        // Panel con los campos
         JPanel panelCentral = new JPanel(null);
         panelCentral.setOpaque(false);
 
-        // --- Teléfono (Operadora + Número) ---
+        // telefono
         JLabel lblTelefono = new JLabel("Número de Teléfono:");
         lblTelefono.setFont(fuenteSubT);
         lblTelefono.setForeground(azulOscuro);
@@ -116,7 +142,7 @@ public class PasarelaPago extends JDialog {
         txtTelefono.setBounds(112, 32, 320, 35);
         panelCentral.add(txtTelefono);
 
-        // --- Cédula (Tipo + Número) ---
+        // cedula con los tipos, que si V o E y el numero de la cedula como tal
         JLabel lblCedula = new JLabel("Cédula de Identidad:");
         lblCedula.setFont(fuenteSubT);
         lblCedula.setForeground(azulOscuro);
@@ -133,7 +159,7 @@ public class PasarelaPago extends JDialog {
         txtCedula.setBounds(82, 102, 350, 35);
         panelCentral.add(txtCedula);
 
-        // --- Banco ---
+        // bancos
         JLabel lblBanco = new JLabel("Banco:");
         lblBanco.setFont(fuenteSubT);
         lblBanco.setForeground(azulOscuro);
@@ -172,7 +198,7 @@ public class PasarelaPago extends JDialog {
         comboBanco.setBounds(10, 172, 422, 35);
         panelCentral.add(comboBanco);
 
-        // --- Monto ---
+        // monto
         JLabel lblMonto = new JLabel("Monto a Pagar:");
         lblMonto.setFont(fuenteSubT);
         lblMonto.setForeground(azulOscuro);
@@ -186,7 +212,7 @@ public class PasarelaPago extends JDialog {
 
         panelPrincipal.add(panelCentral, BorderLayout.CENTER);
 
-        // Panel inferior con el botón "Pagar"
+        // botón para pagar
         JPanel panelSur = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelSur.setOpaque(false);
         panelSur.setBorder(new EmptyBorder(5, 0, 0, 0));
@@ -198,39 +224,38 @@ public class PasarelaPago extends JDialog {
         add(panelPrincipal);
     }
 
+    public void setMontoCalculado(String montoPagar){
+        txtMonto.setText(montoPagar);
+        txtMonto.setEnabled(false);//para q no pueda editar el monto
+    }
+
     // Getters
-    public String getOperadora() { return (String) comboOperadora.getSelectedItem(); }
-    public String getTelefono() { return txtTelefono.getText().trim(); }
-    public String getTipoCedula() { return (String) comboTipoCedula.getSelectedItem(); }
-    public String getCedula() { return txtCedula.getText().trim(); }
-    public String getBanco() { return (String) comboBanco.getSelectedItem(); }
-    public String getMonto() { return txtMonto.getText().trim(); }
-    public BotonUtil getBotonPagar() { return botonPagar; }
-
-    private Font fuenteGlacial(String ruta, float tamano, int estilo){
-        try {
-            Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
-            return fuente.deriveFont(estilo, tamano);
-        } catch (Exception e) {
-            return new Font("SansSerif", estilo, (int) tamano);
-        }
+    public String getOperadora(){ 
+        return (String) comboOperadora.getSelectedItem(); 
     }
 
-    private Font League(String ruta, float tamano, int estilo){
-        try {
-            Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
-            return fuente.deriveFont(estilo, tamano);
-        } catch (Exception e) {
-            return new Font("SansSerif", estilo, (int) tamano);
-        }
+    public String getTelefono(){ 
+        return txtTelefono.getText().trim(); 
     }
 
+    public String getTipoCedula(){ 
+        return (String) comboTipoCedula.getSelectedItem(); 
+    }
 
-    /*public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            PasarelaPago ventana = new PasarelaPago(null);
-            ventana.setVisible(true);
-        });
-    }*/
+    public String getCedula(){ 
+        return txtCedula.getText().trim(); 
+    }
+
+    public String getBanco(){ 
+        return (String) comboBanco.getSelectedItem(); 
+    }
+
+    public String getMonto(){ 
+        return txtMonto.getText().trim(); 
+    }
+
+    public BotonUtil getBotonPagar(){ 
+        return botonPagar; 
+    }
    
 }

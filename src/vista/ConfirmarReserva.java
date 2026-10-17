@@ -19,6 +19,26 @@ public class ConfirmarReserva extends JFrame {
     private Point pointClick = new Point();
     private Usuario pasajero;
 
+    //tipografias
+
+    private Font fuenteGlacial(String ruta, float tamano, int estilo){
+        try {
+            Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
+            return fuente.deriveFont(estilo, tamano);
+        } catch (Exception e) {
+            return new Font("SansSerif", estilo, (int) tamano);
+        }
+    }
+
+    private Font League(String ruta, float tamano, int estilo){
+        try {
+            Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
+            return fuente.deriveFont(estilo, tamano);
+        } catch (Exception e) {
+            return new Font("SansSerif", estilo, (int) tamano);
+        }
+    }
+
     public ConfirmarReserva(Usuario pasajero) {
         this.pasajero = pasajero;
         setTitle("Confirmar reserva");
@@ -29,7 +49,7 @@ public class ConfirmarReserva extends JFrame {
         setUndecorated(true);
         setBackground(new Color(0, 0, 0, 0));
 
-        // Tipografías
+        // fuentes
         Font fuenteTitulo = League("res/LeagueSpartan-Bold.otf", 22f, Font.BOLD);
         Font fuenteGlacialBold = fuenteGlacial("res/GlacialIndifference-Bold.otf", 14f, Font.BOLD);
         Font fuenteBtn = fuenteGlacial("res/GlacialIndifference-Bold.otf", 14f, Font.BOLD);
@@ -62,7 +82,7 @@ public class ConfirmarReserva extends JFrame {
         panelPrincipal.setOpaque(false);
         panelPrincipal.setBorder(new EmptyBorder(18, 22, 18, 22));
 
-        // Listener para permitir arrastrar la ventana
+        // para arrastrar la ventana
         panelPrincipal.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 pointClick.setLocation(e.getX(), e.getY());
@@ -74,7 +94,7 @@ public class ConfirmarReserva extends JFrame {
             }
         });
 
-        // Panel superior para el título y el botón de cierre 
+        // Panel superior para el título y el botón para cerrar la mini ventana 
         JPanel panelSuperior = new JPanel(new BorderLayout());
         panelSuperior.setOpaque(false);
         panelSuperior.setBorder(new EmptyBorder(0, 0, 12, 0));
@@ -84,7 +104,7 @@ public class ConfirmarReserva extends JFrame {
         lblTituloVentana.setForeground(Color.BLACK);
         panelSuperior.add(lblTituloVentana, BorderLayout.CENTER);
 
-        // Botón de cierre X
+        // botón dpara cerrar
         JLabel btnCerrar = new JLabel("X");
         btnCerrar.setFont(new Font("SansSerif", Font.BOLD, 16));
         btnCerrar.setForeground(azulOscuro);
@@ -119,7 +139,7 @@ public class ConfirmarReserva extends JFrame {
 
         panelPrincipal.add(panelDatos, BorderLayout.CENTER);
 
-        // Panel inferior con el botón "Pagar"
+        // botón para pagar
         JPanel panelSur = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelSur.setOpaque(false);
         panelSur.setBorder(new EmptyBorder(10, 0, 5, 0));
@@ -131,7 +151,7 @@ public class ConfirmarReserva extends JFrame {
         add(panelPrincipal);
     }
 
-    // Método auxiliar para que el texto fijo y el dinámico usen la tipografía 
+    // funcion aux para que el texto fijo y el dinámico usen las fuentes 
     private JLabel crearLineaDato(JPanel contenedor, String textoFijo, Font fuenteGlacial, Color colorValor) {
         JPanel linea = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 4));
         linea.setOpaque(false);
@@ -151,32 +171,45 @@ public class ConfirmarReserva extends JFrame {
         return lblDinamico;
     }
 
-    public void setPlaca(String placa) { lblPlaca.setText(placa); }
-    public void setCuposDisponibles(String cupos) { lblCuposDisponibles.setText(cupos); }
-    public void setTipoRuta(String tipoRuta) { lblTipoRuta.setText(tipoRuta); }
-    public void setDestino(String destino) { lblDestino.setText(destino); }
-    public void setPuntoPartida(String puntoPartida) { lblPuntoPartida.setText(puntoPartida); }
-    public void setPuntoLlegada(String puntoLlegada) { lblPuntoLlegada.setText(puntoLlegada); }
-    public void setHorario(String horario) { lblHorario.setText(horario); }
-
-    public BotonUtil getBtnReservar() { return btnReservar; }
-
-    private Font fuenteGlacial(String ruta, float tamano, int estilo){
-        try {
-            Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
-            return fuente.deriveFont(estilo, tamano);
-        } catch (Exception e) {
-            return new Font("SansSerif", estilo, (int) tamano);
-        }
+    public void setPlaca(String placa){ 
+        lblPlaca.setText(placa); 
     }
 
-    private Font League(String ruta, float tamano, int estilo){
-        try {
-            Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
-            return fuente.deriveFont(estilo, tamano);
-        } catch (Exception e) {
-            return new Font("SansSerif", estilo, (int) tamano);
-        }
+    public void setCuposDisponibles(String cupos){ 
+        lblCuposDisponibles.setText(cupos); 
+    }
+
+    public void setTipoRuta(String tipoRuta){ 
+        lblTipoRuta.setText(tipoRuta); 
+    }
+
+    public void setDestino(String destino){ 
+        lblDestino.setText(destino); 
+    }
+
+    public void setPuntoPartida(String puntoPartida){ 
+        lblPuntoPartida.setText(puntoPartida); 
+    }
+
+    public void setPuntoLlegada(String puntoLlegada){ 
+        lblPuntoLlegada.setText(puntoLlegada); 
+    }
+
+    public void setHorario(String horario){ 
+        lblHorario.setText(horario); 
+    }
+
+    //estos dos getteres los usan el controlador de confirmar reserva para lo de la tarifa y eso
+    public String getPlacaConfirmada() { 
+        return lblPlaca.getText(); 
+    }
+    
+    public String getHorarioConfirmado() { 
+        return lblHorario.getText(); 
+    }
+
+    public BotonUtil getBtnReservar(){ 
+        return btnReservar; 
     }
 
     /*public static void main(String[] args) {
