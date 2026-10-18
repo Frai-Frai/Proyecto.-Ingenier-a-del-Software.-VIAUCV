@@ -5,13 +5,15 @@ import modelo.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.File;
 
 public class MonederoReal extends JFrame {
 
     private Usuario pasajeroActual;
     private JPanel panelDerechoTotal, panelDerechaCentro, panelImagenSuperior, panelBlancoIzquierda, panelBlancoDerecha;
-    private JLabel lblTituloDestino;
+    private JLabel lblTituloDestino, lblMontoActual;
     private MiniVentanaUtil menuIzq;
     
     // Componentes de pago móvil integrados
@@ -25,7 +27,7 @@ public class MonederoReal extends JFrame {
 
         this.pasajeroActual = pasajero;
         setTitle("VIAUCV - MONEDERO");
-        setSize(1200, 830); // <--- Tamaño inicial ampliado para evitar recortes con la barra del SO
+        setSize(1200, 830); 
         setMinimumSize(new Dimension(1100, 750));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -113,7 +115,7 @@ public class MonederoReal extends JFrame {
         panelNorteTotal.setOpaque(false);
         panelNorteTotal.setBorder(new EmptyBorder(0, 10, 12, 0)); 
 
-        // Panel superior para la imagen (Altura optimizada a 210px)
+        // Panel superior para la imagen
         panelImagenSuperior = new JPanel(new BorderLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -357,25 +359,44 @@ public class MonederoReal extends JFrame {
         gbcDer.fill = GridBagConstraints.HORIZONTAL;
         gbcDer.weightx = 1.0;
 
-        // Texto superior del panel derecho
+        // 1. Texto superior ("Usted cuenta con")
         gbcDer.gridy = 0;
-        gbcDer.insets = new Insets(30, 20, 5, 20);
+        gbcDer.weighty = 0.0;
+        gbcDer.insets = new Insets(30, 20, 0, 20);
         JLabel lblUstedCuenta = new JLabel("Usted cuenta con", SwingConstants.CENTER);
         lblUstedCuenta.setFont(fuenteTituloPanel);
         lblUstedCuenta.setForeground(azulCuadros);
         panelBlancoDerecha.add(lblUstedCuenta, gbcDer);
 
-        // Espaciador central en el panel derecho
+        // 2. Espaciador flexible SUPERIOR
         gbcDer.gridy = 1;
         gbcDer.weighty = 1.0;
-        JPanel panelEspaciadorDer = new JPanel();
-        panelEspaciadorDer.setOpaque(false);
-        panelBlancoDerecha.add(panelEspaciadorDer, gbcDer);
+        gbcDer.insets = new Insets(0, 0, 0, 0);
+        JPanel espaciadorArribaMonto = new JPanel();
+        espaciadorArribaMonto.setOpaque(false);
+        panelBlancoDerecha.add(espaciadorArribaMonto, gbcDer);
 
-        // Sub-panel vertical para las dos líneas inferiores
+        // 3. Monto 
         gbcDer.gridy = 2;
         gbcDer.weighty = 0.0;
-        gbcDer.insets = new Insets(5, 20, 30, 20);
+        gbcDer.insets = new Insets(0, 20, 0, 20);
+        lblMontoActual = new JLabel("$0.00", SwingConstants.CENTER);
+        lblMontoActual.setFont(League("res/LeagueSpartan-Bold.otf", 48f, Font.PLAIN));
+        lblMontoActual.setForeground(new Color(0x2E7D32));
+        panelBlancoDerecha.add(lblMontoActual, gbcDer);
+
+        // 4. Espaciador flexible INFERIOR
+        gbcDer.gridy = 3;
+        gbcDer.weighty = 1.0;
+        gbcDer.insets = new Insets(0, 0, 0, 0);
+        JPanel espaciadorAbajoMonto = new JPanel();
+        espaciadorAbajoMonto.setOpaque(false);
+        panelBlancoDerecha.add(espaciadorAbajoMonto, gbcDer);
+
+        // 5. Sub-panel vertical ("en su monedero virtual")
+        gbcDer.gridy = 4;
+        gbcDer.weighty = 0.0;
+        gbcDer.insets = new Insets(0, 20, 30, 20);
         
         JPanel panelTextoInferior = new JPanel();
         panelTextoInferior.setLayout(new BoxLayout(panelTextoInferior, BoxLayout.Y_AXIS));
@@ -396,6 +417,20 @@ public class MonederoReal extends JFrame {
         panelTextoInferior.add(lblVirtual);
 
         panelBlancoDerecha.add(panelTextoInferior, gbcDer);
+
+        // --- LISTENER PARA AJUSTAR TAMAÑO DE FUENTE DINÁMICAMENTE ---
+        panelBlancoDerecha.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                int ancho = panelBlancoDerecha.getWidth();
+                int alto = panelBlancoDerecha.getHeight();
+                if (ancho > 0 && alto > 0) {
+                    float tamanoProporcional = Math.min(ancho / 6.0f, alto / 6.0f);
+                    float tamanoFinal = Math.max(28f, Math.min(64f, tamanoProporcional));
+                    lblMontoActual.setFont(League("res/LeagueSpartan-Bold.otf", tamanoFinal, Font.PLAIN));
+                }
+            }
+        });
 
         GridBagConstraints gbcDerContenedor = new GridBagConstraints();
         gbcDerContenedor.gridx = 1;
@@ -430,21 +465,22 @@ public class MonederoReal extends JFrame {
         }
     }
 
-    public Usuario getPasajeroActual(){ 
-        return pasajeroActual; 
+    public Usuario getPasajeroActual() { return pasajeroActual; }
+    public JLabel getLblTituloDestino() { return lblTituloDestino; }
+    
+    // Metodo monedero
+    public JLabel getLblMontoActual() { return lblMontoActual; }
+    
+    public void setMontoActual(String monto) {
+        if (this.lblMontoActual != null) {
+            this.lblMontoActual.setText(monto);
+        }
     }
 
-    public JLabel getLblTituloDestino(){ 
-        return lblTituloDestino; 
+    public String getMontoActualTexto() {
+        return this.lblMontoActual != null ? this.lblMontoActual.getText() : "";
     }
 
-    public JPanel getPanelBlancoIzquierda(){ 
-        return panelBlancoIzquierda; 
-    }
-
-    public JPanel getPanelBlancoDerecha(){ 
-        return panelBlancoDerecha; 
-    }
 
     public String getOperadora(){ 
         return (String) comboOperadora.getSelectedItem(); 
@@ -496,6 +532,14 @@ public class MonederoReal extends JFrame {
 
     public JLabel getOpCerrarS(){ 
         return opCerrarS; 
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            MonederoReal vistaPrueba = new MonederoReal(null);
+            vistaPrueba.setMontoActual("$150.00"); 
+            vistaPrueba.setVisible(true);
+        });
     }
 
 }
