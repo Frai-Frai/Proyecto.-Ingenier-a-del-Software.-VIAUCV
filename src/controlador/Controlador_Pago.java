@@ -41,8 +41,9 @@ public class Controlador_Pago {
         String cedula = vista.getCedula();
         String monto = vista.getMonto();
 
-        String resultValida = valida.ValidarDatos(num, cedula, monto, pasajero);
+        String resultValida = valida.ValidarDatos(num, cedula, monto,pasajero);
 
+        //REVISARRR
         if(resultValida.equals("Pago exitoso")){
 
             //Si hay cupos

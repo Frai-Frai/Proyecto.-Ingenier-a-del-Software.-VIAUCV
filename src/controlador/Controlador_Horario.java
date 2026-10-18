@@ -45,8 +45,21 @@ public class Controlador_Horario {
             return;
         }
 
-        String placa = tabla.getValueAt(filaSelect, 1).toString();
         String cupos = tabla.getValueAt(filaSelect, 2).toString();
+
+        try{
+            int cantCupos = Integer.parseInt(cupos.trim());
+            
+            if(cantCupos <= 0){
+                JOptionPane.showMessageDialog(vista, "No hay cupos disponibles", "Atención", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        } catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(vista, "Error de lectura en los cupos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String placa = tabla.getValueAt(filaSelect, 1).toString();
         String tipoRuta = tabla.getValueAt(filaSelect, 3).toString();
         String destino = tabla.getValueAt(filaSelect, 4).toString();
         String ptoPartida = tabla.getValueAt(filaSelect, 5).toString();

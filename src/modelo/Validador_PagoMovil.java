@@ -54,7 +54,7 @@ public class Validador_PagoMovil {
         }
 
         //monto insuficiente
-        if(u.getSaldo()< montoNum){
+        if(u.getSaldo() < montoNum){
             return "Saldo insuficiente para realizar la transacción. Por favor, recargue en su monedero "+montoNum+"bs";
         }
 
