@@ -41,7 +41,7 @@ public class Controlador_Pago {
         String cedula = vista.getCedula();
         String monto = vista.getMonto();
 
-        String resultValida = valida.ValidarDatos(num, cedula, monto);
+        String resultValida = valida.ValidarDatos(num, cedula, monto, pasajero);
 
         if(resultValida.equals("Pago exitoso")){
 

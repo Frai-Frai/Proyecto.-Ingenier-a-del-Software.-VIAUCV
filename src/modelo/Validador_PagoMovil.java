@@ -3,9 +3,10 @@ package modelo;
 public class Validador_PagoMovil {
     
     public Validador_PagoMovil(){
+
     }
 
-    public String ValidarDatos(String numero, String cedula, String monto){
+    public String ValidarDatos(String numero, String cedula, String monto, Usuario u){
 
         if(numero.trim().isEmpty() && cedula.trim().isEmpty() && monto.trim().isEmpty()){
             return "Por favor, complete todos lo campos del formulario.";
@@ -43,6 +44,18 @@ public class Validador_PagoMovil {
 
         if(errores.length()>0){
             return errores.toString();
+        }
+
+        double montoNum=0.0;
+        try {
+            montoNum = Double.parseDouble(monto.trim());
+        } catch (NumberFormatException e) {
+            return "El monto ingresado no tiene un formato numérico válido.";
+        }
+
+        //monto insuficiente
+        if(u.getSaldo()< montoNum){
+            return "Saldo insuficiente para realizar la transacción. Por favor, recargue en su monedero "+montoNum+"bs";
         }
 
         return "Pago exitoso";
