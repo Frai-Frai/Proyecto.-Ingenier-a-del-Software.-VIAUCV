@@ -30,11 +30,11 @@ public class ReservaDAO {
 
                 String[] datos= linea.split("\\|");
 
-                if (datos.length==9){
+                if (datos.length>=8){
                     String cedulaU= datos[0].trim(); //donde esta la cedula 
 
                     //comparar la cedula para ver sus reservas
-                    if(cedula.equalsIgnoreCase(cedulaU.trim())){
+                    if(cedula.trim().equalsIgnoreCase(cedulaU.trim())){
                         String placa= datos[1].trim();
                         String tipoRuta= datos[2].trim();
                         String destino= datos[3].trim();

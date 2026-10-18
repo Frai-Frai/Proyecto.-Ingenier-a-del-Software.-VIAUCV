@@ -2,7 +2,7 @@ package vista;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import modelo.ItinerarioModelo;
+import modelo.*;
 
 import java.awt.*;
 import java.io.File;
@@ -101,12 +101,12 @@ public class Reservas extends JDialog {
                 Object[] fila = {
                     false,
                     datos[0], // Placa
-                    datos[2], // Tipo ruta
-                    datos[3], // Destino
-                    datos[4], // Partida
-                    datos[5], // Llegada
-                    datos[6], // Día
-                    datos[7]  // Horario
+                    datos[1], // Tipo ruta
+                    datos[2], // Destino
+                    datos[3], // Partida
+                    datos[4], // Llegada
+                    datos[5], // Día
+                    datos[6]  // Horario
                 };
                 modeloTabla.addRow(fila);
             }
@@ -164,17 +164,5 @@ public class Reservas extends JDialog {
         int fila = getFilaSeleccionada();
         if (fila == -1 || listaDatos == null) return null;
         return listaDatos.get(fila);
-    }
-
-    // Método main para probar la interfaz
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            List<String[]> prueba = new ArrayList<>();
-            prueba.add(new String[]{" ", " ", " ", " ", " ", " ", " ", " "});
-            prueba.add(new String[]{" ", " ", " ", " ", " ", " ", " ", " "});
-
-            Reservas ventana = new Reservas(null, prueba);
-            ventana.setVisible(true);
-        });
     }
 }

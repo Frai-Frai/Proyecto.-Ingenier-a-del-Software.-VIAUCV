@@ -2,14 +2,9 @@ package controlador;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.JOptionPane;
 
-import modelo.ItinerarioDAO;
-import modelo.ItinerarioModelo;
-import modelo.PorcentajeTarifasDAO;
-import modelo.Usuario;
-import modelo.UsuarioDAO;
+import modelo.*;
 import vista.ConfirmarReserva;
 
 public class Controlador_ConfR {
@@ -66,8 +61,10 @@ public class Controlador_ConfR {
             pasajeroDao.descontarSaldo(pasajero, montoFijo);
             Itdao.restarCupos(rutaEscogida);
 
-
-            //lo del ticket
+            //guarda en la bd de reservas por usuario
+            ReservaDAO rDao = new ReservaDAO();
+            Reserva nuevaReserva = new Reserva(pasajero.getCedula(), rutaEscogida);
+            rDao.registrarReserva(nuevaReserva);
         }
     }
 

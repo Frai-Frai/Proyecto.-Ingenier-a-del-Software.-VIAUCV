@@ -1,1 +1,2 @@
-CedulaUsuarioReservo|B33697|Extraurbana|Los Teques|Pasillo de las banderas-UCV|La Panamericana|Martes|1:00pm|16578923
+32499046|PLACABU|Extraurbana|Charallave|unlugar|otrolugar|Jueves|5:30 am|16578923
+32499046|676767|Urbana|La Bandera|Pasillo de las banderas-UCV|Metro La Bandera|Lunes|12:00pm|16578923
