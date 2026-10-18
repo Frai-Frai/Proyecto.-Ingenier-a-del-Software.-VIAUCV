@@ -11,7 +11,6 @@ import modelo.PorcentajeTarifasDAO;
 import modelo.Usuario;
 import modelo.UsuarioDAO;
 import vista.ConfirmarReserva;
-import vista.PasarelaPago;
 
 public class Controlador_ConfR {
 
@@ -21,7 +20,6 @@ public class Controlador_ConfR {
     private double montoFijo;
     private PorcentajeTarifasDAO tarifaDao = new PorcentajeTarifasDAO();
     private  ItinerarioModelo rutaEscogida;
-    PasarelaPago pantallaP = new PasarelaPago(vista, pasajero);
 
     public Controlador_ConfR(ConfirmarReserva vista, Usuario pasajero){
         this.vista = vista;
@@ -67,6 +65,9 @@ public class Controlador_ConfR {
             JOptionPane.showMessageDialog(vista,"Pago exitoso de "+montoFijo+"bs", "ÉXITO", JOptionPane.INFORMATION_MESSAGE); 
             pasajeroDao.descontarSaldo(pasajero, montoFijo);
             Itdao.restarCupos(rutaEscogida);
+
+
+            //lo del ticket
         }
     }
 

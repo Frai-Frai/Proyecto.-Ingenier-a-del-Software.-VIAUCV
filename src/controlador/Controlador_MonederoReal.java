@@ -1,10 +1,13 @@
 package controlador;
 
 import modelo.*;
+import util.*;
 import vista.*;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.JOptionPane;
 
 public class Controlador_MonederoReal{
 
@@ -15,6 +18,12 @@ public class Controlador_MonederoReal{
         this.vista = vista;
         this.pasajero = vista.getPasajeroActual();
 
+        this.vista.getBotonPagar().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                ValidarMonedero();
+            }
+        });
         this.vista.getOpCerrarS().addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -36,6 +45,27 @@ public class Controlador_MonederoReal{
             }
         });
 
+    }
+
+    public void ValidarMonedero(){
+        Validador_Monedero valida = new Validador_Monedero();
+        
+        String telefono = vista.getTelefono();
+        String cedula   = vista.getCedula();
+        String monto    = vista.getMonto();
+
+        String resultado = valida.ValidarDatos(telefono, cedula, monto, pasajero);
+
+        if (resultado.equals("Pago exitoso")) {
+            double recarga = Double.parseDouble(monto.trim().replace(".", "."));
+            UsuarioDAO userDao = new UsuarioDAO();
+            userDao.recargarSaldo(pasajero, recarga);
+            JOptionPane.showMessageDialog(vista, "Recarga realizada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            //actualiza el monto en la pantalla
+            //vista.getSaldoMonto().setText(String.valueOf(pasajero.getSaldo()));
+        } else {
+            JOptionPane.showMessageDialog(vista, resultado, "Error en el proceso de recarga, intente de nuevo", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void abrirRutas(String tipoRuta){

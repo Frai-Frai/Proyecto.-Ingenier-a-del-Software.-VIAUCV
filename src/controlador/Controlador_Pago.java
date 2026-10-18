@@ -13,7 +13,7 @@ public class Controlador_Pago {
 
     private PasarelaPago vista;
     private Usuario pasajero;
-    private Validador_PagoMovil valida;
+    private Validador_Monedero valida;
     private double montoFijo;
     private ItinerarioModelo itinerario;
     private ItinerarioDAO itinerarioDAO;
@@ -22,7 +22,7 @@ public class Controlador_Pago {
         this. vista = vista;
         this.pasajero = pasajero;
         this.itinerario=itinerario;
-        this.valida = new Validador_PagoMovil();
+        this.valida = new Validador_Monedero();
         this.itinerarioDAO= new ItinerarioDAO();
 
         PorcentajeTarifasDAO tarifaDao = new PorcentajeTarifasDAO();

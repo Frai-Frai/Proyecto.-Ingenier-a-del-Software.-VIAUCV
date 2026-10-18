@@ -1,8 +1,8 @@
 package modelo;
 
-public class Validador_PagoMovil {
+public class Validador_Monedero {
     
-    public Validador_PagoMovil(){
+    public Validador_Monedero(){
 
     }
 
@@ -36,26 +36,14 @@ public class Validador_PagoMovil {
         }else if(!monto.trim().matches("^\\d+([.,]\\d{1,2})?$")){
             errores.append("- El monto solo debe contener números (enteros o decimales).\n");
         }else{
-            Double montoNum = Double.parseDouble(monto);
-            if(montoNum < 0 || montoNum > 10000){
-                errores.append("- El monto tiene que estar debajo de 10.000\n");
+            Double montoNum = Double.parseDouble(monto.trim().replace(",", "."));
+            if(montoNum <= 0 || montoNum > 10000){
+                errores.append("- El monto tiene que ser mayor a 0 y menor a 10.000\n");
             }
         }
 
         if(errores.length()>0){
             return errores.toString();
-        }
-
-        double montoNum=0.0;
-        try {
-            montoNum = Double.parseDouble(monto.trim());
-        } catch (NumberFormatException e) {
-            return "El monto ingresado no tiene un formato numérico válido.";
-        }
-
-        //monto insuficiente
-        if(u.getSaldo() < montoNum){
-            return "Saldo insuficiente para realizar la transacción. Por favor, recargue en su monedero "+montoNum+"bs";
         }
 
         return "Pago exitoso";

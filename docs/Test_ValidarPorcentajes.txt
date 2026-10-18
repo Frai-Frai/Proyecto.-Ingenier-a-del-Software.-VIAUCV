@@ -1,0 +1,64 @@
+ENTRADAS: 
+- pEmpleado: Valores por parámetro de tipo String
+- pEstudiante: Valores por parámetro de tipo String 
+
+PRECONDICIONES (Casos de prueba / Clases de equivalencia):
+
+1. El campo del porcentaje del estudiante vacío.
+2. El campo del porcentaje del empleado vacío.
+3. El campo del porcentaje del estudiante contiene caracteres no numéricos.
+4. El campo del porcentaje del empleado contiene caracteres no numéricos.
+5. El campo del porcentaje del estudiante está fuera del rango establecido.
+6. El campo del porcentaje del empleado está fuera del rango establecido.
+7. Todos los campos cumplen con el formato.
+
+ESPECIFICACIONES:
+validarPorcentaje(): Devuelve un mensaje de éxito (String) en caso de que todos los campos cumplan con el debido formato. Devuelve un mensaje descriptivo de error (String) en caso contrario.
+
+SALIDAS:
+
+1- "- El campo de estudiante no puede estar vacío (Si no hay cambios, conserve el valor anterior)."
+2- "- El campo de empleado no puede estar vacío (Si no hay cambios, conserve el valor anterior)."
+3- "- El porcentaje solo debe contener valores numéricos (o '.' para los decimales)."
+4- "- El porcentaje solo debe contener valores numéricos (o '.' para los decimales)."
+5- "- Ingrese un porcentaje entre el rango (10-20)."
+6- "- Ingrese un porcentaje entre el rango (30-60)."
+7- "Porcentaje válido"
+
+
+------------------------------------------------------------
+- FACTOR 1: El campo del porcentaje del estudiante vacío.
+- CLASES DE EQUIVALENCIA: ("", pEmpleado previo)
+- ENTRADAS: "", pEmpleado
+- SALIDA:  - El campo de estudiante no puede estar vacío (Si no hay cambios, conserve el valor anterior).
+------------------------------------------------------------
+- FACTOR 2: El campo del porcentaje del empleado vacío.
+- CLASES DE EQUIVALENCIA: (pEstudiante previo, "")
+- ENTRADAS: pEstudiante, ""
+- SALIDA: - El campo de empleado no puede estar vacío (Si no hay cambios, conserve el valor anterior)
+------------------------------------------------------------
+- FACTOR 3: El campo del porcentaje del estudiante contiene caracteres no numéricos.
+- CLASES DE EQUIVALENCIA: (String inválido, pEmpleado)
+- ENTRADAS: "16f", pEmpleado
+- SALIDA: - El porcentaje solo debe contener valores numéricos (o '.' para los decimales).
+------------------------------------------------------------
+- FACTOR 4: El campo del porcentaje del empleado contiene caracteres no numéricos.
+- CLASES DE EQUIVALENCIA: (pEstudiante, String inválido)
+- ENTRADAS: pEstudiante, "30.o"
+- SALIDA: - El porcentaje solo debe contener valores numéricos (o '.' para los decimales).
+------------------------------------------------------------
+- FACTOR 5: El campo del porcentaje del estudiante está fuera del rango establecido.
+- CLASES DE EQUIVALENCIA: (String inválido, pEmpleado)
+- ENTRADAS: "30", pEmpleado
+- SALIDA: - Ingrese un porcentaje entre el rango (10-20).
+------------------------------------------------------------
+- FACTOR 6: El campo del porcentaje del empleado está fuera del rango establecido.
+- CLASES DE EQUIVALENCIA: (pEstudiante, String inválido)
+- ENTRADAS: pEstudiante, "25"
+- SALIDA: Ingrese un porcentaje entre el rango (30-60).
+------------------------------------------------------------
+- FACTOR 7: Todos los campos cumplen con el formato.
+- CLASES DE EQUIVALENCIA: (String inválido, pEmpleado)
+- ENTRADAS: "15", "35"
+- SALIDA: Porcentaje válido
+------------------------------------------------------------
