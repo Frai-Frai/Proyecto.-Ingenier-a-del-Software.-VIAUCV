@@ -68,7 +68,7 @@ public class GestionUnidadesTest {
     public void testFactor8_CapacidadMayor() {
         UnidadBus unidad = new UnidadBus("ABC123A", "Modelo", "85", "Activo");
         String resultado = Validador.validar_RegistroUnidad(unidad);
-        assertEquals("- Ingrese un número de capacidad entre el rango (20-36).\n", resultado);
+        assertEquals("- Ingrese un número de capacidad entre el rango (20-50).\n", resultado);
     }
 
     @Test

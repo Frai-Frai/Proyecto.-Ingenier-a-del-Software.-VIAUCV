@@ -89,7 +89,7 @@ public class ValidarRegistroTest {
 
     @Test 
     void cedulaInvalida(){
-        String resultado= validar.validarRegistro("3244f56t","Rosa Duran","rosa@hotmal.com","Docente","123456","123456");
+        String resultado= validar.validarRegistro("3244f56t","Rosa Duran","rosa@hotmail.com","Docente","123456","123456");
         assertEquals("- La cédula solo debe contener números.\n", resultado);
     }
 

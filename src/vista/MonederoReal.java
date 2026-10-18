@@ -254,7 +254,6 @@ public class MonederoReal extends JFrame {
         gbcForm.gridy = 7;
         gbcForm.insets = new Insets(0, 30, 12, 30);
         String[] bancos = {
-            "SELECCIONE EL BANCO",
             "(0156) 100% BANCO, BANCO UNIVERSAL",
             "(0172) BANCAMIGA BANCO UNIVERSAL, C.A.",
             "(0114) BANCARIBE C.A. BANCO UNIVERSAL",
@@ -380,7 +379,8 @@ public class MonederoReal extends JFrame {
         gbcDer.gridy = 2;
         gbcDer.weighty = 0.0;
         gbcDer.insets = new Insets(0, 20, 0, 20);
-        lblMontoActual = new JLabel("$0.00", SwingConstants.CENTER);
+        String saldito = String.valueOf(pasajero.getSaldo());
+        lblMontoActual = new JLabel(saldito, SwingConstants.CENTER);
         lblMontoActual.setFont(League("res/LeagueSpartan-Bold.otf", 48f, Font.PLAIN));
         lblMontoActual.setForeground(new Color(0x2E7D32));
         panelBlancoDerecha.add(lblMontoActual, gbcDer);
@@ -479,6 +479,12 @@ public class MonederoReal extends JFrame {
 
     public String getMontoActualTexto() {
         return this.lblMontoActual != null ? this.lblMontoActual.getText() : "";
+    }
+
+    public void setMontoActualTexto(String nuevoMonto) {
+        if (this.lblMontoActual != null) {
+            this.lblMontoActual.setText(nuevoMonto);
+        }
     }
 
 

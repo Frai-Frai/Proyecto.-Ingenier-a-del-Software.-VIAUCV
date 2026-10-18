@@ -7,4 +7,3 @@ B79525|Modelo|45|Activo
 444567|habibi|50|Fuera de servicio
 676767|sicseven|41|Activo
 mbh1807|channel|23|En mantenimiento
-
