@@ -6,7 +6,7 @@ public class Validador_Monedero {
 
     }
 
-    public String ValidarDatos(String numero, String cedula, String monto, Usuario u){
+    public String ValidarDatos(String numero, String cedula, String monto){
 
         if(numero.trim().isEmpty() && cedula.trim().isEmpty() && monto.trim().isEmpty()){
             return "Por favor, complete todos lo campos del formulario.";
@@ -27,7 +27,7 @@ public class Validador_Monedero {
         }else{
             int cedulaNumerica= Integer.parseInt(cedula.trim());
             if(cedulaNumerica < 1000000 || cedulaNumerica> 99999999){
-            errores.append("- La cédula debe estar dentro del rango [1.000.000 -99.999.999]\n");
+            errores.append("- La cédula debe estar dentro del rango [1.000.000 -99.999.999].\n");
             }
         }
 
@@ -38,7 +38,7 @@ public class Validador_Monedero {
         }else{
             Double montoNum = Double.parseDouble(monto.trim().replace(",", "."));
             if(montoNum <= 0 || montoNum > 10000){
-                errores.append("- El monto tiene que ser mayor a 0 y menor a 10.000\n");
+                errores.append("- El monto tiene que ser mayor a 0 y menor a 10.000.\n");
             }
         }
 
