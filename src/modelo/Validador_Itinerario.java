@@ -11,19 +11,12 @@ public class Validador_Itinerario {
 
     public String validarItinerario(ItinerarioModelo itinerario) {
         //Todos los campos vacios
-        if(itinerario.getPlacaAsignada().trim().isEmpty() && itinerario.getDestino().trim().isEmpty() && itinerario.getPuntoPartida().trim().isEmpty() 
+        if(itinerario.getDestino().trim().isEmpty() && itinerario.getPuntoPartida().trim().isEmpty() 
             && itinerario.getPuntoLLegada().trim().isEmpty() && itinerario.getConductor().trim().isEmpty() && itinerario.getTarifa().trim().isEmpty()) {
             return "Por favor, complete todos los campos del formulario.";
         }  
 
         StringBuilder errores= new StringBuilder();
-
-        //placa vacia, caracteres que no corresponde, longitud invalida
-        if(itinerario.getPlacaAsignada().trim().isEmpty()){
-            errores.append("- El campo de placa no puede estar vacío.\n");
-        }else if (!itinerario.getPlacaAsignada().trim().matches("^[a-zA-Z0-9]+$")) {
-            errores.append("- Error: Placa con caracteres no permitidos.\n");
-        }
 
         //destino vacio, formato invalido
         if(itinerario.getDestino().trim().isEmpty()){
@@ -58,7 +51,7 @@ public class Validador_Itinerario {
             errores.append("- El campo de tarifa no puede estar vacío para este tipo de ruta.\n");
         }else if(!itinerario.getTarifa().trim().isEmpty() && !itinerario.getTarifa().trim().matches("\\d+")){
             errores.append("- La tarifa solo debe contener valores numéricos.\n");
-        }else if (!itinerario.getTarifa().isEmpty()){
+        }else if (!itinerario.getTarifa().trim().isEmpty()){
             int tarifa= Integer.parseInt(itinerario.getTarifa().trim());
 
             //capacidad fuera de rango para ruta extraurbanas, para las urbanas se acepta el campo vacio o 0
@@ -72,16 +65,6 @@ public class Validador_Itinerario {
 
         if(errores.length()>0){
             return errores.toString();
-        }
-
-        //despues de llenar el formulario con los datos correctos
-        if (unidadesDao.buscarPorPlaca(itinerario.getPlacaAsignada()) == null) {
-            return "- La placa asignada no existe en la base de datos.";
-        }
-
-        //si la unidad no esta activa
-        if(!unidadesDao.estaActivo(itinerario.getPlacaAsignada())){
-            return "- La unidad ingresada no se encuentra activa.";
         }
 
         UsuarioDAO usuarioDao = new UsuarioDAO();

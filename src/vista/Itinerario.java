@@ -24,8 +24,8 @@ public class Itinerario extends JFrame {
     private JPanel panelPines;
     private MiniVentanaUtil menuIzq, Bienvenida, panelRutas, panelForm;
     private JLabel  opPlanificar, opRegistrarP, opPDiarios, opGestionU, opGenR, opCerrarS;
-    private CampoTextoUtil cuadritoPlaca, cuadritoDestino, cuadritoPtoLlegada, cuadritoPtoPartida, cuadritoConductor, cuadritoTarifa;
-    private MenuUtil cuadritoTipoRuta, cuadritoHora, cuadritoDia;
+    private CampoTextoUtil cuadritoDestino, cuadritoPtoLlegada, cuadritoPtoPartida, cuadritoConductor, cuadritoTarifa;
+    private MenuUtil cuadritoTipoRuta, cuadritoHora, cuadritoDia, cuadritoPlaca;
     // Configurado a un máximo de 7 elementos por página
     private int paginaActualPines = 0;
     private final int ELEMENTOS_POR_PAGINA_PINES = 7;
@@ -183,7 +183,19 @@ public class Itinerario extends JFrame {
         placa.setFont(fuenteLetras);
         panelForm.add(placa);
 
-        cuadritoPlaca = new CampoTextoUtil(10, azulCuadros, anchoCuadro, 32, Color.WHITE, Color.BLACK, fuenteNormal);
+        UnidadesDAO unidadDao = new UnidadesDAO();
+        List <UnidadBus> unidadBusca = unidadDao.obtenerBusesPorEstado("Activo");
+        List <String> listaPlacas = new ArrayList<>();
+
+        if(unidadBusca != null){
+            for(UnidadBus bus : unidadBusca){
+                listaPlacas.add(bus.getPlaca());
+            }
+        }
+
+        String[] opcionesTipo = listaPlacas.toArray(new String[0]);
+
+        cuadritoPlaca = new MenuUtil(opcionesTipo, 10, Color.WHITE, Color.BLACK, azulCuadros, fuenteNormal);
         cuadritoPlaca.setBounds(xCuadro, nuevoYInicio, anchoCuadro, 32);
         panelForm.add(cuadritoPlaca);
 
@@ -191,8 +203,6 @@ public class Itinerario extends JFrame {
         Tpruta.setBounds(xLabel, nuevoYInicio + espacioY, anchoLabel, 28);
         Tpruta.setFont(fuenteLetras);
         panelForm.add(Tpruta);
-
-        String[] opcionesTipo = { "Urbana", "Extraurbana" };
 
         cuadritoTipoRuta = new MenuUtil(opcionesTipo, 10, Color.WHITE, Color.BLACK, azulCuadros, fuenteNormal);
         cuadritoTipoRuta.setBounds(xCuadro, nuevoYInicio + espacioY, anchoCuadro, 32);
@@ -519,7 +529,7 @@ public class Itinerario extends JFrame {
         return botonPorcentaje;
     }
     
-    public CampoTextoUtil getCuadritoPlaca(){ 
+    public MenuUtil getCuadritoPlaca(){ 
         return cuadritoPlaca;
     }
     
