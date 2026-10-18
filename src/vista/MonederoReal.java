@@ -430,24 +430,72 @@ public class MonederoReal extends JFrame {
         }
     }
 
-    public Usuario getPasajeroActual() { return pasajeroActual; }
-    public JLabel getLblTituloDestino() { return lblTituloDestino; }
-    public JPanel getPanelBlancoIzquierda() { return panelBlancoIzquierda; }
-    public JPanel getPanelBlancoDerecha() { return panelBlancoDerecha; }
+    public Usuario getPasajeroActual(){ 
+        return pasajeroActual; 
+    }
 
-    public String getOperadora() { return (String) comboOperadora.getSelectedItem(); }
-    public String getTelefono() { return txtTelefono.getText().trim(); }
-    public String getTipoCedula() { return (String) comboTipoCedula.getSelectedItem(); }
-    public String getCedula() { return txtCedula.getText().trim(); }
-    public String getBanco() { return (String) comboBanco.getSelectedItem(); }
-    public String getMonto() { return txtMonto.getText().trim(); }
-    public BotonUtil getBotonPagar() { return botonPagar; }
+    public JLabel getLblTituloDestino(){ 
+        return lblTituloDestino; 
+    }
 
-    public JLabel getOpRutasDisponibles() { return opRutasDisponibles; }
-    public JLabel getOpRutasUrbanas() { return opRutasUrbanas; }
-    public JLabel getOpRutasExtraurbanas() { return opRutasExtraurbanas; }
-    public JLabel getOpVisualizarRecorridos() { return opVisualizarRecorridos; }
-    public JLabel getOpMonedero() { return opMonedero; }
-    public JLabel getOpCerrarS() { return opCerrarS; }
+    public JPanel getPanelBlancoIzquierda(){ 
+        return panelBlancoIzquierda; 
+    }
+
+    public JPanel getPanelBlancoDerecha(){ 
+        return panelBlancoDerecha; 
+    }
+
+    public String getOperadora(){ 
+        return (String) comboOperadora.getSelectedItem(); 
+    }
+
+    public String getTelefono(){ 
+        return txtTelefono.getText().trim(); 
+    }
+
+    public String getTipoCedula(){ 
+        return (String) comboTipoCedula.getSelectedItem(); 
+    }
+
+    public String getCedula(){ 
+        return txtCedula.getText().trim(); 
+    }
+
+    public String getBanco(){ 
+        return (String) comboBanco.getSelectedItem(); 
+    }
+
+    public String getMonto(){ 
+        return txtMonto.getText().trim(); 
+    }
+
+    public BotonUtil getBotonPagar(){ 
+        return botonPagar; 
+    }
+
+    public JLabel getOpRutasDisponibles(){ 
+        return opRutasDisponibles; 
+    }
+
+    public JLabel getOpRutasUrbanas(){ 
+        return opRutasUrbanas; 
+    }
+
+    public JLabel getOpRutasExtraurbanas(){ 
+        return opRutasExtraurbanas; 
+    }
+
+    public JLabel getOpVisualizarRecorridos(){ 
+        return opVisualizarRecorridos; 
+    }
+
+    public JLabel getOpMonedero(){ 
+        return opMonedero; 
+    }
+
+    public JLabel getOpCerrarS(){ 
+        return opCerrarS; 
+    }
 
 }

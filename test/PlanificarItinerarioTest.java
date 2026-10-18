@@ -141,7 +141,7 @@ public class PlanificarItinerarioTest {
 
         File archivoItinerario = carpetaTemp.resolve("itinerarios.txt").toFile();
         try(BufferedWriter w = new BufferedWriter(new FileWriter(archivoItinerario, false))){
-            w.write("676767|Urbana|La Candelaria|Ciudad Universitaria|Sambil de la Candelaria|Lunes|3:00 pm|16578923");
+            w.write("676767|Urbana|La Candelaria|Ciudad Universitaria|Sambil de la Candelaria|Lunes|3:00 pm|16578923|0|0");
         }
 
         uniDao = new UnidadesDAO(archivoUnidades.getAbsolutePath());
@@ -152,6 +152,34 @@ public class PlanificarItinerarioTest {
         ItinerarioModelo itinerarioM = new ItinerarioModelo("676767", "Urbana", "La Candelaria", "Ciudad Universitaria", "Sambil de la Candelaria", "Lunes", "3:00 pm", "16578923","","");
         String resultado = valida.validarItinerario(itinerarioM);
         assertEquals("- El itinerario se solapa con otro itinerario existente.", resultado);
+    }
+
+    @Test 
+    void TarifaExtraurbanaVacia(){
+        ItinerarioModelo itinerarioM = new ItinerarioModelo("676767", "Extraurbana", "La Guaira", "Gato Negro", "Terminal La Guaira", "Lunes", "10:00 am", "16578923", " ", "");
+        String resultado = valida.validarItinerario(itinerarioM);
+        assertEquals("- El campo de tarifa no puede estar vacío para este tipo de ruta.\n", resultado);
+    }
+
+    @Test 
+    void TarifaExtraurbanaInvalida(){
+        ItinerarioModelo itinerarioM = new ItinerarioModelo("676767", "Extraurbana", "La Guaira", "Gato Negro", "Terminal La Guaira", "Lunes", "10:00 am", "16578923", "abc", "");
+        String resultado = valida.validarItinerario(itinerarioM);
+        assertEquals("- La tarifa solo debe contener valores numéricos.\n", resultado);
+    }
+
+    @Test 
+    void TarifaExtraurbanaFueraDeRango(){
+        ItinerarioModelo itinerarioM = new ItinerarioModelo("676767", "Extraurbana", "La Guaira", "Gato Negro", "Terminal La Guaira", "Lunes", "10:00 am", "16578923", "500", "");
+        String resultado = valida.validarItinerario(itinerarioM);
+        assertEquals("- Ingrese una tarifa entre el rango (800-1000).\n", resultado);
+    }
+
+    @Test 
+    void TarifaEnRutaUrbanaInvalida(){
+        ItinerarioModelo itinerarioM = new ItinerarioModelo("676767", "Urbana", "Plaza Venezuela", "Ciudad Universitaria", "Zona Rental", "Lunes", "10:00 am", "16578923", "500", "");
+        String resultado = valida.validarItinerario(itinerarioM);
+        assertEquals("- El campo de tarifa no necesita ser rellenado para este tipo de ruta (o debe ser 0).\n", resultado);
     }
 
     @Test 

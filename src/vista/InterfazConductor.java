@@ -287,13 +287,4 @@ public class InterfazConductor extends JFrame {
         return opCerrarS;
     }
     
-<<<<<<< HEAD
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            InterfazConductor ventana = new InterfazConductor(null);
-            ventana.setVisible(true);
-        });
-    }
-=======
->>>>>>> 9a28f687c11840305afcd4fa3b691df938a7c205
 }
