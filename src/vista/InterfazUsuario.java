@@ -22,6 +22,7 @@ public class InterfazUsuario extends JFrame {
     
     private BotonUtil btnAnterior;
     private BotonUtil btnSiguiente;
+    private BotonUtil btnVisualizarReservas;
     
     private JLabel opRutasDisponibles, opRutasUrbanas, opRutasExtraurbanas, opVisualizarRecorridos, opMonedero, opCerrarS;
     
@@ -57,6 +58,7 @@ public class InterfazUsuario extends JFrame {
         this.pasajeroActual = pasajero;
         setTitle("VIAUCV - Interfaz Usuario");
         setSize(1200, 750);
+        setMinimumSize(new Dimension(1180, 700)); // evita que se corten las flechas al achicar la ventana
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
@@ -250,7 +252,36 @@ public class InterfazUsuario extends JFrame {
         panelInferiorWrapper.setOpaque(false);
         panelInferiorWrapper.add(panelContenedorBotones);
 
-        panelDerechaCentro.add(panelInferiorWrapper, BorderLayout.SOUTH);
+        // Boton de la derecha: Visualizar reservas
+        JPanel panelBotonesEsquina = new JPanel(new FlowLayout(FlowLayout.RIGHT, 12, 0));
+        panelBotonesEsquina.setOpaque(false);
+
+        // El ancho del boton se calcula segun su texto para que se lea completo
+        FontMetrics fm = new JLabel().getFontMetrics(fuenteSubLink);
+        int anchoReservas = fm.stringWidth("Visualizar reservas") + 50;
+
+        btnVisualizarReservas = new BotonUtil("Visualizar reservas", azulCuadros, Color.WHITE, 15, fuenteSubLink, anchoReservas, 50);
+
+        panelBotonesEsquina.add(btnVisualizarReservas);
+
+        // Wrapper para centrarlos verticalmente (misma altura que las flechas)
+        JPanel panelDerechaWrapper = new JPanel(new GridBagLayout());
+        panelDerechaWrapper.setOpaque(false);
+        panelDerechaWrapper.add(panelBotonesEsquina);
+
+        // Espaciador del mismo ancho a la izquierda para que las flechas sigan centradas
+        JPanel panelIzquierdaEspaciador = new JPanel();
+        panelIzquierdaEspaciador.setOpaque(false);
+        panelIzquierdaEspaciador.setPreferredSize(panelDerechaWrapper.getPreferredSize());
+
+        // Fila inferior: [espaciador] [flechas centradas] [botones a la derecha]
+        JPanel filaInferior = new JPanel(new BorderLayout());
+        filaInferior.setOpaque(false);
+        filaInferior.add(panelIzquierdaEspaciador, BorderLayout.WEST);
+        filaInferior.add(panelInferiorWrapper, BorderLayout.CENTER);
+        filaInferior.add(panelDerechaWrapper, BorderLayout.EAST);
+
+        panelDerechaCentro.add(filaInferior, BorderLayout.SOUTH);
 
         panelDerechoTotal.add(panelSuperiorWrapper, BorderLayout.NORTH);
         panelDerechoTotal.add(panelDerechaCentro, BorderLayout.CENTER);
@@ -376,6 +407,10 @@ public class InterfazUsuario extends JFrame {
         return btnSiguiente; 
     }
 
+    public BotonUtil getBtnVisualizarReservas(){
+        return btnVisualizarReservas;
+    }
+
     public Usuario getPasajeroActual(){ 
         return pasajeroActual; 
     }
@@ -404,4 +439,13 @@ public class InterfazUsuario extends JFrame {
         return opCerrarS;
     }
 
+
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+           
+            InterfazUsuario ventana = new InterfazUsuario(null);
+            ventana.setVisible(true);
+        });
+    }
 }

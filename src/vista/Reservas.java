@@ -11,6 +11,7 @@ import java.util.List;
 import util.*;
 
 public class Reservas extends JDialog {
+    private BotonUtil botonTicket;
     private JTable tablaHorarios;
     private DefaultTableModel modeloTabla;
     private List<String[]> listaDatos; 
@@ -47,6 +48,7 @@ public class Reservas extends JDialog {
         setLayout(new BorderLayout());
 
         Font fuenteT = League("res/LeagueSpartan-Bold.otf", 20, Font.PLAIN); 
+        Font fuenteSubT = fuenteGlacial("res/GlacialIndifference-Bold.otf", 14, Font.BOLD); 
         Font fuenteLetras = fuenteGlacial("res/GlacialIndifference-Regular.otf", 13, Font.PLAIN);
         Font fuenteHeaders = fuenteGlacial("res/GlacialIndifference-Bold.otf", 13, Font.BOLD);
         
@@ -66,20 +68,38 @@ public class Reservas extends JDialog {
         titulo.setBounds(35, 15, 1035, 40);
         panelFondo.add(titulo);
 
-        // Columnas 
-        String[] columnas = {"Placa", "Tipo de ruta", "Destino", "Punto de partida", "Punto de llegada", "Día", "Horario"};
+        // Columnas (la primera es la casilla de selección)
+        String[] columnas = {"", "Placa", "Tipo de ruta", "Destino", "Punto de partida", "Punto de llegada", "Día", "Horario"};
         
-        // Tabla solo de información (ninguna celda es editable)
         modeloTabla = new DefaultTableModel(columnas, 0) {
             @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 0) return Boolean.class; // Casilla de verificación
+                return String.class;
+            }
+
+            // Solo la casilla se puede editar, el resto es solo información
+            @Override
             public boolean isCellEditable(int row, int column) {
-                return false; 
+                return column == 0; 
+            }
+
+            // Lógica para permitir solo una selección a la vez 
+            @Override
+            public void setValueAt(Object aValue, int row, int column) {
+                if (column == 0 && Boolean.TRUE.equals(aValue)) {
+                    for (int i = 0; i < getRowCount(); i++) {
+                        super.setValueAt(false, i, 0);
+                    }
+                }
+                super.setValueAt(aValue, row, column);
             }
         };
 
         if(filasDatos != null) {
             for(String[] datos : filasDatos) {
                 Object[] fila = {
+                    false,
                     datos[0], // Placa
                     datos[2], // Tipo ruta
                     datos[3], // Destino
@@ -101,21 +121,49 @@ public class Reservas extends JDialog {
         tablaHorarios.setShowGrid(true);
         tablaHorarios.setGridColor(new Color(180, 210, 235));
 
-        // Sin efecto de selección al hacer click
-        tablaHorarios.setRowSelectionAllowed(false);
-        tablaHorarios.setColumnSelectionAllowed(false);
-        tablaHorarios.setCellSelectionEnabled(false);
-        tablaHorarios.setFocusable(false);
+        // Ajustar ancho de la columna de selección
+        tablaHorarios.getColumnModel().getColumn(0).setMaxWidth(40);
+        tablaHorarios.getColumnModel().getColumn(0).setPreferredWidth(30);
 
         JScrollPane scroll = new JScrollPane(tablaHorarios);
         scroll.setBounds(35, 65, 1035, 320);
         scroll.setBorder(BorderFactory.createLineBorder(new Color(150, 180, 210), 1));
         scroll.getVerticalScrollBar().setUnitIncrement(16);
         panelFondo.add(scroll);
+
+        // Boton de visualizar ticket (centrado debajo de la tabla)
+        FontMetrics fm = new JLabel().getFontMetrics(fuenteSubT);
+        int anchoTicket = fm.stringWidth("Visualizar ticket") + 50;
+        int xTicket = 35 + (1035 - anchoTicket) / 2; // centrado respecto a la tabla
+
+        botonTicket = new BotonUtil("Visualizar ticket", azulCuadros, Color.WHITE, 14, fuenteSubT, anchoTicket, 40);
+        botonTicket.setBounds(xTicket, 410, anchoTicket, 40);
+        panelFondo.add(botonTicket);
     }
 
     public JTable getTablaSeleccionada(){
         return tablaHorarios;
+    }
+
+    public BotonUtil getBotonTicket(){
+        return botonTicket;
+    }
+
+    // Devuelve el indice de la fila marcada con la casilla, o -1 si no hay ninguna
+    public int getFilaSeleccionada(){
+        for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+            if (Boolean.TRUE.equals(modeloTabla.getValueAt(i, 0))) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    // Devuelve los datos originales de la reserva marcada, o null si no hay ninguna
+    public String[] getDatosSeleccionados(){
+        int fila = getFilaSeleccionada();
+        if (fila == -1 || listaDatos == null) return null;
+        return listaDatos.get(fila);
     }
 
     // Método main para probar la interfaz
