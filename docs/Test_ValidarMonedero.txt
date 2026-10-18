@@ -2,7 +2,6 @@ ENTRADAS:
 - numero: Valor por parámetro de tipo String
 - cedula: Valor por parámetro de tipo String
 - monto: Valor por parámetro de tipo String 
-- u: Valor por parámetro de tipo Usuario 
 
 PRECONDICIONES (Casos de prueba / Clases de equivalencia):
 
@@ -37,51 +36,51 @@ SALIDAS:
 
 ------------------------------------------------------------
 - FACTOR 1: Todos los campos vacíos.
-- CLASES DE EQUIVALENCIA: ("","","","" )
+- CLASES DE EQUIVALENCIA: ("","","")
 - ENTRADAS: "","","",""
 - SALIDA:  Por favor, complete todos lo campos del formulario.
 ------------------------------------------------------------
-- FACTOR 2: El campo de número no puede estar vacío.
-- CLASES DE EQUIVALENCIA: ("",cédula,monto,u)
-- ENTRADAS: "","32499046","80",usuario
-- SALIDA: - El campo de empleado no puede estar vacío (Si no hay cambios, conserve el valor anterior)
+- FACTOR 2: Campo de número vacío, los demás llenos.
+- CLASES DE EQUIVALENCIA: ("",cédula,monto)
+- ENTRADAS: "","32499046","80"
+- SALIDA: - El campo de número no puede estar vacío.
 ------------------------------------------------------------
 - FACTOR 3: Campo de cédula vacío, los demás llenos.
-- CLASES DE EQUIVALENCIA: (número,"",monto,u)
-- ENTRADAS: "16f", pEmpleado
-- SALIDA: - El porcentaje solo debe contener valores numéricos (o '.' para los decimales).
-------------------------------------------------------------
+- CLASES DE EQUIVALENCIA: (número,"",monto)
+- ENTRADAS: "1592567","","80"
+- SALIDA: - El campo de cédula no puede estar vacío.
+---------------------------------------------------------------
 - FACTOR 4: Campo de monto vacío, los demás llenos.
-- CLASES DE EQUIVALENCIA: (número, cédula, "", u)
-- ENTRADAS: pEstudiante, "30.o"
-- SALIDA: - El porcentaje solo debe contener valores numéricos (o '.' para los decimales).
-------------------------------------------------------------
+- CLASES DE EQUIVALENCIA: (número, cédula, "")
+- ENTRADAS: "1592567","32499046",""
+- SALIDA: - El campo de monto no puede estar vacío.
+--------------------------------------------------------------
 - FACTOR 5: Campo de número con más de 7 valores numéricos.
-- CLASES DE EQUIVALENCIA: (String inválido, pEmpleado)
-- ENTRADAS: "30", pEmpleado
-- SALIDA: - Ingrese un porcentaje entre el rango (10-20).
-------------------------------------------------------------
+- CLASES DE EQUIVALENCIA: número>7
+- ENTRADAS: "30546789", "32499046","80"
+- SALIDA: - El campo de número solo acepta 7 valores numéricos.
+-----------------------------------------------------------------
 - FACTOR 6: Campo de cédula con valores distintos a los numéricos.
-- CLASES DE EQUIVALENCIA: (pEstudiante, String inválido)
-- ENTRADAS: pEstudiante, "25"
-- SALIDA: Ingrese un porcentaje entre el rango (30-60).
-------------------------------------------------------------
+- CLASES DE EQUIVALENCIA: !numero.matches()
+- ENTRADAS: "1234567", "3249904f","80"
+- SALIDA: - La cédula solo debe contener números.
+----------------------------------------------------------------
 - FACTOR 7: Campo de monto con valores distintos a los numéricos.
-- CLASES DE EQUIVALENCIA: (String inválido, pEmpleado)
-- ENTRADAS: "15", "35"
-- SALIDA: El monto solo debe contener números (enteros o decimales)
-------------------------------------------------------------
+- CLASES DE EQUIVALENCIA: !monto.matches()
+- ENTRADAS: "1234567","32499046","80.o"
+- SALIDA: El monto solo debe contener números (enteros o decimales).
+-----------------------------------------------------------------
 - FACTOR 8: Campo de cedula se encuentra fuera del rango establecido
-- CLASES DE EQUIVALENCIA: (String inválido, pEmpleado)
-- ENTRADAS: "15", "35"
+- CLASES DE EQUIVALENCIA: cedula<1000000 || cedula>99999999
+- ENTRADAS: "1234567", "32499","80"
 - SALIDA: La cédula debe estar dentro del rango [1.000.000 -99.999.999]
-------------------------------------------------------------
+----------------------------------------------------------------
 - FACTOR 9: Campo de monto se encuentra fuera del rango establecido.
-- CLASES DE EQUIVALENCIA: (String inválido, pEmpleado)
-- ENTRADAS: "15", "35"
+- CLASES DE EQUIVALENCIA: monto<=0 || monto>10000
+- ENTRADAS: "3054678", "32499046","12000"
 - SALIDA: El monto tiene que ser mayor a 0 y menor a 10.000
 ------------------------------------------------------------
 - FACTOR 10: El monto es insuficiente para costear la reserva.
 - CLASES DE EQUIVALENCIA: (String inválido, pEmpleado)
-- ENTRADAS: "15", "35"
+- ENTRADAS: "3054678", "32499046","80"
 - SALIDA: Pago exitoso

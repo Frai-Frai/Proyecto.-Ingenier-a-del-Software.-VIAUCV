@@ -54,7 +54,7 @@ public class Controlador_MonederoReal{
         String cedula   = vista.getCedula();
         String monto    = vista.getMonto();
 
-        String resultado = valida.ValidarDatos(telefono, cedula, monto, pasajero);
+        String resultado = valida.ValidarDatos(telefono, cedula, monto);
 
         if (resultado.equals("Pago exitoso")) {
             double recarga = Double.parseDouble(monto.trim().replace(",", "."));

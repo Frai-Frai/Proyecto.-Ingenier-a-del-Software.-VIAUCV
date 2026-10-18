@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.function.Consumer;
 
 public class InterfazConductor extends JFrame {
