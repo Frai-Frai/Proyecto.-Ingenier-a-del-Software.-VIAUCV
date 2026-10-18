@@ -20,7 +20,6 @@ PRECONDICIONES (Casos de prueba / Clases de equivalencia):
 
 ESPECIFICACIONES:
 RegistrarUnidad(): Devuelve un String con el resultado de la validación. Retorna "Registro exitoso" en caso de que todos los campos sean correctos, estén completos, la capacidad sea un número entero positivo y la placa ingresada no esté previamente registrada en el sistema.
-
 Devuelve un mensaje de error en String si hay algún campo en blanco, la placa contiene caracteres especiales no permitidos o ya existe en el registro, o el campo de capacidad contiene letras, símbolos o valores inválidos.
 
 SALIDAS:

@@ -25,7 +25,7 @@ public class MonederoReal extends JFrame {
 
         this.pasajeroActual = pasajero;
         setTitle("VIAUCV - MONEDERO");
-        setSize(1200, 830); 
+        setSize(1200, 830); // <--- Tamaño inicial ampliado para evitar recortes con la barra del SO
         setMinimumSize(new Dimension(1100, 750));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -113,7 +113,7 @@ public class MonederoReal extends JFrame {
         panelNorteTotal.setOpaque(false);
         panelNorteTotal.setBorder(new EmptyBorder(0, 10, 12, 0)); 
 
-        // Panel superior para imagen 
+        // Panel superior para la imagen (Altura optimizada a 210px)
         panelImagenSuperior = new JPanel(new BorderLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -147,7 +147,7 @@ public class MonederoReal extends JFrame {
 
         panelDerechoTotal.add(panelNorteTotal, BorderLayout.NORTH);
 
-        // Panel central con 
+        // Panel central con GridBagLayout
         panelDerechaCentro = new JPanel(new GridBagLayout());
         panelDerechaCentro.setOpaque(false);
 
@@ -296,7 +296,7 @@ public class MonederoReal extends JFrame {
         txtMonto = new CampoTextoUtil(15, bordeColor, 380, 42, Color.WHITE, azulCuadros, fuenteLetras);
         panelBlancoIzquierda.add(txtMonto, gbcForm);
 
-        // Espaciador medio-bajo para que cuadre todo
+        // Espaciador medio-bajo
         gbcForm.gridy = 10;
         gbcForm.weighty = 0.5;
         JPanel panelEspaciadorMedioBajo = new JPanel();
@@ -372,6 +372,7 @@ public class MonederoReal extends JFrame {
         panelEspaciadorDer.setOpaque(false);
         panelBlancoDerecha.add(panelEspaciadorDer, gbcDer);
 
+        // Sub-panel vertical para las dos líneas inferiores
         gbcDer.gridy = 2;
         gbcDer.weighty = 0.0;
         gbcDer.insets = new Insets(5, 20, 30, 20);
@@ -449,10 +450,4 @@ public class MonederoReal extends JFrame {
     public JLabel getOpMonedero() { return opMonedero; }
     public JLabel getOpCerrarS() { return opCerrarS; }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            MonederoReal vista = new MonederoReal(null);
-            vista.setVisible(true);
-        });
-    }
 }

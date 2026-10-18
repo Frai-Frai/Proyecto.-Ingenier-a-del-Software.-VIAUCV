@@ -184,5 +184,20 @@ public class UsuarioDAO {
         }
 
         //recargar saldo y descontar saldo
+        public void recargarSaldo(Usuario u, double monto){
+            double montoNum= monto;
+            double saldo=u.getSaldo();
+            saldo+=montoNum;
+            u.setSaldo(saldo);
+            actualizarDatos(u);
+        }
+
+        public void descontarSaldo(Usuario u, double monto){
+            double montoNum= monto;
+            double saldo=u.getSaldo();
+            saldo-=montoNum;
+            u.setSaldo(saldo);
+            actualizarDatos(u);
+        }
 
 }

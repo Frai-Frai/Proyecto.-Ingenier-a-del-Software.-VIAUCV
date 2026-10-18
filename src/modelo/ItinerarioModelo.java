@@ -10,8 +10,9 @@ public class ItinerarioModelo {
     String hora;
     String conductor;
     String tarifaBaseMunicipal;
+    String cuposDisponibles;
 
-    public ItinerarioModelo(String placaAsignada, String tipoRuta, String destino, String puntoPartida, String puntoLLegada, String dia, String hora, String Conductor, String tarifaMunicipal) {
+    public ItinerarioModelo(String placaAsignada, String tipoRuta, String destino, String puntoPartida, String puntoLLegada, String dia, String hora, String Conductor, String tarifaMunicipal, String capMaxima) {
         this.placaAsignada = placaAsignada;
         this.tipoRuta = tipoRuta;
         this.destino = destino;
@@ -21,6 +22,7 @@ public class ItinerarioModelo {
         this.hora = hora;
         this.conductor = Conductor;
         this.tarifaBaseMunicipal= tarifaMunicipal;
+        this.cuposDisponibles=capMaxima;
     }
 
     //Getters
@@ -60,8 +62,16 @@ public class ItinerarioModelo {
         return tarifaBaseMunicipal;
     }
 
+    public String getCupos(){
+        return cuposDisponibles;
+    }
+
+    public void setCupos(String cupos){
+        this.cuposDisponibles=cupos;
+    }
+
     public String EscribirFormatoTXT(){
-        return placaAsignada +"|"+ tipoRuta +"|"+ destino +"|"+ puntoPartida +"|"+ puntoLLegada +"|"+ dia +"|"+ hora +"|"+ conductor;
+        return placaAsignada +"|"+ tipoRuta +"|"+ destino +"|"+ puntoPartida +"|"+ puntoLLegada +"|"+ dia +"|"+ hora +"|"+ conductor + "|" + tarifaBaseMunicipal + "|" + cuposDisponibles;
     }
 
 }
