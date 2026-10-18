@@ -18,7 +18,7 @@ public class Validador_Porcentajes {
         if(pEstudiante.isEmpty()){
             errores.append("- El campo de estudiante no puede estar vacío (Si no hay cambios, conserve el valor anterior).\n");
         }else if(!pEstudiante.trim().matches("\\d+(\\.\\d+)?")){
-            errores.append("- El porcentaje solo debe contener valores numéricos.\n");
+            errores.append("- El porcentaje solo debe contener valores numéricos (o '.' para los decimales).\n");
         }else if(!pEstudiante.isEmpty()){
             double porcentaje= Double.parseDouble(pEstudiante.trim());
 
