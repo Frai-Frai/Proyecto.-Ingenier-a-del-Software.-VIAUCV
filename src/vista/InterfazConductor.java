@@ -10,7 +10,7 @@ import java.util.function.Consumer;
 
 public class InterfazConductor extends JFrame {
 
-    private Usuario pasajeroActual;
+    private Usuario ConductorActual;
     private JPanel panelDerechaCentro, panelContenidoBlanco;
     private MiniVentanaUtil menuIzq, Bienvenida;
     
@@ -20,10 +20,6 @@ public class InterfazConductor extends JFrame {
     private JLabel opItinerariodelasemana, opCerrarS;
     
     private Consumer<String> ClickR;
-
-    public void setClickRuta(Consumer<String> accion) {
-        this.ClickR = accion;
-    }
 
     //tipografias
     private Font fuenteGlacial(String ruta, float tamano, int estilo){
@@ -45,10 +41,14 @@ public class InterfazConductor extends JFrame {
             return new Font("SansSerif", estilo, (int) tamano);
         }
     }
+    
+    public void setClickRuta(Consumer<String> accion) {
+        this.ClickR = accion;
+    }
 
     public InterfazConductor(Usuario conductor) {
 
-        this.pasajeroActual = conductor;
+        this.ConductorActual = conductor;
         setTitle("VIAUCV - Interfaz de Conductor");
         setSize(1200, 750);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -275,8 +275,8 @@ public class InterfazConductor extends JFrame {
         return btnSiguiente; 
     }
 
-    public Usuario getPasajeroActual(){ 
-        return pasajeroActual; 
+    public Usuario getConductorActual(){ 
+        return ConductorActual; 
     }
 
     public JLabel getOpItinerariodelasemana(){ 
@@ -287,10 +287,13 @@ public class InterfazConductor extends JFrame {
         return opCerrarS;
     }
     
+<<<<<<< HEAD
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             InterfazConductor ventana = new InterfazConductor(null);
             ventana.setVisible(true);
         });
     }
+=======
+>>>>>>> 9a28f687c11840305afcd4fa3b691df938a7c205
 }

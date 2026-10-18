@@ -88,8 +88,9 @@ public class Controlador_IniciodeSesion {
                 RUnidades.setVisible(true);*/
 
             }else if(rol.equalsIgnoreCase("Conductor")){
-                //abre el fondito del conductor NO HACE NADA, ES UNA IMAGEN Y YA 
-                Conductor pantallaC = new Conductor("res/InterfazConductor.png");
+                //abre la interfaz del conductor 
+                InterfazConductor pantallaC = new InterfazConductor(UserAu);
+                new Controlador_Conductor(pantallaC);
                 pantallaC.setVisible(true);
                 pantallaIS.dispose(); // Cerramos Inicio de Sesión
 

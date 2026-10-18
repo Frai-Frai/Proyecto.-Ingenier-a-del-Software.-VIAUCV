@@ -56,13 +56,13 @@ public class Controlador_Itinerario {
         ItinerarioDAO itinerarioDao = new ItinerarioDAO();
         UnidadesDAO unidadesDao = new UnidadesDAO();
         UsuarioDAO usuarioDao = new UsuarioDAO();
-        UnidadBus bus= unidadesDao.buscarPorPlaca(pantalla.getCuadritoPlaca().getText().trim());
+        UnidadBus bus= unidadesDao.buscarPorPlaca(pantalla.getCuadritoPlaca().getSelectedItem().toString().trim());
         String capacidadInicial=bus.getCapacidad();
 
         Validador_Itinerario validador = new Validador_Itinerario(itinerarioDao, unidadesDao, usuarioDao);
 
         ItinerarioModelo itinerario = new ItinerarioModelo(
-            pantalla.getCuadritoPlaca().getText().trim(),
+            pantalla.getCuadritoPlaca().getSelectedItem().toString().trim(),
             pantalla.getCuadritoTipoRuta().getSelectedItem().toString().trim(), 
             pantalla.getCuadritoDestino().getText().trim(), 
             pantalla.getCuadritoPtoPartida().getText().trim(), 
@@ -93,7 +93,7 @@ public class Controlador_Itinerario {
 
     // vacía los campos de texto del formulario despues de un registro exitoso
     private void limpiarCamposFormulario() {
-        pantalla.getCuadritoPlaca().setText("");
+        pantalla.getCuadritoPlaca().setSelectedIndex(0);
         pantalla.getCuadritoTipoRuta().setSelectedIndex(0);
         pantalla.getCuadritoDestino().setText("");
         pantalla.getCuadritoPtoPartida().setText("");
