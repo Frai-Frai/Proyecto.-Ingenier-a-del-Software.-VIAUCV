@@ -204,7 +204,9 @@ public class Itinerario extends JFrame {
         Tpruta.setFont(fuenteLetras);
         panelForm.add(Tpruta);
 
-        cuadritoTipoRuta = new MenuUtil(opcionesTipo, 10, Color.WHITE, Color.BLACK, azulCuadros, fuenteNormal);
+        String[] opcionesTipoR = {"Urbana","Extraurbana"};
+
+        cuadritoTipoRuta = new MenuUtil(opcionesTipoR, 10, Color.WHITE, Color.BLACK, azulCuadros, fuenteNormal);
         cuadritoTipoRuta.setBounds(xCuadro, nuevoYInicio + espacioY, anchoCuadro, 32);
         panelForm.add(cuadritoTipoRuta);
 
