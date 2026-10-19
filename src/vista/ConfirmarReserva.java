@@ -11,10 +11,11 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.ArrayList;
 
 public class ConfirmarReserva extends JFrame {
 
-    private JLabel lblPlaca, lblCuposDisponibles, lblTipoRuta, lblDestino, lblPuntoPartida, lblPuntoLlegada, lblHorario;
+    private JLabel lblPlaca, lblCuposDisponibles, lblTipoRuta, lblDestino, lblPuntoPartida, lblPuntoLlegada, lblHorario, lblMonto;
     private BotonUtil btnReservar;
     private Point pointClick = new Point();
     private Usuario pasajero;
@@ -42,7 +43,7 @@ public class ConfirmarReserva extends JFrame {
     public ConfirmarReserva(Usuario pasajero) {
         this.pasajero = pasajero;
         setTitle("Confirmar reserva");
-        setSize(480, 370);
+        setSize(480, 400); 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         
@@ -136,6 +137,7 @@ public class ConfirmarReserva extends JFrame {
         lblPuntoPartida = crearLineaDato(panelDatos, "Punto de partida: ", fuenteGlacialBold, colorAzulDinamico);
         lblPuntoLlegada = crearLineaDato(panelDatos, "Punto de llegada: ", fuenteGlacialBold, colorAzulDinamico);
         lblHorario = crearLineaDato(panelDatos, "Horario: ", fuenteGlacialBold, colorAzulDinamico);
+        lblMonto = crearLineaDato(panelDatos, "Monto: ", fuenteGlacialBold, colorAzulDinamico);
 
         panelPrincipal.add(panelDatos, BorderLayout.CENTER);
 
@@ -199,6 +201,10 @@ public class ConfirmarReserva extends JFrame {
         lblHorario.setText(horario); 
     }
 
+    public void setMonto(String monto){ 
+        lblMonto.setText(monto); 
+    }
+
     //estos dos getteres los usan el controlador de confirmar reserva para lo de la tarifa y eso
     public String getPlacaConfirmada() { 
         return lblPlaca.getText(); 
@@ -208,7 +214,12 @@ public class ConfirmarReserva extends JFrame {
         return lblHorario.getText(); 
     }
 
+    public String getMontoConfirmado() { 
+        return lblMonto.getText(); 
+    }
+
     public BotonUtil getBtnReservar(){ 
         return btnReservar; 
     }
+
 }

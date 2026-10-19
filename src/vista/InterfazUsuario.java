@@ -440,12 +440,4 @@ public class InterfazUsuario extends JFrame {
     }
 
 
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-           
-            InterfazUsuario ventana = new InterfazUsuario(null);
-            ventana.setVisible(true);
-        });
-    }
 }

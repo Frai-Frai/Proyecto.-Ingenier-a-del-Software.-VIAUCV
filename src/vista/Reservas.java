@@ -78,7 +78,7 @@ public class Reservas extends JDialog {
                 return String.class;
             }
 
-            // Solo la casilla se puede editar, el resto es solo información
+            // Solo la casilla se puede editar
             @Override
             public boolean isCellEditable(int row, int column) {
                 return column == 0; 
@@ -131,10 +131,10 @@ public class Reservas extends JDialog {
         scroll.getVerticalScrollBar().setUnitIncrement(16);
         panelFondo.add(scroll);
 
-        // Boton de visualizar ticket (centrado debajo de la tabla)
+        // Boton de visualizar ticket 
         FontMetrics fm = new JLabel().getFontMetrics(fuenteSubT);
         int anchoTicket = fm.stringWidth("Visualizar ticket") + 50;
-        int xTicket = 35 + (1035 - anchoTicket) / 2; // centrado respecto a la tabla
+        int xTicket = 35 + (1035 - anchoTicket) / 2; 
 
         botonTicket = new BotonUtil("Visualizar ticket", azulCuadros, Color.WHITE, 14, fuenteSubT, anchoTicket, 40);
         botonTicket.setBounds(xTicket, 410, anchoTicket, 40);
@@ -166,15 +166,5 @@ public class Reservas extends JDialog {
         return listaDatos.get(fila);
     }
 
-    // Método main para probar la interfaz
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            List<String[]> prueba = new ArrayList<>();
-            prueba.add(new String[]{" ", " ", " ", " ", " ", " ", " ", " "});
-            prueba.add(new String[]{" ", " ", " ", " ", " ", " ", " ", " "});
-
-            Reservas ventana = new Reservas(null, prueba);
-            ventana.setVisible(true);
-        });
-    }
+    
 }
