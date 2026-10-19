@@ -157,6 +157,7 @@ public class Controlador_InterfazUsuario {
         }
     }
 
+    //para que cuando le de a rutas urbanas o extraurbanas muestre en pantalla las disponibles
     private void redibujarPaginaRutas() {
         List <String> ListaActual = obtenerLista();
         int inicio = paginaActual * ELEMENTOS_POR_PAGINA;
@@ -196,13 +197,13 @@ public class Controlador_InterfazUsuario {
                 ItinerarioModelo iti = r.getItinerario();
 
                 String[] fila = {
-                    iti != null ? iti.getPlacaAsignada() : " ",  // [0] Placa
-                    iti != null ? iti.getTipoRuta() : " ",       // [1] Tipo de ruta
-                    iti != null ? iti.getDestino() : " ",        // [2] Destino
-                    iti != null ? iti.getPuntoPartida() : " ",   // [3] Punto de partida
-                    iti != null ? iti.getPuntoLLegada() : " ",   // [4] Punto de llegada
-                    iti != null ? iti.getDia() : " ",            // [5] Día
-                    iti != null ? iti.getHora() : " "            // [6] Horario
+                    iti != null ? iti.getPlacaAsignada() : " ",  // [0] placa
+                    iti != null ? iti.getTipoRuta() : " ",       // [1] tipo de ruta
+                    iti != null ? iti.getDestino() : " ",        // [2] destino
+                    iti != null ? iti.getPuntoPartida() : " ",   // [3] punto de partida
+                    iti != null ? iti.getPuntoLLegada() : " ",   // [4] punto de llegada
+                    iti != null ? iti.getDia() : " ",            // [5] día
+                    iti != null ? iti.getHora() : " "            // [6] horario
                 };
                 filasR.add(fila);
             }

@@ -70,7 +70,7 @@ public class PasarelaPago extends JDialog {
                 g2.setColor(colorFondo);
                 g2.fillRoundRect(2, 2, getWidth() - 5, getHeight() - 5, 24, 24);
                 
-                // Borde azul oscuro grueso
+                // Borde azul oscuro 
                 g2.setColor(azulOscuro);
                 g2.setStroke(new BasicStroke(5.5f));
                 g2.drawRoundRect(2, 2, getWidth() - 5, getHeight() - 5, 24, 24);

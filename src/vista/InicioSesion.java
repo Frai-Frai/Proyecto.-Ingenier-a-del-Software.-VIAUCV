@@ -3,11 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
-//Import utilidades (Estilos del boton y del campo)
 import util.*;
-
-//Inicio sesion
-
 public class InicioSesion extends JFrame {
 
     //Campos y botones
@@ -18,7 +14,7 @@ public class InicioSesion extends JFrame {
     private JLabel registrarse= new JLabel();
     private EncabezadoUtil encabezado;
 
-    //fuente de letra "Glcial Indifference"
+    //tipografia
     private Font fuenteGlacial(String ruta, float tamano, int estilo){
         try {
             Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
@@ -29,10 +25,9 @@ public class InicioSesion extends JFrame {
         }
     }
 
-
     public InicioSesion(){
 
-        //Ventana general
+        //config de arribita
         setTitle("ViaUCV - Inicio de Sesión");
         setSize(1000, 720);
         setMinimumSize(new Dimension(950,680)); //para que no se achique menos de esto
@@ -61,7 +56,6 @@ public class InicioSesion extends JFrame {
         int alto= logoRedimensionado.getIconHeight();  //calculo el alto de la imagen segun el ancho que coloque
         logo.setBounds(25,10,160,alto);    // posicion personalizada
 
-
         //Textos de Registro y Olvidar contrasena (con util)
         Font fuenteLink= fuenteGlacial("res/GlacialIndifference-Regular.otf", 14, Font.BOLD);
 
@@ -70,7 +64,6 @@ public class InicioSesion extends JFrame {
 
         new TextosInteractivosUtil(registrarse, "¿Aun no tienes cuenta? Registrate!", Color.GRAY, Color.darkGray, fuenteLink);
         registrarse.setBounds(83,420,260,50);
-
 
         //Panel pequeno con los campos y boton
         MiniVentanaUtil miniVentana = new MiniVentanaUtil(30, Color.WHITE, 400, 480, true, new Color(2,58,144));

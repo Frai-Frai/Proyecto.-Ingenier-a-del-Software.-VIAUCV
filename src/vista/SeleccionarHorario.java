@@ -2,8 +2,6 @@ package vista;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import modelo.ItinerarioModelo;
-
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
@@ -82,7 +80,7 @@ public class SeleccionarHorario extends JDialog {
                 return column == 0; 
             }
             
-            // Lógica para permitir solo una selección a la vez 
+            // para que solo pueda hacer una selección a la vez 
             @Override
             public void setValueAt(Object aValue, int row, int column) {
                 if (column == 0 && Boolean.TRUE.equals(aValue)) {
@@ -142,17 +140,5 @@ public class SeleccionarHorario extends JDialog {
     }
     public BotonUtil getBotonAceptar(){ 
         return botonAceptar; 
-    }
-
-    // Método main para probar la interfaz
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            List<String[]> prueba = new ArrayList<>();
-            prueba.add(new String[]{" ", " ", " ", " ", " ", " ", " ", " "});
-            prueba.add(new String[]{" ", " ", " ", " ", " ", " ", " ", " "});
-
-            SeleccionarHorario ventana = new SeleccionarHorario(null, prueba);
-            ventana.setVisible(true);
-        });
     }
 }

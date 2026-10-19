@@ -138,17 +138,17 @@ public class Itinerario extends JFrame {
         botonFlechaD.setBounds(anchoUtilInicial - 55, posYElementos, 40, 40);
         panelRutas.add(botonFlechaD);
 
-        // Panel central de pines con GridLayout de 1 fila y 7 columnas
+        // Panel central de pines 
         panelPines = new JPanel(new GridLayout(1, 7, 15, 0)); 
         panelPines.setBounds(65, 45, anchoUtilInicial - 130, altoPanelRutas - 50);
         panelPines.setOpaque(false); 
         panelRutas.add(panelPines);
 
-        // Listeners para las flechas de paginación
+        //flechas de paginación
         botonSiguienteAccion();
         botonAnteriorAccion();
 
-        //Cargar destinos desde BDItinerario
+        //Cargar destinos desde la bd
         cargarDestinosDesdeBD();
 
         // Ancho del panel del formulario central
@@ -291,7 +291,7 @@ public class Itinerario extends JFrame {
         add(botonP);
         add(botonPorcentaje);
 
-        // Listener de redimensionamiento
+        // para el redimensionamiento
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {

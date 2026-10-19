@@ -23,6 +23,27 @@ public class MonederoReal extends JFrame {
     
     private JLabel opRutasDisponibles, opRutasUrbanas, opRutasExtraurbanas, opVisualizarRecorridos, opMonedero, opCerrarS;
 
+    //tipografias
+    private Font fuenteGlacial(String ruta, float tamano, int estilo){
+        try {
+            Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
+            return fuente.deriveFont(estilo, tamano);
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar la fuente: " + e.getMessage());
+            return new Font("SansSerif", estilo, (int) tamano);
+        }
+    }
+
+    private Font League(String ruta, float tamano, int estilo){
+        try {
+            Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
+            return fuente.deriveFont(estilo, tamano);
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar la fuente: " + e.getMessage());
+            return new Font("SansSerif", estilo, (int) tamano);
+        }
+    }
+
     public MonederoReal(Usuario pasajero) {
 
         this.pasajeroActual = pasajero;
@@ -33,7 +54,7 @@ public class MonederoReal extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // Tipografías 
+        // fuentes 
         Font fuenteTituloGrande = League("res/LeagueSpartan-Bold.otf", 36f, Font.PLAIN);
         Font fuenteTituloPanel = League("res/LeagueSpartan-Bold.otf", 24f, Font.PLAIN);
         Font fuenteSubT = fuenteGlacial("res/GlacialIndifference-Bold.otf", 14f, Font.BOLD);
@@ -41,7 +62,7 @@ public class MonederoReal extends JFrame {
         Font fuenteLink = fuenteGlacial("res/GlacialIndifference-Bold.otf", 16f, Font.BOLD);
         Font fuenteSubLink = fuenteGlacial("res/GlacialIndifference-Bold.otf", 14f, Font.BOLD);
         
-        // Paleta de colores
+        // colores
         Color azulCuadros = new Color(0x0D47A1); 
         Color colormenu = Color.WHITE; 
         Color colorFondo = new Color(0xD6EBF7); 
@@ -109,13 +130,13 @@ public class MonederoReal extends JFrame {
         panelDerechoTotal.setBackground(colorFondo);
         panelDerechoTotal.setBorder(new EmptyBorder(12, 12, 12, 12));
 
-        // Contenedor norte para la imagen 
+        // para la imagen 
         JPanel panelNorteTotal = new JPanel();
         panelNorteTotal.setLayout(new BoxLayout(panelNorteTotal, BoxLayout.Y_AXIS));
         panelNorteTotal.setOpaque(false);
         panelNorteTotal.setBorder(new EmptyBorder(0, 10, 12, 0)); 
 
-        // Panel superior para la imagen
+        // Panel sup para la imagen
         panelImagenSuperior = new JPanel(new BorderLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -149,11 +170,11 @@ public class MonederoReal extends JFrame {
 
         panelDerechoTotal.add(panelNorteTotal, BorderLayout.NORTH);
 
-        // Panel central con GridBagLayout
+        // panel central 
         panelDerechaCentro = new JPanel(new GridBagLayout());
         panelDerechaCentro.setOpaque(false);
 
-        // --- 1. PANEL BLANCO IZQUIERDO ---
+        // panel blanco de a la izquierda
         panelBlancoIzquierda = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -331,7 +352,7 @@ public class MonederoReal extends JFrame {
         gbcIzq.insets = new Insets(15, 15, 15, 10); 
         panelDerechaCentro.add(panelBlancoIzquierda, gbcIzq);
 
-        // --- 2. PANEL BLANCO DERECHO ---
+        // panel blanco de a la derecha
         panelBlancoDerecha = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -358,7 +379,7 @@ public class MonederoReal extends JFrame {
         gbcDer.fill = GridBagConstraints.HORIZONTAL;
         gbcDer.weightx = 1.0;
 
-        // 1. Texto superior ("Usted cuenta con")
+        // texto superior de donde dice cuanto saldo tiene 
         gbcDer.gridy = 0;
         gbcDer.weighty = 0.0;
         gbcDer.insets = new Insets(30, 20, 0, 20);
@@ -367,7 +388,7 @@ public class MonederoReal extends JFrame {
         lblUstedCuenta.setForeground(azulCuadros);
         panelBlancoDerecha.add(lblUstedCuenta, gbcDer);
 
-        // 2. Espaciador flexible SUPERIOR
+        // espaciador superior
         gbcDer.gridy = 1;
         gbcDer.weighty = 1.0;
         gbcDer.insets = new Insets(0, 0, 0, 0);
@@ -375,7 +396,7 @@ public class MonederoReal extends JFrame {
         espaciadorArribaMonto.setOpaque(false);
         panelBlancoDerecha.add(espaciadorArribaMonto, gbcDer);
 
-        // 3. Monto 
+        // config para el monto 
         gbcDer.gridy = 2;
         gbcDer.weighty = 0.0;
         gbcDer.insets = new Insets(0, 20, 0, 20);
@@ -385,7 +406,7 @@ public class MonederoReal extends JFrame {
         lblMontoActual.setForeground(new Color(0x2E7D32));
         panelBlancoDerecha.add(lblMontoActual, gbcDer);
 
-        // 4. Espaciador flexible INFERIOR
+        // espaciador inferior
         gbcDer.gridy = 3;
         gbcDer.weighty = 1.0;
         gbcDer.insets = new Insets(0, 0, 0, 0);
@@ -393,7 +414,7 @@ public class MonederoReal extends JFrame {
         espaciadorAbajoMonto.setOpaque(false);
         panelBlancoDerecha.add(espaciadorAbajoMonto, gbcDer);
 
-        // 5. Sub-panel vertical ("en su monedero virtual")
+        //texto de abajo del saldo 
         gbcDer.gridy = 4;
         gbcDer.weighty = 0.0;
         gbcDer.insets = new Insets(0, 20, 30, 20);
@@ -418,7 +439,7 @@ public class MonederoReal extends JFrame {
 
         panelBlancoDerecha.add(panelTextoInferior, gbcDer);
 
-        // --- LISTENER PARA AJUSTAR TAMAÑO DE FUENTE DINÁMICAMENTE ---
+        // ajusta el tamaño de fuente 
         panelBlancoDerecha.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -445,31 +466,17 @@ public class MonederoReal extends JFrame {
         add(panelDerechoTotal, BorderLayout.CENTER);
     }
 
-    private Font fuenteGlacial(String ruta, float tamano, int estilo){
-        try {
-            Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
-            return fuente.deriveFont(estilo, tamano);
-        } catch (Exception e) {
-            System.out.println("No se pudo cargar la fuente: " + e.getMessage());
-            return new Font("SansSerif", estilo, (int) tamano);
-        }
+    public Usuario getPasajeroActual(){ 
+        return pasajeroActual; 
     }
-
-    private Font League(String ruta, float tamano, int estilo){
-        try {
-            Font fuente = Font.createFont(Font.TRUETYPE_FONT, new File(ruta));
-            return fuente.deriveFont(estilo, tamano);
-        } catch (Exception e) {
-            System.out.println("No se pudo cargar la fuente: " + e.getMessage());
-            return new Font("SansSerif", estilo, (int) tamano);
-        }
+    public JLabel getLblTituloDestino(){ 
+        return lblTituloDestino; 
     }
-
-    public Usuario getPasajeroActual() { return pasajeroActual; }
-    public JLabel getLblTituloDestino() { return lblTituloDestino; }
     
     // Metodo monedero
-    public JLabel getLblMontoActual() { return lblMontoActual; }
+    public JLabel getLblMontoActual(){ 
+        return lblMontoActual; 
+    }
     
     public void setMontoActual(String monto) {
         if (this.lblMontoActual != null) {
@@ -486,7 +493,6 @@ public class MonederoReal extends JFrame {
             this.lblMontoActual.setText(nuevoMonto);
         }
     }
-
 
     public String getOperadora(){ 
         return (String) comboOperadora.getSelectedItem(); 
@@ -539,13 +545,4 @@ public class MonederoReal extends JFrame {
     public JLabel getOpCerrarS(){ 
         return opCerrarS; 
     }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            MonederoReal vistaPrueba = new MonederoReal(null);
-            vistaPrueba.setMontoActual("$150.00"); 
-            vistaPrueba.setVisible(true);
-        });
-    }
-
 }

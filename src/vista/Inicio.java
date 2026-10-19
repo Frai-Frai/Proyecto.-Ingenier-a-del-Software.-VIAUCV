@@ -6,7 +6,6 @@ import util.EncabezadoUtil;
 import java.awt.*;
 import java.io.File;
 
-
 public class Inicio extends JFrame {
 
     private BotonUtil botonR;
@@ -100,5 +99,4 @@ public class Inicio extends JFrame {
     public EncabezadoUtil getEncabezado() {
         return encabezado;
     }
-
 }

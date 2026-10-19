@@ -28,7 +28,7 @@ public class RecuperarCont extends JDialog{
 
     public RecuperarCont (JFrame PantallaIS){ //PantallaIS, es la ventana padre, tipo de donde viene o se llamo la mini ventanita
 
-        super (PantallaIS, "Recuperar Contraseña", true); //bloque la ventana de al fondo mientras restaura la contraseña
+        super (PantallaIS, "Recuperar Contraseña", true); //bloquea la ventana de al fondo mientras restaura la contraseña
         
         //Config
         Color   azulCuadros = new Color(0x0D47A1); // para el borde

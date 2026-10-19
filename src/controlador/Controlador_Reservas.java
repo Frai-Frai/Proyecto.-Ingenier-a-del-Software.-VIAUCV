@@ -7,7 +7,6 @@ import javax.swing.JOptionPane;
 
 import java.awt.Image;
 import modelo.Usuario;
-import vista.MonederoReal;
 import vista.Reservas;
 
 public class Controlador_Reservas{
@@ -40,7 +39,6 @@ public class Controlador_Reservas{
         String[] datosReserva = vista.getDatosSeleccionados();
         if(datosReserva == null) return; // para asegurarse de que no sean nulos
         
-        // Asumiendo el orden de tus columnas: [Placa, Tipo, Destino, Partida, Llegada, Día, Horario]
         String placa = datosReserva[0];
         String destino = datosReserva[2];
         String dia = datosReserva[5];

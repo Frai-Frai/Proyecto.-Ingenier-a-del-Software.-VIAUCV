@@ -252,7 +252,7 @@ public class InterfazUsuario extends JFrame {
         panelInferiorWrapper.setOpaque(false);
         panelInferiorWrapper.add(panelContenedorBotones);
 
-        // Boton de la derecha: Visualizar reservas
+        // Boton de visualizar reservas
         JPanel panelBotonesEsquina = new JPanel(new FlowLayout(FlowLayout.RIGHT, 12, 0));
         panelBotonesEsquina.setOpaque(false);
 
@@ -264,7 +264,7 @@ public class InterfazUsuario extends JFrame {
 
         panelBotonesEsquina.add(btnVisualizarReservas);
 
-        // Wrapper para centrarlos verticalmente (misma altura que las flechas)
+        //para centrarlos verticalmente (misma altura que las flechas)
         JPanel panelDerechaWrapper = new JPanel(new GridBagLayout());
         panelDerechaWrapper.setOpaque(false);
         panelDerechaWrapper.add(panelBotonesEsquina);
@@ -274,7 +274,7 @@ public class InterfazUsuario extends JFrame {
         panelIzquierdaEspaciador.setOpaque(false);
         panelIzquierdaEspaciador.setPreferredSize(panelDerechaWrapper.getPreferredSize());
 
-        // Fila inferior: [espaciador] [flechas centradas] [botones a la derecha]
+        // Fila inferior espaciador-flechas centradas-botones a la derecha
         JPanel filaInferior = new JPanel(new BorderLayout());
         filaInferior.setOpaque(false);
         filaInferior.add(panelIzquierdaEspaciador, BorderLayout.WEST);
@@ -289,7 +289,6 @@ public class InterfazUsuario extends JFrame {
         add(panelDerechoTotal, BorderLayout.CENTER);
     }
 
-    
     public JPanel crearTarjetaRuta(String nombreDestino){
         JPanel tarjeta = new JPanel();
         tarjeta.setPreferredSize(new Dimension(165, 210)); 
@@ -300,6 +299,7 @@ public class InterfazUsuario extends JFrame {
 
         JLabel lblImagen = new JLabel();
         lblImagen.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         try {
             ImageIcon iconOriginal = new ImageIcon("res/" + nombreDestino.replaceAll("\\s+", "") + ".jpeg");
             if (iconOriginal.getIconWidth() <= 0) {
@@ -330,6 +330,7 @@ public class InterfazUsuario extends JFrame {
                 g2.dispose();
             }
         };
+
         panelNombre.setOpaque(false);
         panelNombre.setAlignmentX(Component.CENTER_ALIGNMENT);
         
@@ -346,7 +347,6 @@ public class InterfazUsuario extends JFrame {
 
         panelNombre.addMouseListener(new MouseAdapter() {
             @Override 
-
             public void mousePressed(MouseEvent e){
                 if(ClickR != null){
                     ClickR.accept(nombreDestino);
@@ -438,6 +438,4 @@ public class InterfazUsuario extends JFrame {
     public JLabel getOpCerrarS(){ 
         return opCerrarS;
     }
-
-
 }

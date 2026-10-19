@@ -59,7 +59,7 @@ public class ReservaDAO {
         return lista; //Retorno lista de las reservas de ese usuario
     }
 
-        //Método para agregar una nueva reserva al txt
+    //Método para agregar una nueva reserva al txt
     public void registrarReserva(Reserva reserva) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaBD, true))) {
             bw.write(reserva.EscribirFormatoTXT());

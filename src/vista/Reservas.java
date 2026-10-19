@@ -2,11 +2,8 @@ package vista;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import modelo.*;
-
 import java.awt.*;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import util.*;
 
@@ -74,7 +71,7 @@ public class Reservas extends JDialog {
         modeloTabla = new DefaultTableModel(columnas, 0) {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
-                if (columnIndex == 0) return Boolean.class; // Casilla de verificación
+                if (columnIndex == 0) return Boolean.class; // cuadrito de verificación
                 return String.class;
             }
 
@@ -84,7 +81,7 @@ public class Reservas extends JDialog {
                 return column == 0; 
             }
 
-            // Lógica para permitir solo una selección a la vez 
+            // para que permita solo una seleccion a la vez 
             @Override
             public void setValueAt(Object aValue, int row, int column) {
                 if (column == 0 && Boolean.TRUE.equals(aValue)) {
@@ -121,7 +118,7 @@ public class Reservas extends JDialog {
         tablaHorarios.setShowGrid(true);
         tablaHorarios.setGridColor(new Color(180, 210, 235));
 
-        // Ajustar ancho de la columna de selección
+        // ajustar ancho de la columna de seleccion
         tablaHorarios.getColumnModel().getColumn(0).setMaxWidth(40);
         tablaHorarios.getColumnModel().getColumn(0).setPreferredWidth(30);
 
@@ -149,7 +146,7 @@ public class Reservas extends JDialog {
         return botonTicket;
     }
 
-    // Devuelve el indice de la fila marcada con la casilla, o -1 si no hay ninguna
+    // devuelve el indice de la fila marcada con la casilla, o -1 si no hay ninguna
     public int getFilaSeleccionada(){
         for (int i = 0; i < modeloTabla.getRowCount(); i++) {
             if (Boolean.TRUE.equals(modeloTabla.getValueAt(i, 0))) {
@@ -159,5 +156,10 @@ public class Reservas extends JDialog {
         return -1;
     }
 
-    
+    // devuelve los datos de la reserva marcada, o null si no hay ninguna
+    public String[] getDatosSeleccionados(){
+        int fila = getFilaSeleccionada();
+        if (fila == -1 || listaDatos == null) return null;
+        return listaDatos.get(fila);
+    }  
 }

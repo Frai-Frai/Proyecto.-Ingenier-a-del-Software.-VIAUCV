@@ -32,11 +32,14 @@ public class Registro extends JFrame{
         setLayout(null);
         setLocationRelativeTo(null);
 
-        Font    fuenteT = new Font("Dialog", Font.BOLD, 30); // tipografias
+        // fuentes
+        Font    fuenteT = new Font("Dialog", Font.BOLD, 30); 
         Font    fuenteNormal = fuenteGlacial("res/GlacialIndifference-Regular.otf", 14, Font.PLAIN); 
         Font    fuenteLetras = fuenteGlacial("res/GlacialIndifference-Regular.otf", 16, Font.PLAIN);
         Font    fuenteLink = fuenteGlacial("res/GlacialIndifference-Regular.otf", 14, Font.BOLD);
         Font    fuenteAviso = fuenteGlacial("res/GlacialIndifference-Regular.otf", 12, Font.PLAIN);
+        
+        //colores
         Color   azulCuadros = new Color(0x0D47A1); // para el cuadro de crear cuenta
         Color   azulPastelC = new Color(0xBBDEFB); // para el cuadro del form 
         Color   Colormenu = new Color(0xE3F2FD);
