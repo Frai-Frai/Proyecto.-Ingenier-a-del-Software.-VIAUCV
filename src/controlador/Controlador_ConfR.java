@@ -15,10 +15,13 @@ public class Controlador_ConfR {
     private double montoFijo;
     private PorcentajeTarifasDAO tarifaDao = new PorcentajeTarifasDAO();
     private  ItinerarioModelo rutaEscogida;
+    ItinerarioDAO Itdao = new ItinerarioDAO();
 
     public Controlador_ConfR(ConfirmarReserva vista, Usuario pasajero){
         this.vista = vista;
         this.pasajero = pasajero;
+
+        mostrarMonto();
 
         this.vista.getBtnReservar().addMouseListener(new MouseAdapter() {
             @Override
@@ -27,11 +30,8 @@ public class Controlador_ConfR {
             }
         });
     }
-    
-    public void irAPago(){
-        this.vista.setVisible(false);
-        this.vista.dispose();
 
+    public void mostrarMonto() {
         String placa = vista.getPlacaConfirmada();
         String horario = vista.getHorarioConfirmado();
 
@@ -41,17 +41,23 @@ public class Controlador_ConfR {
         String hora = partesHorario.length > 1 ? partesHorario[1].trim() : "";
         String tarifaInicial = "0.0"; // valor por defecto aqui
 
-        ItinerarioDAO Itdao = new ItinerarioDAO();
-
         for(ItinerarioModelo ruta : Itdao.obtenerRutas()){ //busca la ruta escogida con el dao
             if(ruta.getPlacaAsignada().equals(placa) && ruta.getDia().equals(dia) && ruta.getHora().equals(hora)){
                 tarifaInicial = ruta.getTarifa();
-                rutaEscogida= ruta; //guarda esa ruta completa
+                rutaEscogida = ruta; //guarda esa ruta completa
                 break; // ya encontro la tarifa de ese destino escogido
             }
         }
 
         montoFijo = tarifaDao.calcularCobroSolidario(pasajero.getRol(), tarifaInicial);
+        
+        // Pone el monto en la vista
+        vista.setMonto(String.valueOf(montoFijo)); 
+    }
+    
+    public void irAPago(){
+        this.vista.setVisible(false);
+        this.vista.dispose();
 
         //monto insuficiente
         if(pasajero.getSaldo() < montoFijo){

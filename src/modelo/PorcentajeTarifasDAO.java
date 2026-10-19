@@ -19,7 +19,7 @@ public class PorcentajeTarifasDAO {
 
         //roles no incluidos
         if (buscarRol.equalsIgnoreCase("Público General") || buscarRol.equalsIgnoreCase("Administrador") || buscarRol.equalsIgnoreCase("Conductor")) {
-            return 1.0;
+            return 100.0;
         }
 
         if(buscarRol.equalsIgnoreCase("Docente")){  //si es docente, se toma como empleado
@@ -27,7 +27,7 @@ public class PorcentajeTarifasDAO {
         }
         
         File archivo = new File(tarifasTxt);
-        double porcentaje=1.0; // se guarda el porcentaje dependiendo del rol
+        double porcentaje=100.0; // se guarda el porcentaje dependiendo del rol
 
         if (archivo.exists()){
             try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
