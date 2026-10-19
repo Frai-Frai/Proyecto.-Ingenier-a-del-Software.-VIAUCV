@@ -4,4 +4,5 @@
 16578923|Antonioespinoza27@hotmail.com|Conductor
 31901633|elianymorales28@gmail.com|Administrador
 15289746|diana@hotmail.com|Docente
-000|maria@gmail.com|Estudiante
+14785619|maria@gmail.com|Estudiante
+14785699|mariar@ciencias.ucv.ve|Estudiante

@@ -30,11 +30,11 @@ public class ReservaDAO {
 
                 String[] datos= linea.split("\\|");
 
-                if (datos.length==9){
+                if (datos.length>=8){
                     String cedulaU= datos[0].trim(); //donde esta la cedula 
 
                     //comparar la cedula para ver sus reservas
-                    if(cedula.equalsIgnoreCase(cedulaU.trim())){
+                    if(cedula.trim().equalsIgnoreCase(cedulaU.trim())){
                         String placa= datos[1].trim();
                         String tipoRuta= datos[2].trim();
                         String destino= datos[3].trim();
@@ -57,6 +57,16 @@ public class ReservaDAO {
             System.out.println("Error al filtrar por cédula: "+e.getMessage());
         }
         return lista; //Retorno lista de las reservas de ese usuario
+    }
+
+        //Método para agregar una nueva reserva al txt
+    public void registrarReserva(Reserva reserva) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaBD, true))) {
+            bw.write(reserva.EscribirFormatoTXT());
+            bw.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

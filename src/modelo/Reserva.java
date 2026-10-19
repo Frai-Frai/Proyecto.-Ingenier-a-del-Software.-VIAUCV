@@ -17,4 +17,9 @@ public class Reserva {
         return itinerarioReservado;
     }
 
+    public String EscribirFormatoTXT(){
+        return cedulaUsuario + "|"+ itinerarioReservado.getPlacaAsignada() +"|"+ itinerarioReservado.getTipoRuta() +"|"+ itinerarioReservado.getDestino() +"|"+ itinerarioReservado.getPuntoPartida()+"|"
+        + itinerarioReservado.getPuntoLLegada() +"|"+ itinerarioReservado.getDia() +"|"+ itinerarioReservado.getHora() +"|"+ itinerarioReservado.getConductor();
+    }
+
 }

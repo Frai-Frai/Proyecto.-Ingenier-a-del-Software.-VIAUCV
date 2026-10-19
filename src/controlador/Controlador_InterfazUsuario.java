@@ -55,6 +55,14 @@ public class Controlador_InterfazUsuario {
                 abrirMonedero();
             }
         });
+
+        this.vista.getBtnVisualizarReservas().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                abrirReservas();
+            }
+        });
+        
     }
 
     private void inicializarControlador() {
@@ -176,6 +184,33 @@ public class Controlador_InterfazUsuario {
         this.tipoRutaActual = tipo;
         this.paginaActual = 0;
         redibujarPaginaRutas();
+    }
+
+    public void abrirReservas(){
+        ReservaDAO RDao = new ReservaDAO();
+        List<Reserva> listaR = RDao.buscarPorCedula(pasajero.getCedula());
+        List <String[]> filasR = new ArrayList<>();
+
+        if (listaR != null) {
+            for (Reserva r : listaR) {
+                ItinerarioModelo iti = r.getItinerario();
+
+                String[] fila = {
+                    iti != null ? iti.getPlacaAsignada() : " ",  // [0] Placa
+                    iti != null ? iti.getTipoRuta() : " ",       // [1] Tipo de ruta
+                    iti != null ? iti.getDestino() : " ",        // [2] Destino
+                    iti != null ? iti.getPuntoPartida() : " ",   // [3] Punto de partida
+                    iti != null ? iti.getPuntoLLegada() : " ",   // [4] Punto de llegada
+                    iti != null ? iti.getDia() : " ",            // [5] Día
+                    iti != null ? iti.getHora() : " "            // [6] Horario
+                };
+                filasR.add(fila);
+            }
+        }
+
+        Reservas reserva = new Reservas(vista, filasR);
+        new Controlador_Reservas(reserva, pasajero);
+        reserva.setVisible(true);
     }
 
     private void irInicio(){

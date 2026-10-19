@@ -150,7 +150,7 @@ public class UsuarioDAO {
                 for (int i = 0; i < todos.size(); i++) {
                     Usuario u = todos.get(i);
 
-                    if(u.getCedula().equals(uModificado.getCedula())){
+                    if(u.getCedula().trim().equals(uModificado.getCedula())){
                         bw.write(uModificado.EscribirFormatoTXT());
                         encontrado=true;
                     }else{// si no es el que buscamos no cmabiamos nada
@@ -185,6 +185,7 @@ public class UsuarioDAO {
 
         //recargar saldo y descontar saldo
         public void recargarSaldo(Usuario u, double monto){
+           // List <Usuario> listaUser = obtenerUsuarios();
             double montoNum= monto;
             double saldo=u.getSaldo();
             saldo+=montoNum;

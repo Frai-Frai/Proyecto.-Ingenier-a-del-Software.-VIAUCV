@@ -57,12 +57,13 @@ public class Controlador_MonederoReal{
         String resultado = valida.ValidarDatos(telefono, cedula, monto);
 
         if (resultado.equals("Pago exitoso")) {
-            double recarga = Double.parseDouble(monto.trim().replace(".", "."));
+            double recarga = Double.parseDouble(monto.trim().replace(",", "."));
             UsuarioDAO userDao = new UsuarioDAO();
             userDao.recargarSaldo(pasajero, recarga);
-            JOptionPane.showMessageDialog(vista, "Recarga realizada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             //actualiza el monto en la pantalla
-            //vista.getSaldoMonto().setText(String.valueOf(pasajero.getSaldo()));
+            vista.setMontoActualTexto(String.valueOf(pasajero.getSaldo()));
+            JOptionPane.showMessageDialog(vista, "Recarga realizada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
         } else {
             JOptionPane.showMessageDialog(vista, resultado, "Error en el proceso de recarga, intente de nuevo", JOptionPane.ERROR_MESSAGE);
         }
